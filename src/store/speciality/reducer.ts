@@ -1,0 +1,48 @@
+import { Reducer } from 'redux';
+import { SpecialityState } from 'types';
+import { GET_SPECIALITIES } from './types';
+
+const initialState: SpecialityState = {
+    specialities: [],
+    currentSpeciality: null,
+    loading: true,
+    error: null,
+};
+
+const specialityReducer: Reducer<SpecialityState> = (
+    state: SpecialityState = initialState,
+    action
+) => {
+    switch (action.type) {
+        case GET_SPECIALITIES.start:
+            return onGetSpecialitiesStart(state);
+        case GET_SPECIALITIES.success:
+            return onGetSpecialitiesSuccess(state, action.payload);
+        case GET_SPECIALITIES.failure:
+            return onGetSpecialitiesFailure(state, action.payload);
+
+        default:
+            return state;
+    }
+};
+
+const onGetSpecialitiesStart = (state: SpecialityState): SpecialityState => ({
+    ...state,
+    loading: true,
+});
+
+const onGetSpecialitiesSuccess = (state: SpecialityState, payload): SpecialityState => {
+    return {
+        ...state,
+        specialities: payload.specialities,
+        loading: false,
+    };
+};
+
+const onGetSpecialitiesFailure = (state: SpecialityState, payload): SpecialityState => ({
+    ...state,
+    loading: false,
+    error: payload.error,
+});
+
+export default specialityReducer;

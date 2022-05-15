@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { renderRoutes } from './render-routes';
 
-export function createAppWithRouter(App, getRoutes) {
+export const createAppWithRouter = (App, getRoutes) => {
     return () => {
         const baseUrl = '/';
         const routeList = renderRoutes(getRoutes(baseUrl));
@@ -19,4 +19,4 @@ export function createAppWithRouter(App, getRoutes) {
             </BrowserRouter>
         );
     };
-}
+};
