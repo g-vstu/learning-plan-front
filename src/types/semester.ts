@@ -1,4 +1,6 @@
+import { number } from 'yup';
 import { Node } from './node';
+import { Plan } from './plan';
 
 export enum CourseWorkType {
     Work = 'work',
@@ -33,9 +35,18 @@ export interface Semester {
     idTeacher: number;
 }
 
+export interface WeeksSemester {
+    id: number;
+    countWeeks: number;
+    numberSemestr: number;
+    idPlan: Plan;
+}
+
 export interface SemesterState {
     semesters: Semester[];
     currentSemester: Semester;
+    weeksSemester: WeeksSemester;
+    weeksSemesters: WeeksSemester[];
     loading: boolean;
     error: any;
 }

@@ -9,6 +9,9 @@ import {
     SubjectState,
     CompetenceState,
     SemesterState,
+    CerteficationState,
+    PracticeState,
+    SubCompetenceState,
 } from 'types';
 import speciality from './speciality/reducer';
 import groupComponent from './group-component/reducer';
@@ -18,6 +21,11 @@ import competence from './competence/reducer';
 import plan from './plan/reducer';
 import node from './node/reducer';
 import semester from './semester/reducer';
+import certefication from './certefication/reducer';
+import practice from './practice/reducer';
+import subCompetence from './sub-competence/reducer';
+import { StudyProgramState } from 'types/study-program';
+import studyProgram from './study-program/reducer';
 
 export interface ApplicationState {
     speciality: SpecialityState;
@@ -28,6 +36,10 @@ export interface ApplicationState {
     plan: PlanState;
     node: NodeState;
     semester: SemesterState;
+    certefication: CerteficationState;
+    practice: PracticeState;
+    subCompetence: SubCompetenceState;
+    studyProgram: StudyProgramState;
 }
 
 const rootReducer: Reducer<ApplicationState> = combineReducers({
@@ -39,6 +51,10 @@ const rootReducer: Reducer<ApplicationState> = combineReducers({
     plan,
     node,
     semester,
+    certefication,
+    practice,
+    subCompetence,
+    studyProgram,
 });
 
 export default rootReducer;

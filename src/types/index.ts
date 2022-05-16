@@ -6,3 +6,6 @@ export * from './competence';
 export * from './plan';
 export * from './node';
 export * from './semester';
+export * from './certefication';
+export * from './practice';
+export * from './sub-competence';
