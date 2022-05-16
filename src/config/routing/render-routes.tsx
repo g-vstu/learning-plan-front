@@ -22,7 +22,7 @@ export const renderRoutes = (routes) => {
         } else {
             routeProps.component = route.component;
         }
-
+        debugger;
         return <Route key={route.key} {...routeProps} />;
     });
 };

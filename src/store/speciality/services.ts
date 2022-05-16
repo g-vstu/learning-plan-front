@@ -1,7 +1,7 @@
 import { DEVELOPMENT } from 'config/constants';
+import instance from 'store/auth/instance';
 
 export const fetchSpecialities = async () => {
-    const response = await fetch(`${DEVELOPMENT}/speciality`);
-    const specialitites = await response.json();
+    const { data: specialitites } = await instance.get(`${DEVELOPMENT}/speciality`);
     return specialitites;
 };

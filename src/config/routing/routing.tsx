@@ -1,3 +1,4 @@
+import { PREFIX } from 'config/constants';
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { renderRoutes } from './render-routes';
@@ -5,7 +6,7 @@ import { renderRoutes } from './render-routes';
 export const createAppWithRouter = (App, getRoutes) => {
     return () => {
         const baseUrl = '/';
-        const routeList = renderRoutes(getRoutes(baseUrl));
+        const routeList = renderRoutes(getRoutes(PREFIX));
         return (
             <BrowserRouter>
                 <Route
