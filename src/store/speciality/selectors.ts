@@ -7,3 +7,9 @@ export const selectSpecialities = createSelector(
     [getSpecialitites],
     (specialities) => specialities
 );
+
+const getSpecialititesLoading = (state: ApplicationState): boolean => state.speciality.loading;
+export const selectSpecialitiesLoading = createSelector(
+    [getSpecialititesLoading],
+    (loading) => loading
+);

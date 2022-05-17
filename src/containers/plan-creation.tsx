@@ -20,7 +20,7 @@ export const PlanCreationContanier: React.FC<{ match: match<any> }> = ({ match }
     const isSemestersLoading = useSelector(selectSemestersLoading);
 
     useEffect(() => {
-        if (isPlansLoading && isNodesLoading && isSemestersLoading) {
+        if (!isPlansLoading && !isNodesLoading && !isSemestersLoading) {
             setIsLoading(false);
         }
     }, [isPlansLoading, isNodesLoading, isSemestersLoading]);
@@ -30,7 +30,6 @@ export const PlanCreationContanier: React.FC<{ match: match<any> }> = ({ match }
     const semesters = useSelector(selectSemesters);
 
     useEffect(() => {
-        //dispatch(getSpecialities());
         dispatch(getGlobalPlan(+match?.params?.id));
     }, [dispatch, match?.params?.id]);
 

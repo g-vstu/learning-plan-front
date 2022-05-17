@@ -13,6 +13,10 @@ import { VerticalTableCell } from 'components/vertical-cell';
 import { TableCourseCell } from './plan-creation-table/table-course-cell';
 import { GroupComponentName, Node, Plan, Semester } from 'types';
 import { PlanCreationNode } from './plan-creation-node';
+import { DetailsNavigationContainer } from 'components/navigation-container';
+import { BackButton } from 'components/back-button';
+import { useHistory } from 'react-router-dom';
+import { PREFIX } from 'config/constants';
 
 interface PropTypes {
     plans: Plan[];
@@ -28,6 +32,7 @@ const semestersWeeks = [
 ];
 
 export const PlanCreation: React.FC<PropTypes> = ({ plans, semesters, nodes }) => {
+    const history = useHistory();
     const govNodes = nodes.filter((node) => {
         const con =
             node?.idSubject?.idUnit?.idGroupComponents?.name === GroupComponentName.GovComponent;
@@ -41,12 +46,14 @@ export const PlanCreation: React.FC<PropTypes> = ({ plans, semesters, nodes }) =
 
     return (
         <Container>
+            <DetailsNavigationContainer>
+                <BackButton onClick={() => history.push(`/${PREFIX}/specialities`)} />
+            </DetailsNavigationContainer>
             <Paper style={{ overflow: 'auto' }}>
                 <TableContainer>
                     <Table>
                         <TableHead>
                             <TableRow>
-                                <TableCell></TableCell>
                                 <TableCell>№ п/п</TableCell>
                                 <TableCell style={{ width: 250, border: '1px solid red' }}>
                                     Название модуля, учебной дисциплины, курсового проекта(курсовой
@@ -98,12 +105,10 @@ export const PlanCreation: React.FC<PropTypes> = ({ plans, semesters, nodes }) =
                         </TableHead>
                         <TableBody>
                             <TableRow>
-                                <TableCell></TableCell>
                                 <TableCell>1</TableCell>
                                 <TableCell>{GroupComponentName.GovComponent}</TableCell>
                             </TableRow>
                             <TableRow>
-                                <TableCell></TableCell>
                                 <TableCell>1.1</TableCell>
                                 <TableCell>Модуль Социально гуманитарные дисциплины</TableCell>
                             </TableRow>

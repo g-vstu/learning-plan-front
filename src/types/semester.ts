@@ -18,6 +18,7 @@ export interface Semester {
     idNode: Node;
     rgr: number;
     type: SemesterType;
+    selfeducation: number;
 
     //subject Node
     laboratory?: number;
