@@ -1,7 +1,7 @@
 export interface Speciality {
     id: number;
     name: string;
-    shift: string;
+    shifr: string;
 }
 
 export interface SpecialityState {

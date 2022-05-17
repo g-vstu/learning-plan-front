@@ -8,3 +8,6 @@ export const selectSemesters = createSelector([getSemesters], (semesters) => sem
 const getWeeksSemesters = (state: ApplicationState): WeeksSemester[] =>
     state.semester.weeksSemesters;
 export const selectWeeksSemesters = createSelector([getWeeksSemesters], (semesters) => semesters);
+
+const getSemestersLoading = (state: ApplicationState): boolean => state.semester.loading;
+export const selectSemestersLoading = createSelector([getSemestersLoading], (loading) => loading);

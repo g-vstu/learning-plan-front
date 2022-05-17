@@ -1,10 +1,19 @@
 import React, { useMemo } from 'react';
-import { CssBaseline } from '@mui/material';
+import { Container, CssBaseline } from '@mui/material';
 import { createTheme, ThemeProvider as MUIThemeProvider } from '@mui/material/styles';
 
 export const theme = createTheme({
     typography: {
         fontFamily: 'DM Sans', //This font is only for initial theme testing
+    },
+    components: {
+        MuiTableCell: {
+            styleOverrides: {
+                root: {
+                    border: '1px solid black',
+                },
+            },
+        },
     },
 });
 

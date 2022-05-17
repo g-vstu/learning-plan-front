@@ -4,7 +4,7 @@ export interface GroupUnit {
     id: number;
     name: string;
     unitNumber: string;
-    idGroupComponent: GroupComponent;
+    idGroupComponents: GroupComponent;
 }
 
 export interface GroupUnitState {
