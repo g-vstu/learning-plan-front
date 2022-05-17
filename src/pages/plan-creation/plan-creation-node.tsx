@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
-import { TableCell, TableRow } from '@mui/material';
+import { IconButton, TableCell, TableRow, TextField, Typography } from '@mui/material';
 import { Node, Plan, Semester } from 'types';
+import DoneIcon from '@mui/icons-material/Done';
+import EditIcon from '@mui/icons-material/Edit';
+import DoDisturbIcon from '@mui/icons-material/DoDisturb';
+import { TableEditCell } from './plan-creation-table/table-edit-cell';
 
 interface PropTypes {
     node: Node;
@@ -9,6 +13,8 @@ interface PropTypes {
 }
 
 export const PlanCreationNode: React.FC<PropTypes> = ({ node, semesters, plans }) => {
+    const [editMode, setEditMode] = useState(false);
+
     const associatedSemesters = semesters?.filter(
         (semester) => semester?.idNode?.idNode === node?.idNode
     );
@@ -31,6 +37,22 @@ export const PlanCreationNode: React.FC<PropTypes> = ({ node, semesters, plans }
 
     return (
         <TableRow key={node?.idNode}>
+            <TableCell>
+                {editMode ? (
+                    <>
+                        <IconButton>
+                            <DoneIcon />
+                        </IconButton>
+                        <IconButton onClick={() => setEditMode(false)}>
+                            <DoDisturbIcon />
+                        </IconButton>
+                    </>
+                ) : (
+                    <IconButton onClick={() => setEditMode(true)}>
+                        <EditIcon />
+                    </IconButton>
+                )}
+            </TableCell>
             <TableCell>{node?.nodeNumber}</TableCell>
             <TableCell>{node?.idSubject?.name}</TableCell>
             <TableCell>{totalWorks?.totalExams}</TableCell>
@@ -50,19 +72,35 @@ export const PlanCreationNode: React.FC<PropTypes> = ({ node, semesters, plans }
                     <TableCell key={semester?.id} padding="none">
                         <TableRow>
                             <TableCell>Итог</TableCell>
-                            <TableCell>Итог звонки</TableCell>
+                            <TableCell colSpan={3}>Итог звонки</TableCell>
                         </TableRow>
                         <TableRow>
-                            <TableCell>{semester?.lecture}</TableCell>
-                            <TableCell>{semester?.practice}</TableCell>
-                            <TableCell>{semester?.seminar}</TableCell>
-                            <TableCell>{semester?.laboratory}</TableCell>
+                            <TableEditCell
+                                editMode={editMode}
+                                name="lecture"
+                                value={semester?.lecture}
+                            />
+                            <TableEditCell
+                                editMode={editMode}
+                                name="practice"
+                                value={semester?.practice}
+                            />
+                            <TableEditCell
+                                editMode={editMode}
+                                name="seminar"
+                                value={semester?.seminar}
+                            />
+                            <TableEditCell
+                                editMode={editMode}
+                                name="laboratory"
+                                value={semester?.laboratory}
+                            />
                         </TableRow>
-                        <TableRow>
-                            <TableCell>лк</TableCell>
-                            <TableCell>пр</TableCell>
-                            <TableCell>сем</TableCell>
-                            <TableCell>лб</TableCell>
+                        <TableRow style={{ padding: 0 }}>
+                            <TableCell padding="none">лк</TableCell>
+                            <TableCell padding="none">пр</TableCell>
+                            <TableCell padding="none">сем</TableCell>
+                            <TableCell padding="none">лб</TableCell>
                         </TableRow>
                     </TableCell>
                 ))}

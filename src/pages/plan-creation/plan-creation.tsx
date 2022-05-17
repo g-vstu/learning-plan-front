@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import {
+    Container,
     Paper,
     Table,
     TableBody,
@@ -39,81 +40,85 @@ export const PlanCreation: React.FC<PropTypes> = ({ plans, semesters, nodes }) =
     );
 
     return (
-        <Paper style={{ overflow: 'auto' }}>
-            <TableContainer>
-                <Table>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>№ п/п</TableCell>
-                            <TableCell style={{ width: 250, border: '1px solid red' }}>
-                                Название модуля, учебной дисциплины, курсового проекта(курсовой
-                                работы)
-                            </TableCell>
-                            <VerticalTableCell>Экзамены</VerticalTableCell>
-                            <VerticalTableCell>Зачеты</VerticalTableCell>
-                            <VerticalTableCell>Расчетно графические работы</VerticalTableCell>
-                            <TableCell padding="none">
-                                <TableRow>
-                                    <TableCell padding="none" colSpan={6}>
-                                        Количество академических часов
-                                    </TableCell>
-                                </TableRow>
-                                <TableRow>
-                                    <VerticalTableCell>Всего</VerticalTableCell>
-                                    <VerticalTableCell>Аудиторные</VerticalTableCell>
-                                    <VerticalTableCell>Лекции</VerticalTableCell>
-                                    <VerticalTableCell>Лабораторные</VerticalTableCell>
-                                    <VerticalTableCell>Практические</VerticalTableCell>
-                                    <VerticalTableCell>Семинарские</VerticalTableCell>
-                                </TableRow>
-                            </TableCell>
-                            <TableCell>
-                                <div
-                                    style={{
-                                        display: 'flex',
-                                        justifyContent: 'center',
-                                        alignContent: 'center',
-                                        paddingTop: 0,
-                                        marginTop: 0,
-                                    }}
-                                >
-                                    Распределение по курсам и семестрам
-                                </div>
-
-                                <TableRow>
-                                    <TableCell padding="none">
-                                        <TableRow>
-                                            {semestersWeeks?.map((week) => (
-                                                <TableCourseCell key={week.id} week={week} />
-                                            ))}
-                                        </TableRow>
-                                    </TableCell>
-                                </TableRow>
-                            </TableCell>
-                            <VerticalTableCell>Всего зачетных единиц</VerticalTableCell>
-                            <VerticalTableCell>Код компетенции</VerticalTableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        <TableRow>
-                            <TableCell>1</TableCell>
-                            <TableCell>{GroupComponentName.GovComponent}</TableCell>
-                        </TableRow>
-                        <TableRow>
-                            <TableCell>1.1</TableCell>
-                            <TableCell>Модуль Социально гуманитарные дисциплины</TableCell>
-                        </TableRow>
-                        {govNodes?.map((node) => (
-                            <PlanCreationNode
-                                key={node?.idNode}
-                                node={node}
-                                semesters={semesters}
-                                plans={plans}
-                            />
-                        ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
-        </Paper>
+        <Container>
+            <Paper style={{ overflow: 'auto' }}>
+                <TableContainer>
+                    <Table>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell></TableCell>
+                                <TableCell>№ п/п</TableCell>
+                                <TableCell style={{ width: 250, border: '1px solid red' }}>
+                                    Название модуля, учебной дисциплины, курсового проекта(курсовой
+                                    работы)
+                                </TableCell>
+                                <VerticalTableCell>Экзамены</VerticalTableCell>
+                                <VerticalTableCell>Зачеты</VerticalTableCell>
+                                <VerticalTableCell>Расчетно графические работы</VerticalTableCell>
+                                <TableCell padding="none">
+                                    <TableRow>
+                                        <TableCell padding="none" colSpan={6}>
+                                            Количество академических часов
+                                        </TableCell>
+                                    </TableRow>
+                                    <TableRow>
+                                        <VerticalTableCell>Всего</VerticalTableCell>
+                                        <VerticalTableCell>Аудиторные</VerticalTableCell>
+                                        <VerticalTableCell>Лекции</VerticalTableCell>
+                                        <VerticalTableCell>Лабораторные</VerticalTableCell>
+                                        <VerticalTableCell>Практические</VerticalTableCell>
+                                        <VerticalTableCell>Семинарские</VerticalTableCell>
+                                    </TableRow>
+                                </TableCell>
+                                <TableCell>
+                                    <div
+                                        style={{
+                                            display: 'flex',
+                                            justifyContent: 'center',
+                                            alignContent: 'center',
+                                            paddingTop: 0,
+                                            marginTop: 0,
+                                        }}
+                                    >
+                                        Распределение по курсам и семестрам
+                                    </div>
+                                    <TableRow>
+                                        <TableCell padding="none">
+                                            <TableRow>
+                                                {semestersWeeks?.map((week) => (
+                                                    <TableCourseCell key={week.id} week={week} />
+                                                ))}
+                                            </TableRow>
+                                        </TableCell>
+                                    </TableRow>
+                                </TableCell>
+                                <VerticalTableCell>Всего зачетных единиц</VerticalTableCell>
+                                <VerticalTableCell>Код компетенции</VerticalTableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            <TableRow>
+                                <TableCell></TableCell>
+                                <TableCell>1</TableCell>
+                                <TableCell>{GroupComponentName.GovComponent}</TableCell>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell></TableCell>
+                                <TableCell>1.1</TableCell>
+                                <TableCell>Модуль Социально гуманитарные дисциплины</TableCell>
+                            </TableRow>
+                            {govNodes?.map((node) => (
+                                <PlanCreationNode
+                                    key={node?.idNode}
+                                    node={node}
+                                    semesters={semesters}
+                                    plans={plans}
+                                />
+                            ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+            </Paper>
+        </Container>
     );
 };

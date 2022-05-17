@@ -14,6 +14,13 @@ export const theme = createTheme({
                 },
             },
         },
+        MuiContainer: {
+            styleOverrides: {
+                root: {
+                    minWidth: 1500,
+                },
+            },
+        },
     },
 });
 
