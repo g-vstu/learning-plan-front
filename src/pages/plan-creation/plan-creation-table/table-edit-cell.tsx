@@ -7,7 +7,7 @@ export const TableEditCell: React.FC<any> = ({ editMode, value, name, handleUpda
             {editMode ? (
                 <TextField
                     name={name}
-                    type="number"
+                    //type="number"
                     value={value}
                     onChange={(e) => {
                         handleUpdateSemester(e);

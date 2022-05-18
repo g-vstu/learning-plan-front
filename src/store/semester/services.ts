@@ -1,6 +1,6 @@
 import { DEVELOPMENT } from 'config/constants';
 import instance from 'store/auth/instance';
-import { Semester } from 'types';
+import { Node, Semester } from 'types';
 
 export const fetchSemesters = async () => {
     const { data: semesters } = await instance.get(`${DEVELOPMENT}/semestr`);
@@ -17,6 +17,15 @@ export const updateSemesterRequest = async (semester: Semester) => {
         `${DEVELOPMENT}/semestr?nodeId=${semester?.idNode?.idNode}`,
         semester
     );
-    debugger;
+
     return updatedSemester;
+};
+
+export const createSemesterRequest = async (semester: Semester, node) => {
+    const { data: newSemester } = await instance.post(
+        `${DEVELOPMENT}/semestr?nodeId=${node?.idNode}`,
+        semester
+    );
+
+    return newSemester;
 };

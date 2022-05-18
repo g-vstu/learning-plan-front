@@ -1,8 +1,13 @@
 import { ThunkAction } from 'redux-thunk';
 import { Action, Dispatch } from 'redux';
 import { RootState } from 'store';
-import { GET_SEMESTERS, GET_WEEKS_SEMESTERS, UPDATE_SEMESTER } from './types';
-import { fetchSemesters, fetchWeeksSemesters, updateSemesterRequest } from './services';
+import { CREATE_SEMESTER, GET_SEMESTERS, GET_WEEKS_SEMESTERS, UPDATE_SEMESTER } from './types';
+import {
+    createSemesterRequest,
+    fetchSemesters,
+    fetchWeeksSemesters,
+    updateSemesterRequest,
+} from './services';
 import { Semester, WeeksSemester } from 'types';
 
 export const getSemesters = (): ThunkAction<Promise<void>, RootState, null, Action> => {
@@ -55,6 +60,27 @@ export const updateSemester = (
         } catch (error) {
             dispatch({
                 type: UPDATE_SEMESTER.failure,
+                payload: { error },
+            });
+        }
+    };
+};
+
+export const createSemester = (
+    semester: Semester,
+    node
+): ThunkAction<Promise<void>, RootState, null, Action> => {
+    return async (dispatch: Dispatch) => {
+        dispatch({ type: CREATE_SEMESTER.start });
+        try {
+            const newSemester: Semester = await createSemesterRequest(semester, node);
+            dispatch({
+                type: CREATE_SEMESTER.success,
+                payload: { newSemester },
+            });
+        } catch (error) {
+            dispatch({
+                type: CREATE_SEMESTER.failure,
                 payload: { error },
             });
         }

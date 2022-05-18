@@ -17,6 +17,7 @@ import { DetailsNavigationContainer } from 'components/navigation-container';
 import { BackButton } from 'components/back-button';
 import { useHistory } from 'react-router-dom';
 import { PREFIX } from 'config/constants';
+import { TableSemesterCell } from './plan-creation-table/table-semester.cell';
 
 interface PropTypes {
     plans: Plan[];
@@ -25,10 +26,14 @@ interface PropTypes {
 }
 
 const semestersWeeks = [
-    { id: 1, course: '1 курс', startSem: 1, endSem: 2, firstNum: 17, secondNum: 18 },
-    { id: 2, course: '2 курс', startSem: 3, endSem: 4, firstNum: 17, secondNum: 18 },
-    { id: 3, course: '3 курс', startSem: 5, endSem: 6, firstNum: 17, secondNum: 18 },
-    { id: 4, course: '4 курс', startSem: 7, endSem: 8, firstNum: 17, secondNum: 18 },
+    { id: 1, semsteerNumber: 1, semesterWeeks: 17 },
+    { id: 2, semsteerNumber: 2, semesterWeeks: 17 },
+    { id: 3, semsteerNumber: 3, semesterWeeks: 17 },
+    { id: 4, semsteerNumber: 4, semesterWeeks: 17 },
+    { id: 5, semsteerNumber: 5, semesterWeeks: 17 },
+    { id: 6, semsteerNumber: 6, semesterWeeks: 17 },
+    { id: 7, semsteerNumber: 7, semesterWeeks: 17 },
+    { id: 8, semsteerNumber: 8, semesterWeeks: 17 },
 ];
 
 export const PlanCreation: React.FC<PropTypes> = ({ plans, semesters, nodes }) => {
@@ -68,28 +73,11 @@ export const PlanCreation: React.FC<PropTypes> = ({ plans, semesters, nodes }) =
                                 <VerticalTableCell>Лабораторные</VerticalTableCell>
                                 <VerticalTableCell>Практические</VerticalTableCell>
                                 <VerticalTableCell>Семинарские</VerticalTableCell>
-                                <TableCell>
-                                    <div
-                                        style={{
-                                            display: 'flex',
-                                            justifyContent: 'center',
-                                            alignContent: 'center',
-                                            paddingTop: 0,
-                                            marginTop: 0,
-                                        }}
-                                    >
-                                        Распределение по курсам и семестрам
-                                    </div>
-                                    <TableRow>
-                                        <TableCell padding="none">
-                                            <TableRow>
-                                                {semestersWeeks?.map((week) => (
-                                                    <TableCourseCell key={week.id} week={week} />
-                                                ))}
-                                            </TableRow>
-                                        </TableCell>
-                                    </TableRow>
-                                </TableCell>
+
+                                {semestersWeeks?.map((week) => (
+                                    <TableSemesterCell key={week?.id} semesterWeek={week} />
+                                ))}
+
                                 <VerticalTableCell>Всего зачетных единиц</VerticalTableCell>
                                 <VerticalTableCell>Код компетенции</VerticalTableCell>
                             </TableRow>
@@ -115,6 +103,6 @@ export const PlanCreation: React.FC<PropTypes> = ({ plans, semesters, nodes }) =
                     </Table>
                 </TableContainer>
             </Paper>
-            </>
+        </>
     );
 };

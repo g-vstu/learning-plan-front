@@ -13,9 +13,9 @@ export enum SemesterType {
 }
 
 export interface Semester {
-    id: number;
+    id?: number;
     number: number;
-    idNode: Node;
+    idNode?: Node;
     rgr: number;
     type: SemesterType;
     selfeducation: number;
@@ -32,8 +32,8 @@ export interface Semester {
     courceWorkZe: number;
     courseWorkType: CourseWorkType;
 
-    idFaculty: number;
-    idTeacher: number;
+    idFaculty?: number;
+    idTeacher?: number;
 }
 
 export interface WeeksSemester {

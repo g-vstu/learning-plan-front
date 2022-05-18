@@ -41,6 +41,8 @@ export const PlanCreationSemester: React.FC<PropTypes> = ({ semester }) => {
     }, [semester]);
 
     const handleUpdateSemester = (e) => {
+        debugger;
+        console.log(semesterData);
         setSemesterData({
             ...semesterData,
             [e.target.name]: +e.target.value,
@@ -53,7 +55,7 @@ export const PlanCreationSemester: React.FC<PropTypes> = ({ semester }) => {
     };
 
     return (
-        <>
+        <TableCell>
             <TableCell>
                 {editMode ? (
                     <>
@@ -113,6 +115,7 @@ export const PlanCreationSemester: React.FC<PropTypes> = ({ semester }) => {
                         editMode={editMode}
                         name="laboratory"
                         value={semesterData?.laboratory}
+                        handleUpdateSemester={handleUpdateSemester}
                     />
                 </TableRow>
                 <TableRow style={{ padding: 0 }}>
@@ -138,6 +141,6 @@ export const PlanCreationSemester: React.FC<PropTypes> = ({ semester }) => {
                     />
                 </TableRow>
             </TableCell>
-        </>
+        </TableCell>
     );
 };
