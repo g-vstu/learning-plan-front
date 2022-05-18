@@ -14,9 +14,9 @@ interface PropTypes {
 }
 
 export const PlanCreationNode: React.FC<PropTypes> = ({ node, semesters, plans }) => {
-    const associatedSemesters = semesters?.filter(
-        (semester) => semester?.idNode?.idNode === node?.idNode
-    );
+    const associatedSemesters = semesters
+        ?.filter((semester) => semester?.idNode?.idNode === node?.idNode)
+        .sort((firstSeminar, secondSeminar) => firstSeminar?.number - secondSeminar?.number);
 
     const associatedPlan = plans?.find((plan) => plan?.id === node?.idPlan?.id);
 
@@ -28,6 +28,7 @@ export const PlanCreationNode: React.FC<PropTypes> = ({ node, semesters, plans }
 
     const [totalCourseHours, setCourseHours] = useState({
         totalClass: 0,
+        totalAuditore: 0,
         totalLecture: 0,
         totalLab: 0,
         totalPractice: 0,
@@ -42,14 +43,14 @@ export const PlanCreationNode: React.FC<PropTypes> = ({ node, semesters, plans }
             <TableCell>{totalWorks?.totalTests}</TableCell>
             <TableCell>{totalWorks?.totalRgrs}</TableCell>
 
-            <TableCell padding="none">
-                <TableCell>Всего</TableCell>
-                <TableCell>{totalCourseHours?.totalClass}</TableCell>
-                <TableCell>{totalCourseHours?.totalLecture}</TableCell>
-                <TableCell>{totalCourseHours?.totalLab}</TableCell>
-                <TableCell>{totalCourseHours?.totalPractice}</TableCell>
-                <TableCell>{totalCourseHours?.totalSeminar}</TableCell>
-            </TableCell>
+            <TableCell padding="none">{totalCourseHours?.totalClass}</TableCell>
+            <TableCell padding="none">{totalCourseHours?.totalAuditore}</TableCell>
+
+            <TableCell>{totalCourseHours?.totalLecture}</TableCell>
+            <TableCell>{totalCourseHours?.totalLab}</TableCell>
+            <TableCell>{totalCourseHours?.totalPractice}</TableCell>
+            <TableCell>{totalCourseHours?.totalSeminar}</TableCell>
+
             <TableCell>
                 {associatedSemesters?.map((semester) => (
                     <PlanCreationSemester key={semester?.id} semester={semester} />

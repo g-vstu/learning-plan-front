@@ -45,7 +45,7 @@ export const PlanCreation: React.FC<PropTypes> = ({ plans, semesters, nodes }) =
     );
 
     return (
-        <Container>
+        <>
             <DetailsNavigationContainer>
                 <BackButton onClick={() => history.push(`/${PREFIX}/specialities`)} />
             </DetailsNavigationContainer>
@@ -62,21 +62,12 @@ export const PlanCreation: React.FC<PropTypes> = ({ plans, semesters, nodes }) =
                                 <VerticalTableCell>Экзамены</VerticalTableCell>
                                 <VerticalTableCell>Зачеты</VerticalTableCell>
                                 <VerticalTableCell>Расчетно графические работы</VerticalTableCell>
-                                <TableCell padding="none">
-                                    <TableRow>
-                                        <TableCell padding="none" colSpan={6}>
-                                            Количество академических часов
-                                        </TableCell>
-                                    </TableRow>
-                                    <TableRow>
-                                        <VerticalTableCell>Всего</VerticalTableCell>
-                                        <VerticalTableCell>Аудиторные</VerticalTableCell>
-                                        <VerticalTableCell>Лекции</VerticalTableCell>
-                                        <VerticalTableCell>Лабораторные</VerticalTableCell>
-                                        <VerticalTableCell>Практические</VerticalTableCell>
-                                        <VerticalTableCell>Семинарские</VerticalTableCell>
-                                    </TableRow>
-                                </TableCell>
+                                <VerticalTableCell>Всего</VerticalTableCell>
+                                <VerticalTableCell>Аудиторные</VerticalTableCell>
+                                <VerticalTableCell>Лекции</VerticalTableCell>
+                                <VerticalTableCell>Лабораторные</VerticalTableCell>
+                                <VerticalTableCell>Практические</VerticalTableCell>
+                                <VerticalTableCell>Семинарские</VerticalTableCell>
                                 <TableCell>
                                     <div
                                         style={{
@@ -124,6 +115,6 @@ export const PlanCreation: React.FC<PropTypes> = ({ plans, semesters, nodes }) =
                     </Table>
                 </TableContainer>
             </Paper>
-        </Container>
+            </>
     );
 };

@@ -18,6 +18,20 @@ export const PlanCreationSemester: React.FC<PropTypes> = ({ semester }) => {
     const [editMode, setEditMode] = useState(false);
     const [isCanceledState, setIsCanceledState] = useState(false);
 
+    const [subTotal, setSubTotal] = useState(
+        semesterData?.lecture + semesterData?.practice + semesterData?.laboratory
+    );
+    const [totalHours, setTotalHours] = useState(semesterData?.selfeducation + subTotal);
+
+    useEffect(() => {
+        setTotalHours(subTotal + semesterData?.selfeducation);
+    }, [subTotal, semesterData?.selfeducation]);
+
+    useEffect(() => {
+        const result = semesterData?.lecture + semesterData?.practice + semesterData?.laboratory;
+        setSubTotal(result);
+    }, [semesterData]);
+
     useEffect(() => {
         setSemesterData(semester);
     }, [isCanceledState]);
@@ -65,6 +79,10 @@ export const PlanCreationSemester: React.FC<PropTypes> = ({ semester }) => {
                 <TableRow>
                     <TableCell size="small">Итог</TableCell>
                     <TableCell colSpan={4}>Итог звонки</TableCell>
+                </TableRow>
+                <TableRow>
+                    <TableCell>{totalHours}</TableCell>
+                    <TableCell colSpan={4}>{subTotal}</TableCell>
                 </TableRow>
                 <TableRow>
                     <TableEditCell
