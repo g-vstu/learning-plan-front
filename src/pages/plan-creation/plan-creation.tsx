@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import {
-    Container,
     Paper,
     Table,
     TableBody,
@@ -11,13 +10,14 @@ import {
 } from '@mui/material';
 import { VerticalTableCell } from 'components/vertical-cell';
 import { TableCourseCell } from './plan-creation-table/table-course-cell';
-import { GroupComponentName, Node, Plan, Semester } from 'types';
+import { GroupComponentName, Node, Plan, Semester, SemesterType } from 'types';
 import { PlanCreationNode } from './plan-creation-node';
 import { DetailsNavigationContainer } from 'components/navigation-container';
 import { BackButton } from 'components/back-button';
 import { useHistory } from 'react-router-dom';
 import { PREFIX } from 'config/constants';
 import { TableSemesterCell } from './plan-creation-table/table-semester.cell';
+import { PlanCreationOverall } from './plan-cretion-overall-component';
 
 interface PropTypes {
     plans: Plan[];
@@ -49,6 +49,17 @@ export const PlanCreation: React.FC<PropTypes> = ({ plans, semesters, nodes }) =
             node?.idSubject?.idUnit?.idGroupComponents?.name === GroupComponentName.HighEduComponent
     );
 
+    const govSemesters = semesters?.filter(
+        (semester) =>
+            semester?.idNode?.idSubject?.idUnit?.idGroupComponents?.name ===
+            GroupComponentName?.GovComponent
+    );
+    const highEduSemesters = semesters?.filter(
+        (semester) =>
+            semester?.idNode?.idSubject?.idUnit?.idGroupComponents?.name ===
+            GroupComponentName?.HighEduComponent
+    );
+
     return (
         <>
             <DetailsNavigationContainer>
@@ -60,14 +71,14 @@ export const PlanCreation: React.FC<PropTypes> = ({ plans, semesters, nodes }) =
                         <TableHead>
                             <TableRow>
                                 <TableCell>№ п/п</TableCell>
-                                <TableCell style={{ width: 250, border: '1px solid red' }}>
+                                <TableCell style={{ width: 250 }}>
                                     Название модуля, учебной дисциплины, курсового проекта(курсовой
                                     работы)
                                 </TableCell>
                                 <VerticalTableCell>Экзамены</VerticalTableCell>
                                 <VerticalTableCell>Зачеты</VerticalTableCell>
                                 <VerticalTableCell>Расчетно графические работы</VerticalTableCell>
-                                <VerticalTableCell>Всего</VerticalTableCell>
+                                <VerticalTableCell>Итого</VerticalTableCell>
                                 <VerticalTableCell>Аудиторные</VerticalTableCell>
                                 <VerticalTableCell>Лекции</VerticalTableCell>
                                 <VerticalTableCell>Лабораторные</VerticalTableCell>
@@ -83,20 +94,32 @@ export const PlanCreation: React.FC<PropTypes> = ({ plans, semesters, nodes }) =
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            <TableRow>
-                                <TableCell>1</TableCell>
-                                <TableCell>{GroupComponentName.GovComponent}</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell>1.1</TableCell>
-                                <TableCell>Модуль Социально гуманитарные дисциплины</TableCell>
-                            </TableRow>
+                            <PlanCreationOverall
+                                number={1}
+                                groupComponent={GroupComponentName.GovComponent}
+                                semesters={govSemesters}
+                            />
                             {govNodes?.map((node) => (
                                 <PlanCreationNode
                                     key={node?.idNode}
                                     node={node}
                                     semesters={semesters}
                                     plans={plans}
+                                    semestersWeeks={semestersWeeks}
+                                />
+                            ))}
+                            <PlanCreationOverall
+                                number={2}
+                                groupComponent={GroupComponentName.HighEduComponent}
+                                semesters={highEduSemesters}
+                            />
+                            {highEduNodes?.map((node) => (
+                                <PlanCreationNode
+                                    key={node?.idNode}
+                                    node={node}
+                                    semesters={semesters}
+                                    plans={plans}
+                                    semestersWeeks={semestersWeeks}
                                 />
                             ))}
                         </TableBody>

@@ -7,12 +7,24 @@ import DoDisturbIcon from '@mui/icons-material/DoDisturb';
 import { useDispatch } from 'react-redux';
 import { updateSemester } from 'store/semester/actions';
 import { Semester } from 'types';
+import { makeStyles } from '@mui/styles';
+import { indigo, lightGreen } from '@mui/material/colors';
 
 interface PropTypes {
     semester: Semester;
 }
 
+const useStyles = makeStyles({
+    cell: {
+        backgroundColor: lightGreen[400],
+    },
+    hoursCell: {
+        backgroundColor: indigo[50],
+    },
+});
+
 export const PlanCreationSemester: React.FC<PropTypes> = ({ semester }) => {
+    const classes = useStyles();
     const dispatch = useDispatch();
     const [semesterData, setSemesterData] = useState(semester);
     const [editMode, setEditMode] = useState(false);
@@ -41,7 +53,6 @@ export const PlanCreationSemester: React.FC<PropTypes> = ({ semester }) => {
     }, [semester]);
 
     const handleUpdateSemester = (e) => {
-        debugger;
         console.log(semesterData);
         setSemesterData({
             ...semesterData,
@@ -83,8 +94,10 @@ export const PlanCreationSemester: React.FC<PropTypes> = ({ semester }) => {
                     <TableCell colSpan={4}>Итог звонки</TableCell>
                 </TableRow>
                 <TableRow>
-                    <TableCell>{totalHours}</TableCell>
-                    <TableCell colSpan={4}>{subTotal}</TableCell>
+                    <TableCell className={classes.cell}>{totalHours}</TableCell>
+                    <TableCell colSpan={4} className={classes.cell}>
+                        {subTotal}
+                    </TableCell>
                 </TableRow>
                 <TableRow>
                     <TableEditCell
@@ -130,7 +143,7 @@ export const PlanCreationSemester: React.FC<PropTypes> = ({ semester }) => {
             </TableCell>
             <TableCell padding="none">
                 <TableRow>
-                    <TableCell>з.е</TableCell>
+                    <TableCell colSpan={3}>з.е</TableCell>
                 </TableRow>
                 <TableRow>
                     <TableEditCell

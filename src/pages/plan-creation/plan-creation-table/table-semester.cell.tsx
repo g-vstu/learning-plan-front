@@ -4,7 +4,7 @@ import React from 'react';
 export const TableSemesterCell: React.FC<any> = ({ semesterWeek }) => {
     return (
         <>
-            <TableCell>{semesterWeek?.semsteerNumber} семестр</TableCell>
+            <TableCell align="center">{semesterWeek?.semsteerNumber} семестр</TableCell>
         </>
     );
 };

@@ -1,13 +1,13 @@
 import { TableCell, TextField, Typography } from '@mui/material';
+import { indigo } from '@mui/material/colors';
 import React from 'react';
 
 export const TableEditCell: React.FC<any> = ({ editMode, value, name, handleUpdateSemester }) => {
     return (
-        <TableCell size="small">
+        <TableCell size="small" style={{ backgroundColor: indigo[100] }}>
             {editMode ? (
                 <TextField
                     name={name}
-                    //type="number"
                     value={value}
                     onChange={(e) => {
                         handleUpdateSemester(e);

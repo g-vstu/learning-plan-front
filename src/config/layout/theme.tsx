@@ -17,7 +17,8 @@ export const theme = createTheme({
         MuiContainer: {
             styleOverrides: {
                 root: {
-                    minWidth: 1500,
+                    minWidth: '90%',
+                    marginTop: 30,
                 },
             },
         },
@@ -32,7 +33,7 @@ export const ThemeProvider: React.FC = ({ children }) => {
     return (
         <MUIThemeProvider theme={themeWithLocale}>
             <CssBaseline />
-            {children}
+            <Container>{children}</Container>
         </MUIThemeProvider>
     );
 };

@@ -9,39 +9,47 @@ import { PlanCreationSemester } from './plan-creation-semester';
 import AddIcon from '@mui/icons-material/Add';
 import { useDispatch } from 'react-redux';
 import { createSemester } from 'store/semester/actions';
+import { useCalculateTotalParams } from 'hooks/useCalculateTotalParams';
+import { useCalculateTotalTests } from 'hooks/useCalculateTests';
+import { makeStyles } from '@mui/styles';
+import { blue, lightGreen, lime } from '@mui/material/colors';
 
 interface PropTypes {
     node: Node;
     semesters: Semester[];
     plans: Plan[];
+    semestersWeeks: any;
 }
 
-export const PlanCreationNode: React.FC<PropTypes> = ({ node, semesters, plans }) => {
+const useStyles = makeStyles({
+    cell: {
+        backgroundColor: lightGreen[400],
+    },
+    mainCell: {
+        backgroundColor: blue[300],
+    },
+});
+
+export const PlanCreationNode: React.FC<PropTypes> = ({
+    node,
+    semesters,
+    plans,
+    semestersWeeks,
+}) => {
+    const classes = useStyles();
     const dispatch = useDispatch();
     const associatedSemesters = semesters
         ?.filter((semester) => semester?.idNode?.idNode === node?.idNode)
         .sort((firstSeminar, secondSeminar) => firstSeminar?.number - secondSeminar?.number);
 
     const associatedPlan = plans?.find((plan) => plan?.id === node?.idPlan?.id);
-
     const maxNumber = associatedSemesters.length;
 
-    const [totalWorks, setTotalWorks] = useState({
-        totalExams: 0,
-        totalTests: 0,
-        totalRgrs: 0,
-    });
+    const { totalExams, totalTests, totalRgrs } = useCalculateTotalTests(associatedSemesters);
+    const { totalClass, totalAuditore, totalPractice, totalLecture, totalLab, totalSeminar } =
+        useCalculateTotalParams(associatedSemesters);
 
-    const [totalCourseHours, setCourseHours] = useState({
-        totalClass: 0,
-        totalAuditore: 0,
-        totalLecture: 0,
-        totalLab: 0,
-        totalPractice: 0,
-        totalSeminar: 0,
-    });
-
-    const hnadleCreateNewSemester = () => {
+    const handleCreateNewSemester = () => {
         const newSemester: Semester = {
             courceWorkHours: 0,
             courceWorkZe: 0,
@@ -59,30 +67,46 @@ export const PlanCreationNode: React.FC<PropTypes> = ({ node, semesters, plans }
         dispatch(createSemester(newSemester, node));
     };
 
+    const addSemestersAmount = semestersWeeks?.length - associatedSemesters?.length;
+    const emptyWeeksSemesers = semestersWeeks?.slice(semestersWeeks?.length - addSemestersAmount);
+
     return (
         <TableRow>
             <TableCell>{node?.nodeNumber}</TableCell>
-            <TableCell>{node?.idSubject?.name}</TableCell>
-            <TableCell>{totalWorks?.totalExams}</TableCell>
-            <TableCell>{totalWorks?.totalTests}</TableCell>
-            <TableCell>{totalWorks?.totalRgrs}</TableCell>
+            <TableCell className={classes.mainCell}>{node?.idSubject?.name}</TableCell>
+            <TableCell className={classes.mainCell}>{totalExams}</TableCell>
+            <TableCell className={classes.mainCell}>{totalTests}</TableCell>
+            <TableCell className={classes.mainCell}>{totalRgrs}</TableCell>
 
-            <TableCell padding="none">{totalCourseHours?.totalClass}</TableCell>
-            <TableCell padding="none">{totalCourseHours?.totalAuditore}</TableCell>
+            <TableCell padding="none" className={classes.cell}>
+                {totalClass}
+            </TableCell>
+            <TableCell padding="none" className={classes.cell}>
+                {totalAuditore}
+            </TableCell>
 
-            <TableCell>{totalCourseHours?.totalLecture}</TableCell>
-            <TableCell>{totalCourseHours?.totalLab}</TableCell>
-            <TableCell>{totalCourseHours?.totalPractice}</TableCell>
-            <TableCell>{totalCourseHours?.totalSeminar}</TableCell>
+            <TableCell className={classes.cell}>{totalLecture}</TableCell>
+            <TableCell className={classes.cell}>{totalLab}</TableCell>
+            <TableCell className={classes.cell}>{totalPractice}</TableCell>
+            <TableCell className={classes.cell}>{totalSeminar}</TableCell>
 
             {associatedSemesters?.map((semester) => (
                 <PlanCreationSemester key={semester?.id} semester={semester} />
             ))}
-            <TableCell>
-                <IconButton onClick={hnadleCreateNewSemester}>
-                    <AddIcon />
-                </IconButton>
-            </TableCell>
+            {emptyWeeksSemesers?.map((week) => {
+                //debugger;
+                console.log(maxNumber);
+                console.log(week?.semsteerNumber);
+                return (
+                    <TableCell key={week?.id}>
+                        {week?.semsteerNumber - 1 === maxNumber ? (
+                            <IconButton onClick={() => handleCreateNewSemester()}>
+                                <AddIcon />
+                            </IconButton>
+                        ) : null}
+                    </TableCell>
+                );
+            })}
         </TableRow>
     );
 };
