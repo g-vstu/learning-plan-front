@@ -94,9 +94,6 @@ export const PlanCreationNode: React.FC<PropTypes> = ({
                 <PlanCreationSemester key={semester?.id} semester={semester} />
             ))}
             {emptyWeeksSemesers?.map((week) => {
-                //debugger;
-                console.log(maxNumber);
-                console.log(week?.semsteerNumber);
                 return (
                     <TableCell key={week?.id}>
                         {week?.semsteerNumber - 1 === maxNumber ? (
