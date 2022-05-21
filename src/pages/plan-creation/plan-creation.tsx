@@ -57,22 +57,29 @@ export const PlanCreation: React.FC<PropTypes> = ({ plans, semesters, nodes }) =
         (subject) =>
             subject?.idUnit?.idGroupComponents?.name === GroupComponentName.OptionalComponent
     );
+    const additionalSubjects = subjects?.filter(
+        (subject) =>
+            subject?.idUnit?.idGroupComponents?.name === GroupComponentName.AdditionalComponent
+    );
 
     const govNodes = nodes.filter((node) => {
         const con =
             node?.idSubject?.idUnit?.idGroupComponents?.name === GroupComponentName.GovComponent;
         return con;
     });
-
     const highEduNodes = nodes.filter(
         (node) =>
             node?.idSubject?.idUnit?.idGroupComponents?.name === GroupComponentName.HighEduComponent
     );
-
     const optionalEduNodes = nodes.filter(
         (node) =>
             node?.idSubject?.idUnit?.idGroupComponents?.name ===
             GroupComponentName.OptionalComponent
+    );
+    const additionalNodes = nodes?.filter(
+        (node) =>
+            node?.idSubject?.idUnit?.idGroupComponents?.name ===
+            GroupComponentName.AdditionalComponent
     );
 
     const govSemesters = semesters?.filter(
@@ -89,6 +96,11 @@ export const PlanCreation: React.FC<PropTypes> = ({ plans, semesters, nodes }) =
         (semester) =>
             semester?.idNode?.idSubject?.idUnit?.idGroupComponents?.name ===
             GroupComponentName?.OptionalComponent
+    );
+    const additionalSemesters = semesters?.filter(
+        (semester) =>
+            semester?.idNode?.idSubject?.idUnit?.idGroupComponents?.name ===
+            GroupComponentName.AdditionalComponent
     );
 
     return (
@@ -132,6 +144,7 @@ export const PlanCreation: React.FC<PropTypes> = ({ plans, semesters, nodes }) =
                                 associatedSubjects={govSubjects}
                                 plans={plans}
                                 semestersWeeks={semestersWeeks}
+                                groupComponent={GroupComponentName.GovComponent}
                             />
 
                             <PlanCreationMain
@@ -141,6 +154,7 @@ export const PlanCreation: React.FC<PropTypes> = ({ plans, semesters, nodes }) =
                                 associatedSubjects={highEduSubjects}
                                 plans={plans}
                                 semestersWeeks={semestersWeeks}
+                                groupComponent={GroupComponentName.HighEduComponent}
                             />
 
                             <PlanCreationMain
@@ -150,6 +164,17 @@ export const PlanCreation: React.FC<PropTypes> = ({ plans, semesters, nodes }) =
                                 associatedSubjects={optionalSubjects}
                                 plans={plans}
                                 semestersWeeks={semestersWeeks}
+                                groupComponent={GroupComponentName.OptionalComponent}
+                            />
+
+                            <PlanCreationMain
+                                associatedNodes={additionalNodes}
+                                associatedSemesters={additionalSemesters}
+                                semesters={semesters}
+                                associatedSubjects={additionalSubjects}
+                                plans={plans}
+                                semestersWeeks={semestersWeeks}
+                                groupComponent={GroupComponentName.AdditionalComponent}
                             />
                         </TableBody>
                     </Table>

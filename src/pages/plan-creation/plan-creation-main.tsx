@@ -11,12 +11,13 @@ export const PlanCreationMain: React.FC<any> = ({
     associatedSubjects,
     semesters,
     plans,
+    groupComponent,
 }) => {
     return (
         <>
             <PlanCreationOverall
                 number={1}
-                groupComponent={GroupComponentName.GovComponent}
+                groupComponent={groupComponent}
                 semesters={associatedSemesters}
             />
             {associatedNodes?.map((node) => (
