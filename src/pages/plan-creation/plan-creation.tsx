@@ -49,6 +49,12 @@ export const PlanCreation: React.FC<PropTypes> = ({ plans, semesters, nodes }) =
             node?.idSubject?.idUnit?.idGroupComponents?.name === GroupComponentName.HighEduComponent
     );
 
+    const optionalEduNodes = nodes.filter(
+        (node) =>
+            node?.idSubject?.idUnit?.idGroupComponents?.name ===
+            GroupComponentName.OptionalComponent
+    );
+
     const govSemesters = semesters?.filter(
         (semester) =>
             semester?.idNode?.idSubject?.idUnit?.idGroupComponents?.name ===
@@ -58,6 +64,11 @@ export const PlanCreation: React.FC<PropTypes> = ({ plans, semesters, nodes }) =
         (semester) =>
             semester?.idNode?.idSubject?.idUnit?.idGroupComponents?.name ===
             GroupComponentName?.HighEduComponent
+    );
+    const optionalEduSemesters = semesters?.filter(
+        (semester) =>
+            semester?.idNode?.idSubject?.idUnit?.idGroupComponents?.name ===
+            GroupComponentName?.OptionalComponent
     );
 
     return (
@@ -114,6 +125,20 @@ export const PlanCreation: React.FC<PropTypes> = ({ plans, semesters, nodes }) =
                                 semesters={highEduSemesters}
                             />
                             {highEduNodes?.map((node) => (
+                                <PlanCreationNode
+                                    key={node?.idNode}
+                                    node={node}
+                                    semesters={semesters}
+                                    plans={plans}
+                                    semestersWeeks={semestersWeeks}
+                                />
+                            ))}
+                            <PlanCreationOverall
+                                number={3}
+                                groupComponent={GroupComponentName.OptionalComponent}
+                                semesters={optionalEduSemesters}
+                            />
+                            {optionalEduNodes?.map((node) => (
                                 <PlanCreationNode
                                     key={node?.idNode}
                                     node={node}
