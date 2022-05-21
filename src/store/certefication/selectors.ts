@@ -4,7 +4,7 @@ import { Certefication } from 'types';
 
 const getCertefications = (state: ApplicationState): Certefication[] =>
     state.certefication.certefications;
-export const selectSubjects = createSelector(
+export const selectCertefications = createSelector(
     [getCertefications],
     (certefications) => certefications
 );

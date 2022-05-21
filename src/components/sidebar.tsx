@@ -7,6 +7,7 @@ import ListItemText from '@mui/material/ListItemText';
 import { PREFIX } from 'config/constants';
 import FolderSpecialIcon from '@mui/icons-material/FolderSpecial';
 import { Typography } from '@mui/material';
+import SubjectIcon from '@mui/icons-material/Subject';
 
 export const SideBar = (props) => {
     return (
@@ -18,6 +19,10 @@ export const SideBar = (props) => {
             >
                 <FolderSpecialIcon />
                 <Typography style={{ marginLeft: 5 }}>Specialities</Typography>
+            </ListItemButton>
+            <ListItemButton component={Link} to={`/${PREFIX}/subjects`} style={{ display: 'flex' }}>
+                <SubjectIcon />
+                <Typography style={{ marginLeft: 5 }}>Subjects</Typography>
             </ListItemButton>
         </Menu>
     );

@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import {
+    MenuItem,
     Paper,
+    Select,
     Table,
     TableBody,
     TableCell,
@@ -18,6 +20,9 @@ import { useHistory } from 'react-router-dom';
 import { PREFIX } from 'config/constants';
 import { TableSemesterCell } from './plan-creation-table/table-semester.cell';
 import { PlanCreationOverall } from './plan-cretion-overall-component';
+import { useSelector } from 'react-redux';
+import { selectSubjects } from 'store/subject/selectors';
+import { PlanCreationMain } from './plan-creation-main';
 
 interface PropTypes {
     plans: Plan[];
@@ -38,6 +43,21 @@ const semestersWeeks = [
 
 export const PlanCreation: React.FC<PropTypes> = ({ plans, semesters, nodes }) => {
     const history = useHistory();
+
+    const subjects = useSelector(selectSubjects);
+
+    const govSubjects = subjects?.filter(
+        (subject) => subject?.idUnit?.idGroupComponents?.name === GroupComponentName.GovComponent
+    );
+    const highEduSubjects = subjects?.filter(
+        (subject) =>
+            subject?.idUnit?.idGroupComponents?.name === GroupComponentName.HighEduComponent
+    );
+    const optionalSubjects = subjects?.filter(
+        (subject) =>
+            subject?.idUnit?.idGroupComponents?.name === GroupComponentName.OptionalComponent
+    );
+
     const govNodes = nodes.filter((node) => {
         const con =
             node?.idSubject?.idUnit?.idGroupComponents?.name === GroupComponentName.GovComponent;
@@ -105,48 +125,32 @@ export const PlanCreation: React.FC<PropTypes> = ({ plans, semesters, nodes }) =
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            <PlanCreationOverall
-                                number={1}
-                                groupComponent={GroupComponentName.GovComponent}
-                                semesters={govSemesters}
+                            <PlanCreationMain
+                                associatedNodes={govNodes}
+                                associatedSemesters={govSemesters}
+                                semesters={semesters}
+                                associatedSubjects={govSubjects}
+                                plans={plans}
+                                semestersWeeks={semestersWeeks}
                             />
-                            {govNodes?.map((node) => (
-                                <PlanCreationNode
-                                    key={node?.idNode}
-                                    node={node}
-                                    semesters={semesters}
-                                    plans={plans}
-                                    semestersWeeks={semestersWeeks}
-                                />
-                            ))}
-                            <PlanCreationOverall
-                                number={2}
-                                groupComponent={GroupComponentName.HighEduComponent}
-                                semesters={highEduSemesters}
+
+                            <PlanCreationMain
+                                associatedNodes={highEduNodes}
+                                associatedSemesters={highEduSemesters}
+                                semesters={semesters}
+                                associatedSubjects={highEduSubjects}
+                                plans={plans}
+                                semestersWeeks={semestersWeeks}
                             />
-                            {highEduNodes?.map((node) => (
-                                <PlanCreationNode
-                                    key={node?.idNode}
-                                    node={node}
-                                    semesters={semesters}
-                                    plans={plans}
-                                    semestersWeeks={semestersWeeks}
-                                />
-                            ))}
-                            <PlanCreationOverall
-                                number={3}
-                                groupComponent={GroupComponentName.OptionalComponent}
-                                semesters={optionalEduSemesters}
+
+                            <PlanCreationMain
+                                associatedNodes={optionalEduNodes}
+                                associatedSemesters={optionalEduSemesters}
+                                semesters={semesters}
+                                associatedSubjects={optionalSubjects}
+                                plans={plans}
+                                semestersWeeks={semestersWeeks}
                             />
-                            {optionalEduNodes?.map((node) => (
-                                <PlanCreationNode
-                                    key={node?.idNode}
-                                    node={node}
-                                    semesters={semesters}
-                                    plans={plans}
-                                    semestersWeeks={semestersWeeks}
-                                />
-                            ))}
                         </TableBody>
                     </Table>
                 </TableContainer>

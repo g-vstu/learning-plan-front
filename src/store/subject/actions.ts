@@ -1,8 +1,8 @@
 import { ThunkAction } from 'redux-thunk';
 import { Action, Dispatch } from 'redux';
 import { RootState } from 'store';
-import { GET_SUBJECTS } from './types';
-import { fetchSubjects } from './services';
+import { ADD_SUBJECT, GET_SUBJECTS } from './types';
+import { addSubjectRequest, fetchSubjects } from './services';
 import { Subject } from 'types';
 
 export const getSubjects = (): ThunkAction<Promise<void>, RootState, null, Action> => {
@@ -17,6 +17,27 @@ export const getSubjects = (): ThunkAction<Promise<void>, RootState, null, Actio
         } catch (error) {
             dispatch({
                 type: GET_SUBJECTS.failure,
+                payload: { error },
+            });
+        }
+    };
+};
+
+export const addSubject = (
+    subject,
+    groupUnitId
+): ThunkAction<Promise<void>, RootState, null, Action> => {
+    return async (dispatch: Dispatch) => {
+        dispatch({ type: ADD_SUBJECT.start });
+        try {
+            const newSubject: Subject = await addSubjectRequest(subject, groupUnitId);
+            dispatch({
+                type: ADD_SUBJECT.success,
+                payload: { subject: newSubject },
+            });
+        } catch (error) {
+            dispatch({
+                type: ADD_SUBJECT.failure,
                 payload: { error },
             });
         }

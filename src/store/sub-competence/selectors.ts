@@ -4,7 +4,7 @@ import { SubCompetence, Subject } from 'types';
 
 const getSubCompetencies = (state: ApplicationState): SubCompetence[] =>
     state.subCompetence.subCompetencies;
-export const selectSubjects = createSelector(
+export const selectSubCompetencies = createSelector(
     [getSubCompetencies],
     (subCompetencies) => subCompetencies
 );

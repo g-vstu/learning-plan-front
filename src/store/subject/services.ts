@@ -5,3 +5,11 @@ export const fetchSubjects = async () => {
     const { data: subjects } = await instance.get(`${DEVELOPMENT}/subject`);
     return subjects;
 };
+
+export const addSubjectRequest = async (subject, groupUnitId) => {
+    const { data: newSubject } = await instance.post(
+        `${DEVELOPMENT}/subject?unitId=${groupUnitId}`,
+        subject
+    );
+    return newSubject;
+};

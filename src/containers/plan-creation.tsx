@@ -9,6 +9,8 @@ import { selectNodes, selectNodesLoading } from 'store/node/selectors';
 import { selectSemesters, selectSemestersLoading } from 'store/semester/selectors';
 import { Loader } from 'components/loader';
 import { PlanCreation } from 'pages/plan-creation/plan-creation';
+import { getSubjects } from 'store/subject/actions';
+import { selectSubjectsLoading } from 'store/subject/selectors';
 
 export const PlanCreationContanier: React.FC<{ match: match<any> }> = ({ match }) => {
     const dispatch = useDispatch();
@@ -18,12 +20,13 @@ export const PlanCreationContanier: React.FC<{ match: match<any> }> = ({ match }
     const isPlansLoading = useSelector(selectPlansLoading);
     const isNodesLoading = useSelector(selectNodesLoading);
     const isSemestersLoading = useSelector(selectSemestersLoading);
+    const isSubjectsLoading = useSelector(selectSubjectsLoading);
 
     useEffect(() => {
-        if (!isPlansLoading && !isNodesLoading && !isSemestersLoading) {
+        if (!isPlansLoading && !isNodesLoading && !isSemestersLoading && !isSubjectsLoading) {
             setIsLoading(false);
         }
-    }, [isPlansLoading, isNodesLoading, isSemestersLoading]);
+    }, [isPlansLoading, isNodesLoading, isSemestersLoading, isSubjectsLoading]);
 
     const nodes = useSelector(selectNodes);
     const plans = useSelector(selectPlans);
@@ -31,6 +34,7 @@ export const PlanCreationContanier: React.FC<{ match: match<any> }> = ({ match }
 
     useEffect(() => {
         dispatch(getGlobalPlan(+match?.params?.id));
+        dispatch(getSubjects());
     }, [dispatch, match?.params?.id]);
 
     return (

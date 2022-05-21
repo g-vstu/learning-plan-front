@@ -1,21 +1,25 @@
 import React, { useRef, useState } from 'react';
-import { Button, Table, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
-import { defaultColDef, defaultSize, defaultTheme, PREFIX } from 'config/constants';
-import { AgGridReact } from '@ag-grid-community/react';
-import { Speciality } from 'types';
 import { useHistory } from 'react-router-dom';
 import { useAgGridModules } from 'hooks/useAgGridModules';
+import { defaultColDef, defaultSize, defaultTheme, PREFIX } from 'config/constants';
+import { AgGridReact } from '@ag-grid-community/react';
+import { GroupUnit, Subject } from 'types';
+import { Button } from '@mui/material';
 import { OverviewHeader } from 'components/overview-header';
 import { OverviewTitle } from 'components/overview-title';
+import { AddSubjectDialog } from './add-subject-dialog';
 
 interface PropTypes {
-    specialities: Speciality[];
+    subjects: Subject[];
+    groupUnits: GroupUnit[];
 }
 
-export const Specialities: React.FC<PropTypes> = ({ specialities }) => {
+export const Subjects: React.FC<PropTypes> = ({ subjects, groupUnits }) => {
     const history = useHistory();
     const { modules } = useAgGridModules();
     const gridRef = useRef();
+
+    const [open, setOpen] = useState(false);
 
     const [gridApi, setGridApi] = useState(null);
     const [gridColumnApi, setGridColumnApi] = useState(null);
@@ -25,7 +29,7 @@ export const Specialities: React.FC<PropTypes> = ({ specialities }) => {
         setGridColumnApi(params.columnApi);
     };
 
-    const specialititesColumns = [
+    const subjectsColumns = [
         {
             field: 'shifr',
             width: 140,
@@ -34,24 +38,39 @@ export const Specialities: React.FC<PropTypes> = ({ specialities }) => {
             field: 'name',
             width: 140,
         },
+        {
+            field: 'idUnit.name',
+            width: 140,
+            headerName: 'Unit',
+        },
+        {
+            field: 'idUnit.idGroupComponents.name',
+            width: 140,
+            headerName: 'Component',
+        },
     ];
 
     return (
         <>
+            <AddSubjectDialog open={open} setOpen={setOpen} groupUnits={groupUnits} />
             <OverviewHeader>
-                <OverviewTitle>Specialities</OverviewTitle>
-                <Button variant="contained" style={{ borderRadius: 10 }}>
-                    Add speciality
+                <OverviewTitle>Subjects</OverviewTitle>
+                <Button
+                    variant="contained"
+                    onClick={() => setOpen(true)}
+                    style={{ borderRadius: 10 }}
+                >
+                    Add subject
                 </Button>
             </OverviewHeader>
+
             <div style={defaultSize} className={defaultTheme}>
                 <AgGridReact
                     ref={gridRef}
                     modules={modules}
-                    onCellClicked={(e) => history.push(`/${PREFIX}/plan-creation/${e.data?.id}`)}
-                    rowData={specialities}
+                    rowData={subjects}
                     enableRangeSelection={true}
-                    columnDefs={specialititesColumns}
+                    columnDefs={subjectsColumns}
                     defaultColDef={defaultColDef}
                     onGridReady={onGridReady}
                     cacheQuickFilter={true}
