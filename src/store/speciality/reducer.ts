@@ -1,6 +1,6 @@
 import { Reducer } from 'redux';
 import { SpecialityState } from 'types';
-import { GET_SPECIALITIES } from './types';
+import { CREATE_SPECIALITY, GET_SPECIALITIES, SET_CURRENT_SPECIALITY } from './types';
 
 const initialState: SpecialityState = {
     specialities: [],
@@ -20,6 +20,12 @@ const specialityReducer: Reducer<SpecialityState> = (
             return onGetSpecialitiesSuccess(state, action.payload);
         case GET_SPECIALITIES.failure:
             return onGetSpecialitiesFailure(state, action.payload);
+
+        case SET_CURRENT_SPECIALITY.success:
+            return onSetCurrenySpeciality(state, action.payload);
+
+        case CREATE_SPECIALITY.success:
+            return onCreateSpecialitySuccess(state, action.payload);
 
         default:
             return state;
@@ -43,6 +49,16 @@ const onGetSpecialitiesFailure = (state: SpecialityState, payload): SpecialitySt
     ...state,
     loading: false,
     error: payload.error,
+});
+
+const onSetCurrenySpeciality = (state: SpecialityState, payload): SpecialityState => ({
+    ...state,
+    currentSpeciality: payload.speciality,
+});
+
+const onCreateSpecialitySuccess = (state: SpecialityState, payload): SpecialityState => ({
+    ...state,
+    specialities: [...state.specialities, payload.newSpeciality],
 });
 
 export default specialityReducer;

@@ -5,11 +5,12 @@ import { useCalculateTotalParams } from 'hooks/useCalculateTotalParams';
 import { GroupComponentName, Semester } from 'types';
 import { makeStyles } from '@mui/styles';
 import { lightGreen, lime } from '@mui/material/colors';
+import { useSelector } from 'react-redux';
+import { selectGroupComponents } from 'store/group-component/selectors';
 
 interface PropTypes {
     groupComponent: GroupComponentName;
     semesters: Semester[];
-    number: number;
 }
 
 const useStyles = makeStyles({
@@ -18,8 +19,13 @@ const useStyles = makeStyles({
     },
 });
 
-export const PlanCreationOverall: React.FC<PropTypes> = ({ groupComponent, semesters, number }) => {
+export const PlanCreationOverall: React.FC<PropTypes> = ({ groupComponent, semesters }) => {
     const classes = useStyles();
+    const groupComponents = useSelector(selectGroupComponents);
+    const associatedComponent = groupComponents.find(
+        (component) => component?.name === groupComponent
+    );
+
     const { totalExams, totalTests, totalRgrs } = useCalculateTotalTests(semesters);
 
     const { totalClass, totalAuditore, totalPractice, totalLecture, totalLab, totalSeminar } =
@@ -27,7 +33,7 @@ export const PlanCreationOverall: React.FC<PropTypes> = ({ groupComponent, semes
 
     return (
         <TableRow>
-            <TableCell>{number}</TableCell>
+            <TableCell>{associatedComponent?.componentNumber}</TableCell>
             <TableCell>{groupComponent}</TableCell>
             <TableCell>{totalExams}</TableCell>
             <TableCell>{totalTests}</TableCell>

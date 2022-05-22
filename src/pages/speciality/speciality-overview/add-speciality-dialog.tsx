@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
     Button,
     Container,
@@ -13,30 +13,25 @@ import {
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { useDispatch } from 'react-redux';
-import { addSubject } from 'store/subject/actions';
 import { FieldContainer } from 'components/field-container';
+import { createSpeciality } from 'store/speciality/actions';
 
-export const AddSubjectDialog: React.FC<any> = ({ open, setOpen, groupUnits }) => {
+export const AddSpecialityDialog: React.FC<any> = ({ open, setOpen, groupUnits }) => {
     const dispatch = useDispatch();
-    const [newSubject, setNewSubject] = useState({
+    const [newSpeciality, setNewSpeciality] = useState({
         name: '',
         shifr: '',
     });
-    const [unit, setUnit] = useState(null);
 
     const handleChange = (e) => {
-        setNewSubject({
-            ...newSubject,
+        setNewSpeciality({
+            ...newSpeciality,
             [e.target.name]: e.target.value,
         });
     };
 
-    const handleChangeType = (e) => {
-        setUnit(e.target.value as any);
-    };
-
-    const handleAddSubject = () => {
-        dispatch(addSubject(newSubject, unit));
+    const handleAddSpeciality = () => {
+        dispatch(createSpeciality(newSpeciality));
         setOpen(false);
     };
 
@@ -58,7 +53,7 @@ export const AddSubjectDialog: React.FC<any> = ({ open, setOpen, groupUnits }) =
                                     <Grid container>
                                         <Grid item xs={9}>
                                             <Typography fontWeight={700} variant="h5">
-                                                Add subject from
+                                                Add speciality
                                             </Typography>
                                         </Grid>
                                         <Grid item xs={3}>
@@ -79,7 +74,7 @@ export const AddSubjectDialog: React.FC<any> = ({ open, setOpen, groupUnits }) =
                                     <Typography>Name</Typography>
                                     <TextField
                                         name="name"
-                                        value={newSubject.name}
+                                        value={newSpeciality.name}
                                         onChange={handleChange}
                                         fullWidth
                                         size="small"
@@ -89,31 +84,16 @@ export const AddSubjectDialog: React.FC<any> = ({ open, setOpen, groupUnits }) =
                                     <Typography>Shifr</Typography>
                                     <TextField
                                         name="shifr"
-                                        value={newSubject.shifr}
+                                        value={newSpeciality.shifr}
                                         onChange={handleChange}
                                         fullWidth
                                         size="small"
                                     />
                                 </FieldContainer>
-                                <FieldContainer>
-                                    <Typography>Select group unit</Typography>
-                                    <Select
-                                        fullWidth
-                                        size="small"
-                                        value={unit?.id}
-                                        onChange={handleChangeType}
-                                    >
-                                        {groupUnits?.map((groupUnit) => (
-                                            <MenuItem key={groupUnit?.id} value={groupUnit?.id}>
-                                                {groupUnit?.name}
-                                            </MenuItem>
-                                        ))}
-                                    </Select>
-                                </FieldContainer>
                             </div>
                             <div style={{ marginTop: 30 }}>
-                                <Button fullWidth onClick={handleAddSubject} variant="contained">
-                                    Add Subject
+                                <Button fullWidth onClick={handleAddSpeciality} variant="contained">
+                                    Add Speciality
                                 </Button>
                             </div>
                         </div>

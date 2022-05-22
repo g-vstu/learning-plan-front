@@ -9,6 +9,8 @@ import { fetchGroupComponents } from 'store/group-component/services';
 import { fetchSemesters } from 'store/semester/services';
 import { GET_NODES } from 'store/node/types';
 import { GET_SEMESTERS } from 'store/semester/types';
+import { fetchSpeciality } from 'store/speciality/services';
+import { SET_CURRENT_SPECIALITY } from 'store/speciality/types';
 
 export const getPlans = (): ThunkAction<Promise<void>, RootState, null, Action> => {
     return async (dispatch: Dispatch) => {
@@ -34,6 +36,8 @@ export const getGlobalPlan = (
     return async (dispatch: Dispatch) => {
         dispatch({ type: GET_PLANS.start });
         try {
+            const speciality = await fetchSpeciality(specialityId);
+
             const plans: Plan[] = await fetchPlans();
             const plansWithAssociatedSpeciality = plans.filter(
                 (plan) => plan?.idSpeciality?.id === specialityId
@@ -56,7 +60,6 @@ export const getGlobalPlan = (
                     }).length !== 0
                 );
             });
-
             dispatch({
                 type: GET_PLANS.success,
                 payload: { plans: plansWithAssociatedSpeciality },
@@ -68,6 +71,10 @@ export const getGlobalPlan = (
             dispatch({
                 type: GET_SEMESTERS.success,
                 payload: { semesters: associatedSemesters },
+            });
+            dispatch({
+                type: SET_CURRENT_SPECIALITY.success,
+                payload: { speciality },
             });
         } catch (error) {
             dispatch({

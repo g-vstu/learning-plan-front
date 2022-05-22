@@ -7,6 +7,7 @@ import { useHistory } from 'react-router-dom';
 import { useAgGridModules } from 'hooks/useAgGridModules';
 import { OverviewHeader } from 'components/overview-header';
 import { OverviewTitle } from 'components/overview-title';
+import { AddSpecialityDialog } from './add-speciality-dialog';
 
 interface PropTypes {
     specialities: Speciality[];
@@ -16,6 +17,8 @@ export const Specialities: React.FC<PropTypes> = ({ specialities }) => {
     const history = useHistory();
     const { modules } = useAgGridModules();
     const gridRef = useRef();
+
+    const [open, setOpen] = useState(false);
 
     const [gridApi, setGridApi] = useState(null);
     const [gridColumnApi, setGridColumnApi] = useState(null);
@@ -38,9 +41,10 @@ export const Specialities: React.FC<PropTypes> = ({ specialities }) => {
 
     return (
         <>
+            <AddSpecialityDialog open={open} setOpen={setOpen} />
             <OverviewHeader>
                 <OverviewTitle>Specialities</OverviewTitle>
-                <Button variant="contained" style={{ borderRadius: 10 }}>
+                <Button variant="contained" onClick={() => setOpen(true)}>
                     Add speciality
                 </Button>
             </OverviewHeader>

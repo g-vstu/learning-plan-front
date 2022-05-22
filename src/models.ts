@@ -1,4 +1,5 @@
 import App from 'App';
+import { GroupUnitsList } from 'containers/group-unit-list';
 import { PlanCreationContanier } from 'containers/plan-creation';
 import { SpecialitiesListContainer } from 'containers/speaciality-list';
 import { SubjectList } from 'containers/subject-list';
@@ -18,5 +19,10 @@ export const getRoutes = (PREFIX: string) => [
         path: `/${PREFIX}/subjects`,
         exact: true,
         component: SubjectList,
+    },
+    {
+        path: `/${PREFIX}/units`,
+        exact: true,
+        component: GroupUnitsList,
     },
 ];

@@ -1,21 +1,18 @@
 import React, { useRef, useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import { useAgGridModules } from 'hooks/useAgGridModules';
+import { Button } from '@mui/material';
 import { defaultColDef, defaultSize, defaultTheme, PREFIX } from 'config/constants';
 import { AgGridReact } from '@ag-grid-community/react';
-import { GroupUnit, Subject } from 'types';
-import { Button } from '@mui/material';
+import { GroupUnit } from 'types';
+import { useAgGridModules } from 'hooks/useAgGridModules';
 import { OverviewHeader } from 'components/overview-header';
 import { OverviewTitle } from 'components/overview-title';
-import { AddSubjectDialog } from './add-subject-dialog';
+import { AddGroupUnitDialog } from './add-group-unit-dialog';
 
 interface PropTypes {
-    subjects: Subject[];
     groupUnits: GroupUnit[];
 }
 
-export const Subjects: React.FC<PropTypes> = ({ subjects, groupUnits }) => {
-    const history = useHistory();
+export const GroupUnits: React.FC<PropTypes> = ({ groupUnits }) => {
     const { modules } = useAgGridModules();
     const gridRef = useRef();
 
@@ -29,22 +26,17 @@ export const Subjects: React.FC<PropTypes> = ({ subjects, groupUnits }) => {
         setGridColumnApi(params.columnApi);
     };
 
-    const subjectsColumns = [
-        {
-            field: 'shifr',
-            width: 140,
-        },
+    const specialititesColumns = [
         {
             field: 'name',
             width: 140,
         },
         {
-            field: 'idUnit.name',
+            field: 'unitNumber',
             width: 140,
-            headerName: 'Unit',
         },
         {
-            field: 'idUnit.idGroupComponents.name',
+            field: 'idGroupComponents.name',
             width: 140,
             headerName: 'Component',
         },
@@ -52,21 +44,20 @@ export const Subjects: React.FC<PropTypes> = ({ subjects, groupUnits }) => {
 
     return (
         <>
-            <AddSubjectDialog open={open} setOpen={setOpen} groupUnits={groupUnits} />
+            <AddGroupUnitDialog open={open} setOpen={setOpen} />
             <OverviewHeader>
-                <OverviewTitle>Subjects</OverviewTitle>
+                <OverviewTitle>Group Units</OverviewTitle>
                 <Button variant="contained" onClick={() => setOpen(true)}>
-                    Add subject
+                    Add group unit
                 </Button>
             </OverviewHeader>
-
             <div style={defaultSize} className={defaultTheme}>
                 <AgGridReact
                     ref={gridRef}
                     modules={modules}
-                    rowData={subjects}
+                    rowData={groupUnits}
                     enableRangeSelection={true}
-                    columnDefs={subjectsColumns}
+                    columnDefs={specialititesColumns}
                     defaultColDef={defaultColDef}
                     onGridReady={onGridReady}
                     cacheQuickFilter={true}

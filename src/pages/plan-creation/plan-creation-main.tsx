@@ -1,4 +1,4 @@
-import { MenuItem, Select, TableCell, TableRow } from '@mui/material';
+import { TableCell, TableRow } from '@mui/material';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { selectGroupUnits } from 'store/group-unit/selectors';
@@ -31,11 +31,7 @@ export const PlanCreationMain: React.FC<PropTypes> = ({
     );
     return (
         <>
-            <PlanCreationOverall
-                number={1}
-                groupComponent={groupComponent}
-                semesters={associatedSemesters}
-            />
+            <PlanCreationOverall groupComponent={groupComponent} semesters={associatedSemesters} />
             {associateUnits?.map((unit) => {
                 const unitNodes = associatedNodes?.filter(
                     (node) => node?.idSubject?.idUnit?.id === unit?.id
@@ -43,7 +39,7 @@ export const PlanCreationMain: React.FC<PropTypes> = ({
                 return (
                     <>
                         <TableRow>
-                            <TableCell></TableCell>
+                            <TableCell>{unit?.unitNumber}</TableCell>
                             <TableCell>{unit?.name}</TableCell>
                         </TableRow>
                         {unitNodes?.map((node) => (
@@ -55,41 +51,9 @@ export const PlanCreationMain: React.FC<PropTypes> = ({
                                 semestersWeeks={semestersWeeks}
                             />
                         ))}
-                        {/*(<PlanCreationNode
-                            node={node}
-                            semesters={semesters}
-                            plans={plans}
-                            semestersWeeks={semestersWeeks}
-                        />*/}
                     </>
                 );
             })}
-            {/*associatedNodes?.map((node) => (
-                <PlanCreationNode
-                    key={node?.idNode}
-                    node={node}
-                    semesters={semesters}
-                    plans={plans}
-                    semestersWeeks={semestersWeeks}
-                />
-            ))*/}
-            <TableRow>
-                <TableCell></TableCell>
-                <TableCell>
-                    <Select
-                        fullWidth
-                        size="small"
-                        //value={}
-                        //onChange={handleChangeType}
-                    >
-                        {associatedSubjects?.map((subject) => (
-                            <MenuItem key={subject?.id} value={subject?.id}>
-                                {subject?.name}
-                            </MenuItem>
-                        ))}
-                    </Select>
-                </TableCell>
-            </TableRow>
         </>
     );
 };

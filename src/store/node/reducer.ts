@@ -1,6 +1,6 @@
 import { Reducer } from 'redux';
 import { NodeState } from 'types/node';
-import { GET_NODES } from './types';
+import { CREATE_NODE, GET_NODES } from './types';
 
 const initialState: NodeState = {
     nodes: [],
@@ -17,6 +17,9 @@ const nodeReducer: Reducer<NodeState> = (state: NodeState = initialState, action
             return onGetNodesSuccess(state, action.payload);
         case GET_NODES.failure:
             return onGetNodesFailure(state, action.payload);
+
+        case CREATE_NODE.success:
+            return onCreateNodeSuccess(state, action.payload);
 
         default:
             return state;
@@ -41,5 +44,12 @@ const onGetNodesFailure = (state: NodeState, payload): NodeState => ({
     loading: false,
     error: payload.error,
 });
+
+const onCreateNodeSuccess = (state: NodeState, payload): NodeState => {
+    return {
+        ...state,
+        nodes: [...state.nodes, payload.newNode],
+    };
+};
 
 export default nodeReducer;

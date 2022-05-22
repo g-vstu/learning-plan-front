@@ -8,3 +8,9 @@ export const selectSubCompetencies = createSelector(
     [getSubCompetencies],
     (subCompetencies) => subCompetencies
 );
+
+const getSubCompetenciesLoading = (state: ApplicationState): boolean => state.subCompetence.loading;
+export const selectSubCompetenciesLoading = createSelector(
+    [getSubCompetenciesLoading],
+    (loading) => loading
+);

@@ -45,7 +45,8 @@ export const PlanCreationNode: React.FC<PropTypes> = ({
     const associatedPlan = plans?.find((plan) => plan?.id === node?.idPlan?.id);
     const maxNumber = associatedSemesters.length;
 
-    const { totalExams, totalTests, totalRgrs } = useCalculateTotalTests(associatedSemesters);
+    const { totalExams, totalTests, totalRgrs, totalZe } =
+        useCalculateTotalTests(associatedSemesters);
     const { totalClass, totalAuditore, totalPractice, totalLecture, totalLab, totalSeminar } =
         useCalculateTotalParams(associatedSemesters);
 
@@ -72,30 +73,44 @@ export const PlanCreationNode: React.FC<PropTypes> = ({
 
     return (
         <TableRow>
-            <TableCell>{node?.nodeNumber}</TableCell>
-            <TableCell className={classes.mainCell}>{node?.idSubject?.name}</TableCell>
-            <TableCell className={classes.mainCell}>{totalExams}</TableCell>
-            <TableCell className={classes.mainCell}>{totalTests}</TableCell>
+            <TableCell align="center">{node?.nodeNumber}</TableCell>
+            <TableCell align="center" className={classes.mainCell}>
+                {node?.idSubject?.name}
+            </TableCell>
+            <TableCell align="center" className={classes.mainCell}>
+                {totalExams}
+            </TableCell>
+            <TableCell align="center" className={classes.mainCell}>
+                {totalTests}
+            </TableCell>
             <TableCell className={classes.mainCell}>{totalRgrs}</TableCell>
 
-            <TableCell padding="none" className={classes.cell}>
+            <TableCell align="center" padding="none" className={classes.cell}>
                 {totalClass}
             </TableCell>
-            <TableCell padding="none" className={classes.cell}>
+            <TableCell align="center" padding="none" className={classes.cell}>
                 {totalAuditore}
             </TableCell>
 
-            <TableCell className={classes.cell}>{totalLecture}</TableCell>
-            <TableCell className={classes.cell}>{totalLab}</TableCell>
-            <TableCell className={classes.cell}>{totalPractice}</TableCell>
-            <TableCell className={classes.cell}>{totalSeminar}</TableCell>
+            <TableCell align="center" className={classes.cell}>
+                {totalLecture}
+            </TableCell>
+            <TableCell align="center" className={classes.cell}>
+                {totalLab}
+            </TableCell>
+            <TableCell align="center" className={classes.cell}>
+                {totalPractice}
+            </TableCell>
+            <TableCell align="center" className={classes.cell}>
+                {totalSeminar}
+            </TableCell>
 
             {associatedSemesters?.map((semester) => (
                 <PlanCreationSemester key={semester?.id} semester={semester} />
             ))}
             {emptyWeeksSemesers?.map((week) => {
                 return (
-                    <TableCell key={week?.id}>
+                    <TableCell align="center" key={week?.id}>
                         {week?.semsteerNumber - 1 === maxNumber ? (
                             <IconButton onClick={() => handleCreateNewSemester()}>
                                 <AddIcon />
@@ -104,6 +119,9 @@ export const PlanCreationNode: React.FC<PropTypes> = ({
                     </TableCell>
                 );
             })}
+            <TableCell className={classes.cell} align="center">
+                {totalZe}
+            </TableCell>
         </TableRow>
     );
 };

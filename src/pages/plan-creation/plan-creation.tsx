@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import {
-    MenuItem,
+    Button,
+    Divider,
     Paper,
-    Select,
     Table,
     TableBody,
     TableCell,
@@ -11,18 +11,17 @@ import {
     TableRow,
 } from '@mui/material';
 import { VerticalTableCell } from 'components/vertical-cell';
-import { TableCourseCell } from './plan-creation-table/table-course-cell';
-import { GroupComponentName, Node, Plan, Semester, SemesterType } from 'types';
-import { PlanCreationNode } from './plan-creation-node';
+import { GroupComponentName, Node, Plan, Semester } from 'types';
 import { DetailsNavigationContainer } from 'components/navigation-container';
 import { BackButton } from 'components/back-button';
 import { useHistory } from 'react-router-dom';
 import { PREFIX } from 'config/constants';
 import { TableSemesterCell } from './plan-creation-table/table-semester.cell';
-import { PlanCreationOverall } from './plan-cretion-overall-component';
 import { useSelector } from 'react-redux';
 import { selectSubjects } from 'store/subject/selectors';
 import { PlanCreationMain } from './plan-creation-main';
+import { AddPlanDialog } from './plan-creation-add-subject/add-plan-subject';
+import { AddGroupUnitDialog } from 'pages/group-unit/add-group-unit-dialog';
 
 interface PropTypes {
     plans: Plan[];
@@ -43,6 +42,8 @@ const semestersWeeks = [
 
 export const PlanCreation: React.FC<PropTypes> = ({ plans, semesters, nodes }) => {
     const history = useHistory();
+    const [open, setOpen] = useState(false);
+    const [openUnitDialog, setOpenUnitDialog] = useState(false);
 
     const subjects = useSelector(selectSubjects);
 
@@ -62,16 +63,16 @@ export const PlanCreation: React.FC<PropTypes> = ({ plans, semesters, nodes }) =
             subject?.idUnit?.idGroupComponents?.name === GroupComponentName.AdditionalComponent
     );
 
-    const govNodes = nodes.filter((node) => {
+    const govNodes = nodes?.filter((node) => {
         const con =
             node?.idSubject?.idUnit?.idGroupComponents?.name === GroupComponentName.GovComponent;
         return con;
     });
-    const highEduNodes = nodes.filter(
+    const highEduNodes = nodes?.filter(
         (node) =>
             node?.idSubject?.idUnit?.idGroupComponents?.name === GroupComponentName.HighEduComponent
     );
-    const optionalEduNodes = nodes.filter(
+    const optionalEduNodes = nodes?.filter(
         (node) =>
             node?.idSubject?.idUnit?.idGroupComponents?.name ===
             GroupComponentName.OptionalComponent
@@ -105,8 +106,22 @@ export const PlanCreation: React.FC<PropTypes> = ({ plans, semesters, nodes }) =
 
     return (
         <>
+            <AddGroupUnitDialog open={openUnitDialog} setOpen={setOpenUnitDialog} />
+            <AddPlanDialog open={open} setOpen={setOpen} nodes={nodes} />
             <DetailsNavigationContainer>
                 <BackButton onClick={() => history.push(`/${PREFIX}/specialities`)} />
+                <div>
+                    <Button
+                        variant="contained"
+                        style={{ marginRight: 10 }}
+                        onClick={() => setOpenUnitDialog(true)}
+                    >
+                        Add group unit
+                    </Button>
+                    <Button variant="contained" onClick={() => setOpen(true)}>
+                        Add subject
+                    </Button>
+                </div>
             </DetailsNavigationContainer>
             <Paper style={{ overflow: 'auto' }}>
                 <TableContainer>
@@ -146,7 +161,7 @@ export const PlanCreation: React.FC<PropTypes> = ({ plans, semesters, nodes }) =
                                 semestersWeeks={semestersWeeks}
                                 groupComponent={GroupComponentName.GovComponent}
                             />
-
+                            <Divider />
                             <PlanCreationMain
                                 associatedNodes={highEduNodes}
                                 associatedSemesters={highEduSemesters}
@@ -156,7 +171,7 @@ export const PlanCreation: React.FC<PropTypes> = ({ plans, semesters, nodes }) =
                                 semestersWeeks={semestersWeeks}
                                 groupComponent={GroupComponentName.HighEduComponent}
                             />
-
+                            <Divider />
                             <PlanCreationMain
                                 associatedNodes={optionalEduNodes}
                                 associatedSemesters={optionalEduSemesters}
@@ -166,7 +181,7 @@ export const PlanCreation: React.FC<PropTypes> = ({ plans, semesters, nodes }) =
                                 semestersWeeks={semestersWeeks}
                                 groupComponent={GroupComponentName.OptionalComponent}
                             />
-
+                            <Divider />
                             <PlanCreationMain
                                 associatedNodes={additionalNodes}
                                 associatedSemesters={additionalSemesters}

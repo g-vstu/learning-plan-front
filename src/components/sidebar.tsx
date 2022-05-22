@@ -8,6 +8,8 @@ import { PREFIX } from 'config/constants';
 import FolderSpecialIcon from '@mui/icons-material/FolderSpecial';
 import { Typography } from '@mui/material';
 import SubjectIcon from '@mui/icons-material/Subject';
+import FilterNoneIcon from '@mui/icons-material/FilterNone';
+import PictureInPictureIcon from '@mui/icons-material/PictureInPicture';
 
 export const SideBar = (props) => {
     return (
@@ -23,6 +25,10 @@ export const SideBar = (props) => {
             <ListItemButton component={Link} to={`/${PREFIX}/subjects`} style={{ display: 'flex' }}>
                 <SubjectIcon />
                 <Typography style={{ marginLeft: 5 }}>Subjects</Typography>
+            </ListItemButton>
+            <ListItemButton component={Link} to={`/${PREFIX}/units`} style={{ display: 'flex' }}>
+                <PictureInPictureIcon />
+                <Typography style={{ marginLeft: 5 }}>Group Units</Typography>
             </ListItemButton>
         </Menu>
     );

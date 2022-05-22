@@ -15,6 +15,8 @@ import { getGroupUnits } from 'store/group-unit/actions';
 import { getGroupComponents } from 'store/group-component/actions';
 import { selectGroupComponentsLoading } from 'store/group-component/selectors';
 import { selectGroupUnitsLoading } from 'store/group-unit/selectors';
+import { getSubCompetencies } from 'store/sub-competence/actions';
+import { selectSubCompetenciesLoading } from 'store/sub-competence/selectors';
 
 export const PlanCreationContanier: React.FC<{ match: match<any> }> = ({ match }) => {
     const dispatch = useDispatch();
@@ -28,6 +30,7 @@ export const PlanCreationContanier: React.FC<{ match: match<any> }> = ({ match }
 
     const isGroupComponentsLoading = useSelector(selectGroupComponentsLoading);
     const isGroupUnitsLoading = useSelector(selectGroupUnitsLoading);
+    const isSubCompetenciesLoading = useSelector(selectSubCompetenciesLoading);
 
     useEffect(() => {
         if (
@@ -58,6 +61,7 @@ export const PlanCreationContanier: React.FC<{ match: match<any> }> = ({ match }
         dispatch(getGroupUnits());
         dispatch(getGroupComponents());
         dispatch(getSubjects());
+        dispatch(getSubCompetencies());
     }, [dispatch, match?.params?.id]);
 
     return (

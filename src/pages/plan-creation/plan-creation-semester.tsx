@@ -90,12 +90,18 @@ export const PlanCreationSemester: React.FC<PropTypes> = ({ semester }) => {
             </TableCell>
             <TableCell padding="none">
                 <TableRow>
-                    <TableCell size="small">Итог</TableCell>
-                    <TableCell colSpan={4}>Итог звонки</TableCell>
+                    <TableCell align="center" size="small">
+                        Итог
+                    </TableCell>
+                    <TableCell align="center" colSpan={4}>
+                        Итог звонки
+                    </TableCell>
                 </TableRow>
                 <TableRow>
-                    <TableCell className={classes.cell}>{totalHours}</TableCell>
-                    <TableCell colSpan={4} className={classes.cell}>
+                    <TableCell align="center" className={classes.cell}>
+                        {totalHours}
+                    </TableCell>
+                    <TableCell align="center" colSpan={4} className={classes.cell}>
                         {subTotal}
                     </TableCell>
                 </TableRow>

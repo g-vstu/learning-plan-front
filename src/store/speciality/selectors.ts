@@ -13,3 +13,10 @@ export const selectSpecialitiesLoading = createSelector(
     [getSpecialititesLoading],
     (loading) => loading
 );
+
+const getCurrentSpeciality = (state: ApplicationState): Speciality =>
+    state.speciality.currentSpeciality;
+export const selectCurrentSpeciality = createSelector(
+    [getCurrentSpeciality],
+    (speciality) => speciality
+);

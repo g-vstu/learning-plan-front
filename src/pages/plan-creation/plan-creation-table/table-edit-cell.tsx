@@ -4,7 +4,7 @@ import React from 'react';
 
 export const TableEditCell: React.FC<any> = ({ editMode, value, name, handleUpdateSemester }) => {
     return (
-        <TableCell size="small" style={{ backgroundColor: indigo[100] }}>
+        <TableCell align="center" size="small" style={{ backgroundColor: indigo[100] }}>
             {editMode ? (
                 <TextField
                     name={name}

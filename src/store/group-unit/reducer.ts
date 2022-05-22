@@ -1,6 +1,6 @@
 import { Reducer } from 'redux';
 import { GroupUnitState } from 'types';
-import { GET_GROUP_UNITS } from './types';
+import { CREATE_GROUP_UNIT, GET_GROUP_UNITS } from './types';
 
 const initialState: GroupUnitState = {
     groupUnits: [],
@@ -20,6 +20,9 @@ const groupUnitReducer: Reducer<GroupUnitState> = (
             return onGetGroupUnitsSuccess(state, action.payload);
         case GET_GROUP_UNITS.failure:
             return onGetGroupUnitsFailure(state, action.payload);
+
+        case CREATE_GROUP_UNIT.success:
+            return onCreateGroupUnitSuccess(state, action.payload);
 
         default:
             return state;
@@ -43,6 +46,11 @@ const onGetGroupUnitsFailure = (state: GroupUnitState, payload): GroupUnitState 
     ...state,
     loading: false,
     error: payload.error,
+});
+
+const onCreateGroupUnitSuccess = (state: GroupUnitState, payload): GroupUnitState => ({
+    ...state,
+    groupUnits: [...state.groupUnits, payload.newGroupUnit],
 });
 
 export default groupUnitReducer;
