@@ -1,10 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { IconButton, TableCell, TableRow, TextField, Typography } from '@mui/material';
 import { Node, Plan, Semester, SemesterType } from 'types';
-import DoneIcon from '@mui/icons-material/Done';
-import EditIcon from '@mui/icons-material/Edit';
-import DoDisturbIcon from '@mui/icons-material/DoDisturb';
-import { TableEditCell } from './plan-creation-table/table-edit-cell';
 import { PlanCreationSemester } from './plan-creation-semester';
 import AddIcon from '@mui/icons-material/Add';
 import { useDispatch, useSelector } from 'react-redux';

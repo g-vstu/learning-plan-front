@@ -109,7 +109,7 @@ export const PlanCreation: React.FC<PropTypes> = ({ plans, semesters, nodes }) =
             <AddGroupUnitDialog open={openUnitDialog} setOpen={setOpenUnitDialog} />
             <AddPlanDialog open={open} setOpen={setOpen} nodes={nodes} />
             <DetailsNavigationContainer>
-                <BackButton onClick={() => history.push(`/${PREFIX}/specialities`)} />
+                <BackButton onClick={() => history.push(`/${PREFIX}/plans`)} />
                 <div>
                     <Button
                         variant="contained"

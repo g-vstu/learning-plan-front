@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { Button } from '@mui/material';
-import { defaultColDef, defaultSize, defaultTheme, PREFIX } from 'config/constants';
+import { defaultColDef, defaultSize, defaultTheme } from 'config/constants';
 import { AgGridReact } from '@ag-grid-community/react';
 import { GroupUnit } from 'types';
 import { useAgGridModules } from 'hooks/useAgGridModules';

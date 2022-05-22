@@ -2,10 +2,9 @@ import { ThunkAction } from 'redux-thunk';
 import { Action, Dispatch } from 'redux';
 import { RootState } from 'store';
 import { CREATE_PLAN, GET_PLANS } from './types';
-import { createPlanRequest, fetchPlans } from './services';
-import { GroupComponent, Node, Plan, Semester } from 'types';
+import { createPlanRequest, fetchPlan, fetchPlans } from './services';
+import { Node, Plan, Semester, Speciality } from 'types';
 import { fetchNodes } from 'store/node/services';
-import { fetchGroupComponents } from 'store/group-component/services';
 import { fetchSemesters } from 'store/semester/services';
 import { GET_NODES } from 'store/node/types';
 import { GET_SEMESTERS } from 'store/semester/types';
@@ -52,26 +51,22 @@ export const createPlan = (
 };
 
 export const getGlobalPlan = (
-    specialityId: number
+    planId: number
 ): ThunkAction<Promise<void>, RootState, null, Action> => {
     return async (dispatch: Dispatch) => {
         dispatch({ type: GET_PLANS.start });
         try {
-            const speciality = await fetchSpeciality(specialityId);
+            const necessaryPlan: Plan = await fetchPlan(planId);
+
+            const speciality: Speciality = await fetchSpeciality(necessaryPlan?.idSpeciality?.id);
 
             const plans: Plan[] = await fetchPlans();
             const plansWithAssociatedSpeciality = plans.filter(
-                (plan) => plan?.idSpeciality?.id === specialityId
+                (plan) => plan?.idSpeciality?.id === speciality?.id
             );
-            //All associated plans
+
             const nodes: Node[] = await fetchNodes();
-            const associatedNodes = nodes.filter((node) => {
-                return (
-                    plansWithAssociatedSpeciality.filter((plan) => {
-                        return plan?.id === node?.idPlan?.id;
-                    }).length !== 0
-                );
-            });
+            const associatedNodes = nodes.filter((node) => node?.idPlan?.id === necessaryPlan.id);
 
             const semesters: Semester[] = await fetchSemesters();
             const associatedSemesters = semesters?.filter((semester) => {

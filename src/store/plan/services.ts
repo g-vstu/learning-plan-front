@@ -6,6 +6,11 @@ export const fetchPlans = async () => {
     return plans;
 };
 
+export const fetchPlan = async (id) => {
+    const { data: plan } = await instance.get(`${DEVELOPMENT}/plan/${id}`);
+    return plan;
+};
+
 export const createPlanRequest = async (plan, specialityId) => {
     const { data: newPlan } = await instance.post(
         `${DEVELOPMENT}/plan?specialityId=${specialityId}`,

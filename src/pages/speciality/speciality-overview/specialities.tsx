@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
-import { Button, Table, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
-import { defaultColDef, defaultSize, defaultTheme, PREFIX } from 'config/constants';
+import { Button } from '@mui/material';
+import { defaultColDef, defaultSize, defaultTheme } from 'config/constants';
 import { AgGridReact } from '@ag-grid-community/react';
 import { Speciality } from 'types';
 import { useHistory } from 'react-router-dom';
@@ -52,7 +52,6 @@ export const Specialities: React.FC<PropTypes> = ({ specialities }) => {
                 <AgGridReact
                     ref={gridRef}
                     modules={modules}
-                    onCellClicked={(e) => history.push(`/${PREFIX}/plan-creation/${e.data?.id}`)}
                     rowData={specialities}
                     enableRangeSelection={true}
                     columnDefs={specialititesColumns}

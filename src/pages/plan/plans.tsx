@@ -7,6 +7,7 @@ import { useHistory } from 'react-router-dom';
 import { useAgGridModules } from 'hooks/useAgGridModules';
 import { OverviewHeader } from 'components/overview-header';
 import { OverviewTitle } from 'components/overview-title';
+import { AddPlanDialog } from './add-plan-dialog';
 
 interface PropTypes {
     plans: Plan[];
@@ -37,6 +38,10 @@ export const Plans: React.FC<PropTypes> = ({ plans }) => {
             width: 140,
         },
         {
+            field: 'educationForm',
+            width: 140,
+        },
+        {
             field: 'idSpeciality.name',
             width: 140,
             headerName: 'Speciality',
@@ -45,6 +50,7 @@ export const Plans: React.FC<PropTypes> = ({ plans }) => {
 
     return (
         <>
+            <AddPlanDialog open={open} setOpen={setOpen} />
             <OverviewHeader>
                 <OverviewTitle>Plans</OverviewTitle>
                 <Button variant="contained" onClick={() => setOpen(true)}>
