@@ -98,7 +98,7 @@ export const AddGroupUnitDialog: React.FC<any> = ({ open, setOpen }) => {
                                 />
                             </FieldContainer>
                             <FieldContainer>
-                                <Typography>Select group unit</Typography>
+                                <Typography>Select group component</Typography>
                                 <Select
                                     fullWidth
                                     size="small"

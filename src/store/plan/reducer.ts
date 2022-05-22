@@ -1,6 +1,6 @@
 import { Reducer } from 'redux';
 import { PlanState } from 'types';
-import { GET_PLANS } from './types';
+import { CREATE_PLAN, GET_PLANS } from './types';
 
 const initialState: PlanState = {
     plans: [],
@@ -17,6 +17,9 @@ const planReducer: Reducer<PlanState> = (state: PlanState = initialState, action
             return onGetPlansSuccess(state, action.payload);
         case GET_PLANS.failure:
             return onGetPlansFailure(state, action.payload);
+
+        case CREATE_PLAN.success:
+            return onCreatePlanSuccess(state, action.payload);
 
         default:
             return state;
@@ -40,6 +43,11 @@ const onGetPlansFailure = (state: PlanState, payload): PlanState => ({
     ...state,
     loading: false,
     error: payload.error,
+});
+
+const onCreatePlanSuccess = (state: PlanState, payload): PlanState => ({
+    ...state,
+    plans: [...state.plans, payload.newPlan],
 });
 
 export default planReducer;

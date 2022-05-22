@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getSpecialities } from 'store/speciality/actions';
-import { selectSpecialities } from 'store/speciality/selectors';
 import { match } from 'react-router-dom';
 import { getGlobalPlan } from 'store/plan/actions';
 import { selectPlans, selectPlansLoading } from 'store/plan/selectors';
@@ -39,7 +37,8 @@ export const PlanCreationContanier: React.FC<{ match: match<any> }> = ({ match }
             !isSemestersLoading &&
             !isSubjectsLoading &&
             !isGroupComponentsLoading &&
-            !isGroupUnitsLoading
+            !isGroupUnitsLoading &&
+            !isSubCompetenciesLoading
         ) {
             setIsLoading(false);
         }
@@ -50,6 +49,7 @@ export const PlanCreationContanier: React.FC<{ match: match<any> }> = ({ match }
         isSubjectsLoading,
         isGroupComponentsLoading,
         isGroupUnitsLoading,
+        isSubCompetenciesLoading,
     ]);
 
     const nodes = useSelector(selectNodes);

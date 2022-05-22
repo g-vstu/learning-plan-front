@@ -1,8 +1,8 @@
 import { ThunkAction } from 'redux-thunk';
 import { Action, Dispatch } from 'redux';
 import { RootState } from 'store';
-import { GET_PLANS } from './types';
-import { fetchPlanAndCreateRelationWithNode, fetchPlans } from './services';
+import { CREATE_PLAN, GET_PLANS } from './types';
+import { createPlanRequest, fetchPlans } from './services';
 import { GroupComponent, Node, Plan, Semester } from 'types';
 import { fetchNodes } from 'store/node/services';
 import { fetchGroupComponents } from 'store/group-component/services';
@@ -24,6 +24,27 @@ export const getPlans = (): ThunkAction<Promise<void>, RootState, null, Action> 
         } catch (error) {
             dispatch({
                 type: GET_PLANS.failure,
+                payload: { error },
+            });
+        }
+    };
+};
+
+export const createPlan = (
+    plan,
+    specialityId
+): ThunkAction<Promise<void>, RootState, null, Action> => {
+    return async (dispatch: Dispatch) => {
+        dispatch({ type: CREATE_PLAN.start });
+        try {
+            const newPlan: Plan = await createPlanRequest(plan, specialityId);
+            dispatch({
+                type: CREATE_PLAN.success,
+                payload: { newPlan },
+            });
+        } catch (error) {
+            dispatch({
+                type: CREATE_PLAN.failure,
                 payload: { error },
             });
         }
@@ -75,91 +96,6 @@ export const getGlobalPlan = (
             dispatch({
                 type: SET_CURRENT_SPECIALITY.success,
                 payload: { speciality },
-            });
-        } catch (error) {
-            dispatch({
-                type: GET_PLANS.failure,
-                payload: { error },
-            });
-        }
-    };
-};
-
-export const getGlobalPlan1 = (
-    specialityId: number
-): ThunkAction<Promise<void>, RootState, null, Action> => {
-    return async (dispatch: Dispatch) => {
-        dispatch({ type: GET_PLANS.start });
-        try {
-            /*const plans: Plan[] = await fetchPlans();
-            const plansWithAssociatedSpeciality = plans.filter(
-                (plan) => plan?.idSpeciality?.id === specialityId
-            );
-
-            const nodes: Node[] = await fetchNodes();
-            const associatedNodes = nodes.filter((node) => {
-                return plansWithAssociatedSpeciality.map((plan) => {
-                    return plan?.id === node?.idPlan?.id;
-                });
-            });*/
-
-            //FIRST STEP load all nodes and create relatonship with all plans objWithPlanAndNode
-            //SECOND STEP filter objWithPlanAndNode by plans with associated speciality
-            //will be only associated nodes with that speciality
-            //THIRD STEP load all semesters and filter semesters by asssociated speciality
-
-            const nodes: Node[] = await fetchNodes();
-            const objWithPlanAndNode: (Node & Plan)[] = []; //This arrays contains information about all nodes with all associated plans
-
-            await Promise.all(
-                nodes?.map(async (node) => {
-                    const obj = await fetchPlanAndCreateRelationWithNode(node?.idPlan?.id, node);
-                    objWithPlanAndNode.push(obj);
-                })
-            );
-
-            const semesters: Semester[] = await fetchSemesters();
-
-            /*const dataAboutSpecialityPlanWithAsociatedSemester = objWithPlanAndNode.filter(
-                (obj) => {
-                    return semesters.filter((semester) => {
-                        if (semester?.idNode?.idNode === obj?.idNode) {
-                            const obb = {
-                                ...obj,
-                                semester: {
-                                    ...semester,
-                                },
-                            };
-                            return obb;
-                        } else {
-                            return;
-                        }
-                    });
-                }
-            );*/
-            const associatedSemestersWithNodes = semesters?.filter((semester) => {
-                return (
-                    objWithPlanAndNode.filter((obj) => {
-                        return obj?.idNode === semester?.idNode?.idNode;
-                    }).length !== 0
-                );
-            });
-
-            const createObjWithSemesters = objWithPlanAndNode.map((obj) => {
-                return associatedSemestersWithNodes.map((semester) => {
-                    if (obj?.idNode === semester?.idNode?.idNode) {
-                        return {
-                            ...obj,
-                            semester: {
-                                ...semester,
-                            },
-                        };
-                    }
-                });
-            });
-            dispatch({
-                type: GET_PLANS.success,
-                payload: {},
             });
         } catch (error) {
             dispatch({

@@ -10,6 +10,7 @@ import { Typography } from '@mui/material';
 import SubjectIcon from '@mui/icons-material/Subject';
 import FilterNoneIcon from '@mui/icons-material/FilterNone';
 import PictureInPictureIcon from '@mui/icons-material/PictureInPicture';
+import SourceIcon from '@mui/icons-material/Source';
 
 export const SideBar = (props) => {
     return (
@@ -29,6 +30,10 @@ export const SideBar = (props) => {
             <ListItemButton component={Link} to={`/${PREFIX}/units`} style={{ display: 'flex' }}>
                 <PictureInPictureIcon />
                 <Typography style={{ marginLeft: 5 }}>Group Units</Typography>
+            </ListItemButton>
+            <ListItemButton component={Link} to={`/${PREFIX}/plans`} style={{ display: 'flex' }}>
+                <SourceIcon />
+                <Typography style={{ marginLeft: 5 }}>Plans</Typography>
             </ListItemButton>
         </Menu>
     );

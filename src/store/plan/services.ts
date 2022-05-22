@@ -6,13 +6,10 @@ export const fetchPlans = async () => {
     return plans;
 };
 
-export const fetchPlanAndCreateRelationWithNode = async (planId, node) => {
-    const { data: plan } = await instance.get(`${DEVELOPMENT}/plan/${planId}`);
-    const associatedRow = {
-        ...plan,
-        ...node,
-    };
-
-    return associatedRow;
-    //return plan;
+export const createPlanRequest = async (plan, specialityId) => {
+    const { data: newPlan } = await instance.post(
+        `${DEVELOPMENT}/plan?specialityId=${specialityId}`,
+        plan
+    );
+    return newPlan;
 };

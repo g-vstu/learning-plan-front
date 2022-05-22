@@ -7,12 +7,13 @@ import DoDisturbIcon from '@mui/icons-material/DoDisturb';
 import { TableEditCell } from './plan-creation-table/table-edit-cell';
 import { PlanCreationSemester } from './plan-creation-semester';
 import AddIcon from '@mui/icons-material/Add';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { createSemester } from 'store/semester/actions';
 import { useCalculateTotalParams } from 'hooks/useCalculateTotalParams';
 import { useCalculateTotalTests } from 'hooks/useCalculateTests';
 import { makeStyles } from '@mui/styles';
 import { blue, lightGreen, lime } from '@mui/material/colors';
+import { selectSubCompetencies } from 'store/sub-competence/selectors';
 
 interface PropTypes {
     node: Node;
@@ -71,6 +72,11 @@ export const PlanCreationNode: React.FC<PropTypes> = ({
     const addSemestersAmount = semestersWeeks?.length - associatedSemesters?.length;
     const emptyWeeksSemesers = semestersWeeks?.slice(semestersWeeks?.length - addSemestersAmount);
 
+    const subCompetencies = useSelector(selectSubCompetencies);
+    const associatedCompetence = subCompetencies.find(
+        (competence) => competence?.idSubject?.id === node?.idSubject?.id
+    );
+
     return (
         <TableRow>
             <TableCell align="center">{node?.nodeNumber}</TableCell>
@@ -122,6 +128,7 @@ export const PlanCreationNode: React.FC<PropTypes> = ({
             <TableCell className={classes.cell} align="center">
                 {totalZe}
             </TableCell>
+            <TableCell>{associatedCompetence?.idCompetence?.shifrCompetence || 'N/A'}</TableCell>
         </TableRow>
     );
 };

@@ -4,6 +4,7 @@ import {
     Container,
     Dialog,
     DialogContent,
+    Divider,
     Grid,
     IconButton,
     MenuItem,
@@ -23,6 +24,20 @@ export const AddSpecialityDialog: React.FC<any> = ({ open, setOpen, groupUnits }
         shifr: '',
     });
 
+    const [newPlan, setNewPlan] = useState({
+        diplomC2ountWeek: 0,
+        diplomIdSemestr: 0,
+        diplomName: '',
+        diplomZe: 0,
+        educationForm: 'очная',
+        enrollmentYear: '2022-05-22',
+        govExam: 0,
+        learnYear: '',
+        name: '',
+        regNumber: '',
+        utvDate: '2022-05-22',
+    });
+
     const handleChange = (e) => {
         setNewSpeciality({
             ...newSpeciality,
@@ -30,8 +45,15 @@ export const AddSpecialityDialog: React.FC<any> = ({ open, setOpen, groupUnits }
         });
     };
 
+    const handlePlanChange = (e) => {
+        setNewPlan({
+            ...newPlan,
+            [e.target.name]: e.target.value,
+        });
+    };
+
     const handleAddSpeciality = () => {
-        dispatch(createSpeciality(newSpeciality));
+        dispatch(createSpeciality(newSpeciality, newPlan));
         setOpen(false);
     };
 
@@ -86,6 +108,110 @@ export const AddSpecialityDialog: React.FC<any> = ({ open, setOpen, groupUnits }
                                         name="shifr"
                                         value={newSpeciality.shifr}
                                         onChange={handleChange}
+                                        fullWidth
+                                        size="small"
+                                    />
+                                </FieldContainer>
+                                <Divider />
+                                <FieldContainer>
+                                    <Typography>Plan form</Typography>
+                                </FieldContainer>
+                                <FieldContainer>
+                                    <Typography>Diplom weeks</Typography>
+                                    <TextField
+                                        name="diplomC2ountWeek"
+                                        value={newPlan.diplomC2ountWeek}
+                                        onChange={handlePlanChange}
+                                        fullWidth
+                                        size="small"
+                                    />
+                                </FieldContainer>
+                                <FieldContainer>
+                                    <Typography>Id semester</Typography>
+                                    <TextField
+                                        name="diplomIdSemestr"
+                                        value={newPlan.diplomIdSemestr}
+                                        onChange={handlePlanChange}
+                                        fullWidth
+                                        size="small"
+                                    />
+                                </FieldContainer>
+                                <FieldContainer>
+                                    <Typography>Diplom name</Typography>
+                                    <TextField
+                                        name="diplomName"
+                                        value={newPlan.diplomName}
+                                        onChange={handlePlanChange}
+                                        fullWidth
+                                        size="small"
+                                    />
+                                </FieldContainer>
+                                <FieldContainer>
+                                    <Typography>Diplom ZE</Typography>
+                                    <TextField
+                                        name="diplomZe"
+                                        value={newPlan.diplomZe}
+                                        onChange={handlePlanChange}
+                                        fullWidth
+                                        size="small"
+                                    />
+                                </FieldContainer>
+                                <FieldContainer>
+                                    <Typography>Education Form</Typography>
+                                    <TextField
+                                        name="educationForm"
+                                        value={newPlan.educationForm}
+                                        onChange={handlePlanChange}
+                                        fullWidth
+                                        size="small"
+                                    />
+                                </FieldContainer>
+                                <FieldContainer>
+                                    <Typography>Enrollment Year</Typography>
+                                    <TextField
+                                        name="enrollmentYear"
+                                        value={newPlan.enrollmentYear}
+                                        onChange={handlePlanChange}
+                                        fullWidth
+                                        size="small"
+                                    />
+                                </FieldContainer>
+                                <FieldContainer>
+                                    <Typography>Gov Exam</Typography>
+                                    <TextField
+                                        name="govExam"
+                                        value={newPlan.govExam}
+                                        onChange={handlePlanChange}
+                                        fullWidth
+                                        size="small"
+                                    />
+                                </FieldContainer>
+                                <FieldContainer>
+                                    <Typography>Learn Year</Typography>
+                                    <TextField
+                                        name="learnYear"
+                                        value={newPlan.learnYear}
+                                        onChange={handlePlanChange}
+                                        fullWidth
+                                        size="small"
+                                    />
+                                </FieldContainer>
+                                <FieldContainer>
+                                    <Typography>Reg Number</Typography>
+                                    <TextField
+                                        name="regNumber"
+                                        value={newPlan.regNumber}
+                                        onChange={handlePlanChange}
+                                        fullWidth
+                                        size="small"
+                                    />
+                                </FieldContainer>
+                                <FieldContainer>
+                                    <Typography>Utv Date</Typography>
+                                    <TextField
+                                        name="utvDate"
+                                        value={newPlan.utvDate}
+                                        onChange={handlePlanChange}
                                         fullWidth
                                         size="small"
                                     />
