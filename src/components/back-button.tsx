@@ -15,7 +15,7 @@ export const BackButton: React.FC<any> = (props) => {
                 border: '1px solid black',
             }}
         >
-            Back
+            Назад
         </Button>
     );
 };

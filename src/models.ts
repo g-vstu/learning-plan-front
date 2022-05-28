@@ -1,4 +1,5 @@
 import App from 'App';
+import { CompetenciesList } from 'containers/competencies-list';
 import { GroupUnitsList } from 'containers/group-unit-list';
 import { PlanCreationContanier } from 'containers/plan-creation';
 import { PlansList } from 'containers/plan-list';
@@ -30,5 +31,10 @@ export const getRoutes = (PREFIX: string) => [
         path: `/${PREFIX}/plans`,
         exact: true,
         component: PlansList,
+    },
+    {
+        path: `/${PREFIX}/competencies`,
+        exact: true,
+        component: CompetenciesList,
     },
 ];

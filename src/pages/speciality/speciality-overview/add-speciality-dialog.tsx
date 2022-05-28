@@ -51,7 +51,7 @@ export const AddSpecialityDialog: React.FC<any> = ({ open, setOpen }) => {
                                     <Grid container>
                                         <Grid item xs={9}>
                                             <Typography fontWeight={700} variant="h5">
-                                                Add speciality
+                                                Добавить специальность
                                             </Typography>
                                         </Grid>
                                         <Grid item xs={3}>
@@ -69,7 +69,7 @@ export const AddSpecialityDialog: React.FC<any> = ({ open, setOpen }) => {
                                     </Grid>
                                 </FieldContainer>
                                 <FieldContainer>
-                                    <Typography>Name</Typography>
+                                    <Typography>Название</Typography>
                                     <TextField
                                         name="name"
                                         value={newSpeciality.name}
@@ -79,7 +79,7 @@ export const AddSpecialityDialog: React.FC<any> = ({ open, setOpen }) => {
                                     />
                                 </FieldContainer>
                                 <FieldContainer>
-                                    <Typography>Shifr</Typography>
+                                    <Typography>Шифр</Typography>
                                     <TextField
                                         name="shifr"
                                         value={newSpeciality.shifr}
@@ -91,7 +91,7 @@ export const AddSpecialityDialog: React.FC<any> = ({ open, setOpen }) => {
                             </div>
                             <div style={{ marginTop: 30 }}>
                                 <Button fullWidth onClick={handleAddSpeciality} variant="contained">
-                                    Add Speciality
+                                    Добавить специальность
                                 </Button>
                             </div>
                         </div>

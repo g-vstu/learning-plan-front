@@ -1,4 +1,3 @@
-import { Typography } from '@mui/material';
 import { Loader } from 'components/loader';
 import { Specialities } from 'pages/speciality/speciality-overview/specialities';
 import React, { useEffect } from 'react';

@@ -34,10 +34,10 @@ export const PlanCreationOverall: React.FC<PropTypes> = ({ groupComponent, semes
     return (
         <TableRow>
             <TableCell>{associatedComponent?.componentNumber}</TableCell>
-            <TableCell>{groupComponent}</TableCell>
-            <TableCell>{totalExams}</TableCell>
-            <TableCell>{totalTests}</TableCell>
-            <TableCell>{totalRgrs}</TableCell>
+            <TableCell style={{ backgroundColor: '#18ffff' }}>{groupComponent}</TableCell>
+            <TableCell style={{ backgroundColor: '#18ffff' }}>{totalExams}</TableCell>
+            <TableCell style={{ backgroundColor: '#18ffff' }}>{totalTests}</TableCell>
+            <TableCell style={{ backgroundColor: '#18ffff' }}>{totalRgrs}</TableCell>
 
             <TableCell className={classes.cell}>{totalClass}</TableCell>
             <TableCell className={classes.cell}>{totalAuditore}</TableCell>

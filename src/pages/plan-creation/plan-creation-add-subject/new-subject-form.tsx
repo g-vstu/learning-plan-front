@@ -17,7 +17,7 @@ export const NewSubjectForm: React.FC<any> = ({
     return (
         <>
             <FieldContainer>
-                <Typography>Name</Typography>
+                <Typography>Предмет</Typography>
                 <TextField
                     name="name"
                     value={newSubject.name}
@@ -27,7 +27,7 @@ export const NewSubjectForm: React.FC<any> = ({
                 />
             </FieldContainer>
             <FieldContainer>
-                <Typography>Shifr</Typography>
+                <Typography>Шифр</Typography>
                 <TextField
                     name="shifr"
                     value={newSubject.shifr}
@@ -37,7 +37,7 @@ export const NewSubjectForm: React.FC<any> = ({
                 />
             </FieldContainer>
             <FieldContainer>
-                <Typography>Select group unit</Typography>
+                <Typography>Выберете модуль</Typography>
                 <Select fullWidth size="small" value={unit?.id} onChange={handleChangeTypeUnit}>
                     {groupUnits?.map((groupUnit) => (
                         <MenuItem key={groupUnit?.id} value={groupUnit?.id}>
@@ -47,7 +47,7 @@ export const NewSubjectForm: React.FC<any> = ({
                 </Select>
             </FieldContainer>
             <FieldContainer>
-                <Typography>Node number</Typography>
+                <Typography>Номер в плане</Typography>
                 <TextField
                     value={newNodeNumber}
                     onChange={(e) => setNewNodeNumber(e.target.value)}

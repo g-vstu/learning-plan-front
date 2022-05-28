@@ -32,10 +32,12 @@ export const Specialities: React.FC<PropTypes> = ({ specialities }) => {
         {
             field: 'shifr',
             width: 140,
+            headerName: 'Шифр',
         },
         {
             field: 'name',
             width: 140,
+            headerName: 'Название',
         },
     ];
 
@@ -43,9 +45,9 @@ export const Specialities: React.FC<PropTypes> = ({ specialities }) => {
         <>
             <AddSpecialityDialog open={open} setOpen={setOpen} />
             <OverviewHeader>
-                <OverviewTitle>Specialities</OverviewTitle>
+                <OverviewTitle>Специальности</OverviewTitle>
                 <Button variant="contained" onClick={() => setOpen(true)}>
-                    Add speciality
+                    Добавить специальность
                 </Button>
             </OverviewHeader>
             <div style={defaultSize} className={defaultTheme}>

@@ -40,7 +40,9 @@ export const PlanCreationMain: React.FC<PropTypes> = ({
                     <>
                         <TableRow>
                             <TableCell>{unit?.unitNumber}</TableCell>
-                            <TableCell>{unit?.name}</TableCell>
+                            <TableCell style={{ backgroundColor: '#bbdefb' }}>
+                                {unit?.name}
+                            </TableCell>
                         </TableRow>
                         {unitNodes?.map((node) => (
                             <PlanCreationNode

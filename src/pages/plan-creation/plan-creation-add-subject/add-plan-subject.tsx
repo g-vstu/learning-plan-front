@@ -6,17 +6,15 @@ import {
     DialogContent,
     Grid,
     IconButton,
-    InputLabel,
-    MenuItem,
-    Select,
-    Switch,
+    Tab,
+    Tabs,
     TextField,
     Typography,
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectSubjects } from 'store/subject/selectors';
-import { selectPlans } from 'store/plan/selectors';
+import { selectCurrentPlan, selectPlans } from 'store/plan/selectors';
 import { selectCurrentSpeciality } from 'store/speciality/selectors';
 import { Node } from 'types';
 import { createNode, createNodeWithNewSubject } from 'store/node/actions';
@@ -31,13 +29,25 @@ interface PropTypes {
     nodes: Node[];
 }
 
+const TABS = {
+    EXISTING_SUBJECT: {
+        label: 'Предмет',
+        value: 'existingSubject',
+    },
+    NEW_SUBJECT: {
+        label: 'Новый предмет',
+        value: 'newSubject',
+    },
+};
+
 export const AddPlanDialog: React.FC<PropTypes> = ({ open, setOpen, nodes }) => {
     const dispatch = useDispatch();
     const [isNewSubject, setIsNewSubject] = useState(false);
-    const speciality = useSelector(selectCurrentSpeciality);
+    const [tabValue, setTabValue] = useState(TABS.EXISTING_SUBJECT.value);
 
     const plans = useSelector(selectPlans);
-    const associatedPlan = plans?.find((plan) => plan?.idSpeciality?.id === speciality?.id);
+    const currentPlan = useSelector(selectCurrentPlan);
+    //const associatedPlan = plans?.find((plan) => plan?.idSpeciality?.id === speciality?.id);
 
     const subjects = useSelector(selectSubjects);
 
@@ -72,29 +82,51 @@ export const AddPlanDialog: React.FC<PropTypes> = ({ open, setOpen, nodes }) => 
 
     const hanldeAddSubjectToPlan = () => {
         const checkFiltered = nodes?.some((node) => node?.idSubject?.id === selectedSubject);
-        if (!isNewSubject) {
-            if (!checkFiltered) {
+        if (checkFiltered) {
+            console.log('error');
+        } else {
+            if (!isNewSubject) {
+                if (!checkFiltered) {
+                    const node = {
+                        idCathedra: 1,
+                        nodeNumber: newNodeNumber,
+                    };
+                    dispatch(createNode(node, selectedSubject, currentPlan));
+                    setOpen(false);
+                }
+            }
+            if (isNewSubject) {
                 const node = {
                     idCathedra: 1,
                     nodeNumber: newNodeNumber,
                 };
-                dispatch(createNode(node, selectedSubject, associatedPlan));
+                dispatch(createNodeWithNewSubject(node, currentPlan, newSubject, unit));
                 setOpen(false);
             }
         }
-        if (isNewSubject) {
-            const node = {
-                idCathedra: 1,
-                nodeNumber: newNodeNumber,
-            };
-            dispatch(createNodeWithNewSubject(node, associatedPlan, newSubject, unit));
-            setOpen(false);
-        }
+    };
+
+    const onTabChange = (event, newValue) => {
+        setTabValue(newValue);
     };
 
     return (
         <>
             <Dialog open={open} onClose={() => setOpen(false)} maxWidth="xs" fullWidth>
+                <Tabs value={tabValue} onChange={onTabChange} style={{ width: '100%' }}>
+                    {Object.values(TABS).map((tab) => (
+                        <Tab
+                            {...tab}
+                            key={tab.value}
+                            style={{
+                                fontWeight: 600,
+                                width: '50%',
+                                fontSize: 14,
+                                marginTop: 15,
+                            }}
+                        />
+                    ))}
+                </Tabs>
                 <DialogContent>
                     <Container style={{ marginTop: 0, paddingTop: 20, paddingBottom: 20 }}>
                         <div
@@ -110,7 +142,7 @@ export const AddPlanDialog: React.FC<PropTypes> = ({ open, setOpen, nodes }) => 
                                     <Grid container>
                                         <Grid item xs={9}>
                                             <Typography fontWeight={700} variant="h5">
-                                                Add subject
+                                                Добавить предмет
                                             </Typography>
                                         </Grid>
                                         <Grid item xs={3}>
@@ -127,35 +159,15 @@ export const AddPlanDialog: React.FC<PropTypes> = ({ open, setOpen, nodes }) => 
                                         </Grid>
                                     </Grid>
                                 </FieldContainer>
-                                <FieldContainer>
-                                    <InputLabel>New subject?</InputLabel>
-                                    <Switch
-                                        checked={isNewSubject}
-                                        onChange={hanldeChangeSubjectMode}
+                                {tabValue === TABS.EXISTING_SUBJECT.value && (
+                                    <ExistSubjectForm
+                                        selectedSubject={selectedSubject}
+                                        setNewNodeNumber={setNewNodeNumber}
+                                        newNodeNumber={newNodeNumber}
+                                        handleChangeType={handleChangeType}
                                     />
-                                    {isNewSubject ? (
-                                        <Typography
-                                            style={{
-                                                fontWeight: 600,
-                                                marginLeft: 10,
-                                                color: green[500],
-                                            }}
-                                        >
-                                            Yes
-                                        </Typography>
-                                    ) : (
-                                        <Typography
-                                            style={{
-                                                fontWeight: 600,
-                                                marginLeft: 10,
-                                                color: blue[500],
-                                            }}
-                                        >
-                                            No
-                                        </Typography>
-                                    )}
-                                </FieldContainer>
-                                {isNewSubject ? (
+                                )}
+                                {tabValue === TABS.NEW_SUBJECT.value && (
                                     <NewSubjectForm
                                         newNodeNumber={newNodeNumber}
                                         setNewNodeNumber={setNewNodeNumber}
@@ -163,13 +175,6 @@ export const AddPlanDialog: React.FC<PropTypes> = ({ open, setOpen, nodes }) => 
                                         handleChange={handleChange}
                                         unit={unit}
                                         handleChangeTypeUnit={handleChangeTypeUnit}
-                                    />
-                                ) : (
-                                    <ExistSubjectForm
-                                        selectedSubject={selectedSubject}
-                                        setNewNodeNumber={setNewNodeNumber}
-                                        newNodeNumber={newNodeNumber}
-                                        handleChangeType={handleChangeType}
                                     />
                                 )}
                             </div>
@@ -179,7 +184,7 @@ export const AddPlanDialog: React.FC<PropTypes> = ({ open, setOpen, nodes }) => 
                                     fullWidth
                                     onClick={hanldeAddSubjectToPlan}
                                 >
-                                    Add to plan
+                                    Добавить предмет
                                 </Button>
                             </div>
                         </div>

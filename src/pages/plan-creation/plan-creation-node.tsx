@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { IconButton, TableCell, TableRow, TextField, Typography } from '@mui/material';
-import { Node, Plan, Semester, SemesterType } from 'types';
+import { CourseWorkType, Node, Plan, Semester, SemesterType } from 'types';
 import { PlanCreationSemester } from './plan-creation-semester';
 import AddIcon from '@mui/icons-material/Add';
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,6 +10,8 @@ import { useCalculateTotalTests } from 'hooks/useCalculateTests';
 import { makeStyles } from '@mui/styles';
 import { blue, lightGreen, lime } from '@mui/material/colors';
 import { selectSubCompetencies } from 'store/sub-competence/selectors';
+import { AddSemesterDialog } from './plan-creation-add-semester-dialog';
+import { PlanCreationSemesterWork } from './plan-creation-semester-work';
 
 interface PropTypes {
     node: Node;
@@ -35,6 +37,9 @@ export const PlanCreationNode: React.FC<PropTypes> = ({
 }) => {
     const classes = useStyles();
     const dispatch = useDispatch();
+
+    const [open, setOpen] = useState(false);
+
     const associatedSemesters = semesters
         ?.filter((semester) => semester?.idNode?.idNode === node?.idNode)
         .sort((firstSeminar, secondSeminar) => firstSeminar?.number - secondSeminar?.number);
@@ -48,7 +53,7 @@ export const PlanCreationNode: React.FC<PropTypes> = ({
         useCalculateTotalParams(associatedSemesters);
 
     const handleCreateNewSemester = () => {
-        const newSemester: Semester = {
+        /*const newSemester: Semester = {
             courceWorkHours: 0,
             courceWorkZe: 0,
             courseWorkType: null,
@@ -62,7 +67,8 @@ export const PlanCreationNode: React.FC<PropTypes> = ({
             type: SemesterType.Test,
             ze: 0,
         };
-        dispatch(createSemester(newSemester, node));
+        dispatch(createSemester(newSemester, node));*/
+        setOpen(true);
     };
 
     const addSemestersAmount = semestersWeeks?.length - associatedSemesters?.length;
@@ -74,57 +80,70 @@ export const PlanCreationNode: React.FC<PropTypes> = ({
     );
 
     return (
-        <TableRow>
-            <TableCell align="center">{node?.nodeNumber}</TableCell>
-            <TableCell align="center" className={classes.mainCell}>
-                {node?.idSubject?.name}
-            </TableCell>
-            <TableCell align="center" className={classes.mainCell}>
-                {totalExams}
-            </TableCell>
-            <TableCell align="center" className={classes.mainCell}>
-                {totalTests}
-            </TableCell>
-            <TableCell className={classes.mainCell}>{totalRgrs}</TableCell>
+        <>
+            <AddSemesterDialog open={open} setOpen={setOpen} node={node} maxNumber={maxNumber} />
+            <TableRow>
+                <TableCell align="center">{node?.nodeNumber}</TableCell>
+                <TableCell align="center" className={classes.mainCell}>
+                    {node?.idSubject?.name}
+                </TableCell>
+                <TableCell align="center" className={classes.mainCell}>
+                    {totalExams}
+                </TableCell>
+                <TableCell align="center" className={classes.mainCell}>
+                    {totalTests}
+                </TableCell>
+                <TableCell className={classes.mainCell}>{totalRgrs}</TableCell>
 
-            <TableCell align="center" padding="none" className={classes.cell}>
-                {totalClass}
-            </TableCell>
-            <TableCell align="center" padding="none" className={classes.cell}>
-                {totalAuditore}
-            </TableCell>
+                <TableCell align="center" padding="none" className={classes.cell}>
+                    {totalClass}
+                </TableCell>
+                <TableCell align="center" padding="none" className={classes.cell}>
+                    {totalAuditore}
+                </TableCell>
 
-            <TableCell align="center" className={classes.cell}>
-                {totalLecture}
-            </TableCell>
-            <TableCell align="center" className={classes.cell}>
-                {totalLab}
-            </TableCell>
-            <TableCell align="center" className={classes.cell}>
-                {totalPractice}
-            </TableCell>
-            <TableCell align="center" className={classes.cell}>
-                {totalSeminar}
-            </TableCell>
+                <TableCell align="center" className={classes.cell}>
+                    {totalLecture}
+                </TableCell>
+                <TableCell align="center" className={classes.cell}>
+                    {totalLab}
+                </TableCell>
+                <TableCell align="center" className={classes.cell}>
+                    {totalPractice}
+                </TableCell>
+                <TableCell align="center" className={classes.cell}>
+                    {totalSeminar}
+                </TableCell>
 
-            {associatedSemesters?.map((semester) => (
-                <PlanCreationSemester key={semester?.id} semester={semester} />
-            ))}
-            {emptyWeeksSemesers?.map((week) => {
-                return (
-                    <TableCell align="center" key={week?.id}>
-                        {week?.semsteerNumber - 1 === maxNumber ? (
-                            <IconButton onClick={() => handleCreateNewSemester()}>
-                                <AddIcon />
-                            </IconButton>
-                        ) : null}
-                    </TableCell>
-                );
-            })}
-            <TableCell className={classes.cell} align="center">
-                {totalZe}
-            </TableCell>
-            <TableCell>{associatedCompetence?.idCompetence?.shifrCompetence || 'N/A'}</TableCell>
-        </TableRow>
+                {associatedSemesters?.map((semester) => {
+                    return (
+                        <>
+                            {semester?.courseWorkType === CourseWorkType.Project ? (
+                                <PlanCreationSemesterWork key={semester?.id} semester={semester} />
+                            ) : (
+                                <PlanCreationSemester key={semester?.id} semester={semester} />
+                            )}
+                        </>
+                    );
+                })}
+                {emptyWeeksSemesers?.map((week) => {
+                    return (
+                        <TableCell align="center" key={week?.id}>
+                            {week?.semsteerNumber - 1 === maxNumber ? (
+                                <IconButton onClick={() => handleCreateNewSemester()}>
+                                    <AddIcon />
+                                </IconButton>
+                            ) : null}
+                        </TableCell>
+                    );
+                })}
+                <TableCell className={classes.cell} align="center">
+                    {totalZe}
+                </TableCell>
+                <TableCell>
+                    {associatedCompetence?.idCompetence?.shifrCompetence || 'N/A'}
+                </TableCell>
+            </TableRow>
+        </>
     );
 };

@@ -14,7 +14,7 @@ export const ExistSubjectForm: React.FC<any> = ({
     return (
         <>
             <FieldContainer>
-                <Typography>Select subject</Typography>
+                <Typography>Выберете предмет</Typography>
                 <Select fullWidth size="small" value={selectedSubject} onChange={handleChangeType}>
                     {subjects?.map((subject) => (
                         <MenuItem key={subject?.id} value={subject?.id}>
@@ -24,7 +24,7 @@ export const ExistSubjectForm: React.FC<any> = ({
                 </Select>
             </FieldContainer>
             <FieldContainer>
-                <Typography>Node number</Typography>
+                <Typography>Номер в плане</Typography>
                 <TextField
                     value={newNodeNumber}
                     onChange={(e) => setNewNodeNumber(e.target.value)}

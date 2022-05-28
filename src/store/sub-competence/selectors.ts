@@ -1,6 +1,6 @@
 import { ApplicationState } from 'store';
 import { createSelector } from 'reselect';
-import { SubCompetence, Subject } from 'types';
+import { SubCompetence } from 'types';
 
 const getSubCompetencies = (state: ApplicationState): SubCompetence[] =>
     state.subCompetence.subCompetencies;

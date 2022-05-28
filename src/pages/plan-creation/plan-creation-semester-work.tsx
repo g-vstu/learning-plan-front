@@ -23,7 +23,7 @@ const useStyles = makeStyles({
     },
 });
 
-export const PlanCreationSemester: React.FC<PropTypes> = ({ semester }) => {
+export const PlanCreationSemesterWork: React.FC<PropTypes> = ({ semester }) => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const [semesterData, setSemesterData] = useState(semester);
@@ -91,67 +91,25 @@ export const PlanCreationSemester: React.FC<PropTypes> = ({ semester }) => {
             <TableCell padding="none" style={{ border: 'none' }}>
                 <TableRow>
                     <TableCell align="center" size="small">
-                        Итог
+                        Часы
                     </TableCell>
                     <TableCell align="center" colSpan={4}>
-                        Итог звонки
-                    </TableCell>
-                </TableRow>
-                <TableRow>
-                    <TableCell align="center" className={classes.cell}>
-                        {totalHours}
-                    </TableCell>
-                    <TableCell align="center" colSpan={4} className={classes.cell}>
-                        {subTotal}
+                        Зачетные единицы
                     </TableCell>
                 </TableRow>
                 <TableRow>
                     <TableEditCell
                         editMode={editMode}
-                        name="selfeducation"
-                        value={semesterData?.selfeducation}
+                        name="courceWorkHours"
+                        value={semesterData?.courceWorkHours}
                         handleUpdateSemester={handleUpdateSemester}
                     />
                     <TableEditCell
                         editMode={editMode}
-                        name="lecture"
-                        value={semesterData?.lecture}
+                        name="courceWorkZe"
+                        value={semesterData?.courceWorkZe}
                         handleUpdateSemester={handleUpdateSemester}
                     />
-                    <TableEditCell
-                        editMode={editMode}
-                        name="practice"
-                        value={semesterData?.practice}
-                        handleUpdateSemester={handleUpdateSemester}
-                    />
-                    <TableEditCell
-                        editMode={editMode}
-                        name="seminar"
-                        value={semesterData?.seminar}
-                        handleUpdateSemester={handleUpdateSemester}
-                    />
-                    <TableEditCell
-                        editMode={editMode}
-                        name="laboratory"
-                        value={semesterData?.laboratory}
-                        handleUpdateSemester={handleUpdateSemester}
-                    />
-                    <TableEditCell
-                        editMode={editMode}
-                        name="ze"
-                        value={semesterData?.ze}
-                        handleUpdateSemester={handleUpdateSemester}
-                    />
-                </TableRow>
-                <TableRow style={{ padding: 0 }}>
-                    <TableCell padding="none" size="small">
-                        самост
-                    </TableCell>
-                    <TableCell padding="none">лк</TableCell>
-                    <TableCell padding="none">пр</TableCell>
-                    <TableCell padding="none">сем</TableCell>
-                    <TableCell padding="none">лб</TableCell>
-                    <TableCell padding="none">зе</TableCell>
                 </TableRow>
             </TableCell>
         </TableCell>

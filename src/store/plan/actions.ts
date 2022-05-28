@@ -1,7 +1,7 @@
 import { ThunkAction } from 'redux-thunk';
 import { Action, Dispatch } from 'redux';
 import { RootState } from 'store';
-import { CREATE_PLAN, GET_PLANS } from './types';
+import { CREATE_PLAN, GET_PLANS, SET_CURRENT_PLAN } from './types';
 import { createPlanRequest, fetchPlan, fetchPlans } from './services';
 import { Node, Plan, Semester, Speciality } from 'types';
 import { fetchNodes } from 'store/node/services';
@@ -61,6 +61,7 @@ export const getGlobalPlan = (
             const speciality: Speciality = await fetchSpeciality(necessaryPlan?.idSpeciality?.id);
 
             const plans: Plan[] = await fetchPlans();
+
             const plansWithAssociatedSpeciality = plans.filter(
                 (plan) => plan?.idSpeciality?.id === speciality?.id
             );
@@ -91,6 +92,10 @@ export const getGlobalPlan = (
             dispatch({
                 type: SET_CURRENT_SPECIALITY.success,
                 payload: { speciality },
+            });
+            dispatch({
+                type: SET_CURRENT_PLAN.success,
+                payload: { currentPlan: necessaryPlan },
             });
         } catch (error) {
             dispatch({

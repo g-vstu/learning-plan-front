@@ -30,15 +30,17 @@ export const GroupUnits: React.FC<PropTypes> = ({ groupUnits }) => {
         {
             field: 'name',
             width: 140,
+            headerName: 'Имя',
         },
         {
             field: 'unitNumber',
             width: 140,
+            headerName: 'Номер',
         },
         {
             field: 'idGroupComponents.name',
             width: 140,
-            headerName: 'Component',
+            headerName: 'Компонент',
         },
     ];
 
@@ -46,9 +48,9 @@ export const GroupUnits: React.FC<PropTypes> = ({ groupUnits }) => {
         <>
             <AddGroupUnitDialog open={open} setOpen={setOpen} />
             <OverviewHeader>
-                <OverviewTitle>Group Units</OverviewTitle>
+                <OverviewTitle>Модули</OverviewTitle>
                 <Button variant="contained" onClick={() => setOpen(true)}>
-                    Add group unit
+                    Добавить модуль
                 </Button>
             </OverviewHeader>
             <div style={defaultSize} className={defaultTheme}>

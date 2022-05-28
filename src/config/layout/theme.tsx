@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import { Container, CssBaseline } from '@mui/material';
 import { createTheme, ThemeProvider as MUIThemeProvider } from '@mui/material/styles';
+import { hover } from '@testing-library/user-event/dist/hover';
 
 export const theme = createTheme({
     typography: {
@@ -11,9 +12,15 @@ export const theme = createTheme({
             styleOverrides: {
                 root: {
                     border: '1px solid black',
+                    padding: 8,
+                    fontSize: 12,
+                    '&:hover': {
+                        //backgroundColor: '#80deea',
+                    },
                 },
             },
         },
+
         MuiContainer: {
             styleOverrides: {
                 root: {

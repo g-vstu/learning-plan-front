@@ -1,20 +1,18 @@
 import React, { useRef, useState } from 'react';
 import { Button } from '@mui/material';
-import { defaultColDef, defaultSize, defaultTheme, PREFIX } from 'config/constants';
+import { defaultColDef, defaultSize, defaultTheme } from 'config/constants';
 import { AgGridReact } from '@ag-grid-community/react';
-import { Plan } from 'types';
-import { useHistory } from 'react-router-dom';
+import { GroupUnit, SubCompetence } from 'types';
 import { useAgGridModules } from 'hooks/useAgGridModules';
 import { OverviewHeader } from 'components/overview-header';
 import { OverviewTitle } from 'components/overview-title';
-import { AddPlanDialog } from './add-plan-dialog';
+import { AddCompetenceDialog } from './add-competency-dialog';
 
 interface PropTypes {
-    plans: Plan[];
+    subCompetencies: SubCompetence[];
 }
 
-export const Plans: React.FC<PropTypes> = ({ plans }) => {
-    const history = useHistory();
+export const Competencies: React.FC<PropTypes> = ({ subCompetencies }) => {
     const { modules } = useAgGridModules();
     const gridRef = useRef();
 
@@ -28,41 +26,40 @@ export const Plans: React.FC<PropTypes> = ({ plans }) => {
         setGridColumnApi(params.columnApi);
     };
 
-    const plansColumns = [
+    const specialititesColumns = [
         {
-            field: 'learnYear',
+            field: 'idCompetence.shifrCompetence',
             width: 140,
-            headerName: 'Года обучения',
+            headerName: 'Шифр',
         },
         {
-            field: 'educationForm',
+            field: 'idCompetence.nameCompetence',
             width: 140,
-            headerName: 'Форма обучения',
+            headerName: 'Название',
         },
         {
-            field: 'idSpeciality.name',
+            field: 'idSubject.name',
             width: 140,
-            headerName: 'Специальность',
+            headerName: 'Предмет',
         },
     ];
 
     return (
         <>
-            <AddPlanDialog open={open} setOpen={setOpen} />
+            <AddCompetenceDialog open={open} setOpen={setOpen} />
             <OverviewHeader>
-                <OverviewTitle>Планы</OverviewTitle>
+                <OverviewTitle>Компетенции</OverviewTitle>
                 <Button variant="contained" onClick={() => setOpen(true)}>
-                    Добавить план
+                    Добавить компетенцию
                 </Button>
             </OverviewHeader>
             <div style={defaultSize} className={defaultTheme}>
                 <AgGridReact
                     ref={gridRef}
                     modules={modules}
-                    onCellClicked={(e) => history.push(`/${PREFIX}/plan-creation/${e.data?.id}`)}
-                    rowData={plans}
+                    rowData={subCompetencies}
                     enableRangeSelection={true}
-                    columnDefs={plansColumns}
+                    columnDefs={specialititesColumns}
                     defaultColDef={defaultColDef}
                     onGridReady={onGridReady}
                     cacheQuickFilter={true}

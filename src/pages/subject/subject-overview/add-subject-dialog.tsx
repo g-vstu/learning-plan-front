@@ -58,7 +58,7 @@ export const AddSubjectDialog: React.FC<any> = ({ open, setOpen, groupUnits }) =
                                     <Grid container>
                                         <Grid item xs={9}>
                                             <Typography fontWeight={700} variant="h5">
-                                                Add subject from
+                                                Добавить предмет
                                             </Typography>
                                         </Grid>
                                         <Grid item xs={3}>
@@ -76,7 +76,7 @@ export const AddSubjectDialog: React.FC<any> = ({ open, setOpen, groupUnits }) =
                                     </Grid>
                                 </FieldContainer>
                                 <FieldContainer>
-                                    <Typography>Name</Typography>
+                                    <Typography>Предмет</Typography>
                                     <TextField
                                         name="name"
                                         value={newSubject.name}
@@ -86,7 +86,7 @@ export const AddSubjectDialog: React.FC<any> = ({ open, setOpen, groupUnits }) =
                                     />
                                 </FieldContainer>
                                 <FieldContainer>
-                                    <Typography>Shifr</Typography>
+                                    <Typography>Шифр</Typography>
                                     <TextField
                                         name="shifr"
                                         value={newSubject.shifr}
@@ -96,7 +96,7 @@ export const AddSubjectDialog: React.FC<any> = ({ open, setOpen, groupUnits }) =
                                     />
                                 </FieldContainer>
                                 <FieldContainer>
-                                    <Typography>Select group unit</Typography>
+                                    <Typography>Выберете модуль</Typography>
                                     <Select
                                         fullWidth
                                         size="small"
@@ -113,7 +113,7 @@ export const AddSubjectDialog: React.FC<any> = ({ open, setOpen, groupUnits }) =
                             </div>
                             <div style={{ marginTop: 30 }}>
                                 <Button fullWidth onClick={handleAddSubject} variant="contained">
-                                    Add Subject
+                                    Добавить предмет
                                 </Button>
                             </div>
                         </div>

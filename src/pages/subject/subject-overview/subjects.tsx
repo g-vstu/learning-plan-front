@@ -33,20 +33,22 @@ export const Subjects: React.FC<PropTypes> = ({ subjects, groupUnits }) => {
         {
             field: 'shifr',
             width: 140,
+            headerName: 'Шифр',
         },
         {
             field: 'name',
             width: 140,
+            headerName: 'Название',
         },
         {
             field: 'idUnit.name',
             width: 140,
-            headerName: 'Unit',
+            headerName: 'Модуль',
         },
         {
             field: 'idUnit.idGroupComponents.name',
             width: 140,
-            headerName: 'Component',
+            headerName: 'Компонент',
         },
     ];
 
@@ -54,9 +56,9 @@ export const Subjects: React.FC<PropTypes> = ({ subjects, groupUnits }) => {
         <>
             <AddSubjectDialog open={open} setOpen={setOpen} groupUnits={groupUnits} />
             <OverviewHeader>
-                <OverviewTitle>Subjects</OverviewTitle>
+                <OverviewTitle>Предметы</OverviewTitle>
                 <Button variant="contained" onClick={() => setOpen(true)}>
-                    Add subject
+                    Добавить предмет
                 </Button>
             </OverviewHeader>
 

@@ -19,6 +19,7 @@ import { PREFIX } from 'config/constants';
 import { TableSemesterCell } from './plan-creation-table/table-semester.cell';
 import { useSelector } from 'react-redux';
 import { selectSubjects } from 'store/subject/selectors';
+import { makeStyles } from '@mui/styles';
 import { PlanCreationMain } from './plan-creation-main';
 import { AddPlanDialog } from './plan-creation-add-subject/add-plan-subject';
 import { AddGroupUnitDialog } from 'pages/group-unit/add-group-unit-dialog';
@@ -28,6 +29,24 @@ interface PropTypes {
     semesters: Semester[];
     nodes: Node[];
 }
+
+const useStyles = makeStyles({
+    table: {
+        borderRadius: 5,
+        fontSize: 12,
+        fontWeight: 'normal',
+        border: 'none',
+        borderCollapse: 'collapse',
+        width: '100%',
+        maxWidth: '100%',
+        whiteSpace: 'nowrap',
+        backgroundColor: 'white',
+    },
+    header: {
+        textAlign: 'center',
+        padding: 8,
+    },
+});
 
 const semestersWeeks = [
     { id: 1, semsteerNumber: 1, semesterWeeks: 17 },
@@ -41,6 +60,7 @@ const semestersWeeks = [
 ];
 
 export const PlanCreation: React.FC<PropTypes> = ({ plans, semesters, nodes }) => {
+    const classes = useStyles();
     const history = useHistory();
     const [open, setOpen] = useState(false);
     const [openUnitDialog, setOpenUnitDialog] = useState(false);
@@ -116,16 +136,20 @@ export const PlanCreation: React.FC<PropTypes> = ({ plans, semesters, nodes }) =
                         style={{ marginRight: 10 }}
                         onClick={() => setOpenUnitDialog(true)}
                     >
-                        Add group unit
+                        Добавить модуль
                     </Button>
                     <Button variant="contained" onClick={() => setOpen(true)}>
-                        Add subject
+                        Добавить предмет
                     </Button>
                 </div>
             </DetailsNavigationContainer>
             <Paper style={{ overflow: 'auto' }}>
-                <TableContainer>
-                    <Table>
+                <TableContainer
+                    style={{
+                        boxShadow: '0px 35px 50px rgba( 0, 0, 0, 0.2 )',
+                    }}
+                >
+                    <Table className={classes.table}>
                         <TableHead>
                             <TableRow>
                                 <TableCell>№ п/п</TableCell>
@@ -161,7 +185,6 @@ export const PlanCreation: React.FC<PropTypes> = ({ plans, semesters, nodes }) =
                                 semestersWeeks={semestersWeeks}
                                 groupComponent={GroupComponentName.GovComponent}
                             />
-                            <Divider />
                             <PlanCreationMain
                                 associatedNodes={highEduNodes}
                                 associatedSemesters={highEduSemesters}
@@ -171,7 +194,6 @@ export const PlanCreation: React.FC<PropTypes> = ({ plans, semesters, nodes }) =
                                 semestersWeeks={semestersWeeks}
                                 groupComponent={GroupComponentName.HighEduComponent}
                             />
-                            <Divider />
                             <PlanCreationMain
                                 associatedNodes={optionalEduNodes}
                                 associatedSemesters={optionalEduSemesters}
@@ -181,7 +203,6 @@ export const PlanCreation: React.FC<PropTypes> = ({ plans, semesters, nodes }) =
                                 semestersWeeks={semestersWeeks}
                                 groupComponent={GroupComponentName.OptionalComponent}
                             />
-                            <Divider />
                             <PlanCreationMain
                                 associatedNodes={additionalNodes}
                                 associatedSemesters={additionalSemesters}

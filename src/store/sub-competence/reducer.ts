@@ -1,6 +1,6 @@
 import { Reducer } from 'redux';
 import { SubCompetenceState } from 'types';
-import { GET_SUB_COMPETENCIES } from './types';
+import { CREATE_SUB_COMPETENCE, GET_SUB_COMPETENCIES } from './types';
 
 const initialState: SubCompetenceState = {
     subCompetencies: [],
@@ -20,6 +20,9 @@ const subCompetenceReducer: Reducer<SubCompetenceState> = (
             return onGetSubCompetenceSuccess(state, action.payload);
         case GET_SUB_COMPETENCIES.failure:
             return onGetSubCompetenceFailure(state, action.payload);
+
+        case CREATE_SUB_COMPETENCE.success:
+            return onCreateSubCompetenceSuccess(state, action.payload);
 
         default:
             return state;
@@ -44,5 +47,12 @@ const onGetSubCompetenceFailure = (state: SubCompetenceState, payload): SubCompe
     loading: false,
     error: payload.error,
 });
+
+const onCreateSubCompetenceSuccess = (state: SubCompetenceState, payload): SubCompetenceState => {
+    return {
+        ...state,
+        subCompetencies: [...state.subCompetencies, payload.subCompetence],
+    };
+};
 
 export default subCompetenceReducer;

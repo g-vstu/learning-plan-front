@@ -58,7 +58,7 @@ export const AddPlanDialog: React.FC<any> = ({ open, setOpen }) => {
 
     return (
         <>
-            <Dialog open={open} onClose={() => setOpen(false)} maxWidth="xs" fullWidth>
+            <Dialog open={open} onClose={() => setOpen(false)} maxWidth="md" fullWidth>
                 <DialogContent>
                     <Container style={{ marginTop: 0, paddingTop: 20, paddingBottom: 30 }}>
                         <div
@@ -74,7 +74,7 @@ export const AddPlanDialog: React.FC<any> = ({ open, setOpen }) => {
                                     <Grid container>
                                         <Grid item xs={9}>
                                             <Typography fontWeight={700} variant="h5">
-                                                Add plan
+                                                Добавить план
                                             </Typography>
                                         </Grid>
                                         <Grid item xs={3}>
@@ -92,10 +92,7 @@ export const AddPlanDialog: React.FC<any> = ({ open, setOpen }) => {
                                     </Grid>
                                 </FieldContainer>
                                 <FieldContainer>
-                                    <Typography>Plan form</Typography>
-                                </FieldContainer>
-                                <FieldContainer>
-                                    <Typography>Select speciality</Typography>
+                                    <Typography>Выберете специальность</Typography>
                                     <Select
                                         fullWidth
                                         size="small"
@@ -110,7 +107,7 @@ export const AddPlanDialog: React.FC<any> = ({ open, setOpen }) => {
                                     </Select>
                                 </FieldContainer>
                                 <FieldContainer>
-                                    <Typography>Diplom weeks</Typography>
+                                    <Typography>Недели диплома</Typography>
                                     <TextField
                                         name="diplomC2ountWeek"
                                         value={newPlan.diplomC2ountWeek}
@@ -120,7 +117,7 @@ export const AddPlanDialog: React.FC<any> = ({ open, setOpen }) => {
                                     />
                                 </FieldContainer>
                                 <FieldContainer>
-                                    <Typography>Id semester</Typography>
+                                    <Typography>Семестр</Typography>
                                     <TextField
                                         name="diplomIdSemestr"
                                         value={newPlan.diplomIdSemestr}
@@ -130,7 +127,7 @@ export const AddPlanDialog: React.FC<any> = ({ open, setOpen }) => {
                                     />
                                 </FieldContainer>
                                 <FieldContainer>
-                                    <Typography>Diplom name</Typography>
+                                    <Typography>Имя диплома</Typography>
                                     <TextField
                                         name="diplomName"
                                         value={newPlan.diplomName}
@@ -140,7 +137,7 @@ export const AddPlanDialog: React.FC<any> = ({ open, setOpen }) => {
                                     />
                                 </FieldContainer>
                                 <FieldContainer>
-                                    <Typography>Diplom ZE</Typography>
+                                    <Typography>Диплом зе</Typography>
                                     <TextField
                                         name="diplomZe"
                                         value={newPlan.diplomZe}
@@ -150,7 +147,7 @@ export const AddPlanDialog: React.FC<any> = ({ open, setOpen }) => {
                                     />
                                 </FieldContainer>
                                 <FieldContainer>
-                                    <Typography>Education Form</Typography>
+                                    <Typography>форма обучения</Typography>
                                     <TextField
                                         name="educationForm"
                                         value={newPlan.educationForm}
@@ -160,7 +157,7 @@ export const AddPlanDialog: React.FC<any> = ({ open, setOpen }) => {
                                     />
                                 </FieldContainer>
                                 <FieldContainer>
-                                    <Typography>Enrollment Year</Typography>
+                                    <Typography>Год принятия</Typography>
                                     <TextField
                                         name="enrollmentYear"
                                         value={newPlan.enrollmentYear}
@@ -170,7 +167,7 @@ export const AddPlanDialog: React.FC<any> = ({ open, setOpen }) => {
                                     />
                                 </FieldContainer>
                                 <FieldContainer>
-                                    <Typography>Gov Exam</Typography>
+                                    <Typography>Экзамены</Typography>
                                     <TextField
                                         name="govExam"
                                         value={newPlan.govExam}
@@ -180,7 +177,7 @@ export const AddPlanDialog: React.FC<any> = ({ open, setOpen }) => {
                                     />
                                 </FieldContainer>
                                 <FieldContainer>
-                                    <Typography>Learn Year</Typography>
+                                    <Typography>Года обучения</Typography>
                                     <TextField
                                         name="learnYear"
                                         value={newPlan.learnYear}
@@ -190,7 +187,7 @@ export const AddPlanDialog: React.FC<any> = ({ open, setOpen }) => {
                                     />
                                 </FieldContainer>
                                 <FieldContainer>
-                                    <Typography>Reg Number</Typography>
+                                    <Typography>Регестрационный номер</Typography>
                                     <TextField
                                         name="regNumber"
                                         value={newPlan.regNumber}
@@ -200,7 +197,7 @@ export const AddPlanDialog: React.FC<any> = ({ open, setOpen }) => {
                                     />
                                 </FieldContainer>
                                 <FieldContainer>
-                                    <Typography>Utv Date</Typography>
+                                    <Typography>Дата утверждения</Typography>
                                     <TextField
                                         name="utvDate"
                                         value={newPlan.utvDate}
@@ -212,7 +209,7 @@ export const AddPlanDialog: React.FC<any> = ({ open, setOpen }) => {
                             </div>
                             <div style={{ marginTop: 30 }}>
                                 <Button fullWidth onClick={handleCreatePlan} variant="contained">
-                                    Add Speciality
+                                    Добавить план
                                 </Button>
                             </div>
                         </div>

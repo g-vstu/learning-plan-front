@@ -11,6 +11,7 @@ import SubjectIcon from '@mui/icons-material/Subject';
 import FilterNoneIcon from '@mui/icons-material/FilterNone';
 import PictureInPictureIcon from '@mui/icons-material/PictureInPicture';
 import SourceIcon from '@mui/icons-material/Source';
+import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 
 export const SideBar = (props) => {
     return (
@@ -21,19 +22,27 @@ export const SideBar = (props) => {
                 style={{ display: 'flex' }}
             >
                 <FolderSpecialIcon />
-                <Typography style={{ marginLeft: 5 }}>Specialities</Typography>
+                <Typography style={{ marginLeft: 5 }}>Специальности</Typography>
             </ListItemButton>
             <ListItemButton component={Link} to={`/${PREFIX}/subjects`} style={{ display: 'flex' }}>
                 <SubjectIcon />
-                <Typography style={{ marginLeft: 5 }}>Subjects</Typography>
+                <Typography style={{ marginLeft: 5 }}>Предметы</Typography>
             </ListItemButton>
             <ListItemButton component={Link} to={`/${PREFIX}/units`} style={{ display: 'flex' }}>
                 <PictureInPictureIcon />
-                <Typography style={{ marginLeft: 5 }}>Group Units</Typography>
+                <Typography style={{ marginLeft: 5 }}>Модули</Typography>
             </ListItemButton>
             <ListItemButton component={Link} to={`/${PREFIX}/plans`} style={{ display: 'flex' }}>
                 <SourceIcon />
-                <Typography style={{ marginLeft: 5 }}>Plans</Typography>
+                <Typography style={{ marginLeft: 5 }}>Планы</Typography>
+            </ListItemButton>
+            <ListItemButton
+                component={Link}
+                to={`/${PREFIX}/competencies`}
+                style={{ display: 'flex' }}
+            >
+                <ChatBubbleIcon />
+                <Typography style={{ marginLeft: 5 }}>Компетенции</Typography>
             </ListItemButton>
         </Menu>
     );
