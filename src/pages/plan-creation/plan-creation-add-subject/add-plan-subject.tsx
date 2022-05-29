@@ -15,7 +15,6 @@ import CloseIcon from '@mui/icons-material/Close';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectSubjects } from 'store/subject/selectors';
 import { selectCurrentPlan, selectPlans } from 'store/plan/selectors';
-import { selectCurrentSpeciality } from 'store/speciality/selectors';
 import { Node } from 'types';
 import { createNode, createNodeWithNewSubject } from 'store/node/actions';
 import { ExistSubjectForm } from './exist-subject-form';

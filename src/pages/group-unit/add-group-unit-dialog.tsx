@@ -59,9 +59,9 @@ export const AddGroupUnitDialog: React.FC<any> = ({ open, setOpen }) => {
                             <FieldContainer>
                                 <Grid container>
                                     <Grid item xs={9}>
-                                        <Typography fontWeight={700} variant="h5">
-                                            Add Group Unit
-                                        </Typography>
+                                    <Typography fontWeight={700} variant="h5">
+                                                Добавить модуль
+                                            </Typography>
                                     </Grid>
                                     <Grid item xs={3}>
                                         <div
@@ -78,7 +78,7 @@ export const AddGroupUnitDialog: React.FC<any> = ({ open, setOpen }) => {
                                 </Grid>
                             </FieldContainer>
                             <FieldContainer>
-                                <Typography>Name</Typography>
+                                <Typography>Название</Typography>
                                 <TextField
                                     name="name"
                                     value={newGroupUnit.name}
@@ -88,7 +88,7 @@ export const AddGroupUnitDialog: React.FC<any> = ({ open, setOpen }) => {
                                 />
                             </FieldContainer>
                             <FieldContainer>
-                                <Typography>Shifr</Typography>
+                                <Typography>Шифр</Typography>
                                 <TextField
                                     name="unitNumber"
                                     value={newGroupUnit.unitNumber}
@@ -98,7 +98,7 @@ export const AddGroupUnitDialog: React.FC<any> = ({ open, setOpen }) => {
                                 />
                             </FieldContainer>
                             <FieldContainer>
-                                <Typography>Select group component</Typography>
+                                <Typography>Выберете компонент</Typography>
                                 <Select
                                     fullWidth
                                     size="small"
@@ -118,7 +118,7 @@ export const AddGroupUnitDialog: React.FC<any> = ({ open, setOpen }) => {
                         </div>
                         <div style={{ marginTop: 30 }}>
                             <Button fullWidth onClick={handleAddGroupUnit} variant="contained">
-                                Add Group Unit
+                                Добавить модуль
                             </Button>
                         </div>
                     </div>
