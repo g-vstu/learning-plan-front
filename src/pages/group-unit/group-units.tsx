@@ -1,5 +1,5 @@
-import React, { useRef, useState } from 'react';
-import { Button } from '@mui/material';
+import React, { useCallback, useRef, useState } from 'react';
+import { Button, TextField } from '@mui/material';
 import { defaultColDef, defaultSize, defaultTheme } from 'config/constants';
 import { AgGridReact } from '@ag-grid-community/react';
 import { GroupUnit } from 'types';
@@ -7,6 +7,7 @@ import { useAgGridModules } from 'hooks/useAgGridModules';
 import { OverviewHeader } from 'components/overview-header';
 import { OverviewTitle } from 'components/overview-title';
 import { AddGroupUnitDialog } from './add-group-unit-dialog';
+import { Search as SearchIcon } from '@mui/icons-material';
 
 interface PropTypes {
     groupUnits: GroupUnit[];
@@ -44,11 +45,30 @@ export const GroupUnits: React.FC<PropTypes> = ({ groupUnits }) => {
         },
     ];
 
+    const onFilterTextBoxChanged = useCallback(() => {
+        (gridRef.current as any).api.setQuickFilter(
+            (document.getElementById('filter-text-box') as HTMLInputElement).value
+        );
+    }, []);
+
     return (
         <>
             <AddGroupUnitDialog open={open} setOpen={setOpen} />
             <OverviewHeader>
-                <OverviewTitle>Модули</OverviewTitle>
+            <div style={{ display: 'flex' }}>
+                    <TextField
+                        id="filter-text-box"
+                        variant="outlined"
+                        onInput={onFilterTextBoxChanged}
+                        size="small"
+                        style={{ marginRight: 15 }}
+                        InputProps={{
+                            endAdornment: <SearchIcon />,
+                        }}
+                        placeholder="Search"
+                    />
+                    <OverviewTitle>Модули</OverviewTitle>
+                </div>
                 <Button variant="contained" onClick={() => setOpen(true)}>
                     Добавить модуль
                 </Button>

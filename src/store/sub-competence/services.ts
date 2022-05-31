@@ -8,7 +8,8 @@ export const fetchSubCompetencies = async () => {
 
 export const createSubCimpetenceRequest = async (competenceId, subjectId) => {
     const { data: newSubCompetency } = await instance.post(
-        `${DEVELOPMENT}/sub_competence?competenceId=${competenceId}&subjectId=${subjectId}`, {}
+        `${DEVELOPMENT}/sub_competence?competenceId=${competenceId}&subjectId=${subjectId}`,
+        {}
     );
     return newSubCompetency;
 };

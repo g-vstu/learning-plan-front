@@ -1,13 +1,14 @@
-import React, { useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useAgGridModules } from 'hooks/useAgGridModules';
 import { defaultColDef, defaultSize, defaultTheme, PREFIX } from 'config/constants';
 import { AgGridReact } from '@ag-grid-community/react';
 import { GroupUnit, Subject } from 'types';
-import { Button } from '@mui/material';
+import { Button, TextField } from '@mui/material';
 import { OverviewHeader } from 'components/overview-header';
 import { OverviewTitle } from 'components/overview-title';
 import { AddSubjectDialog } from './add-subject-dialog';
+import { Search as SearchIcon } from '@mui/icons-material';
 
 interface PropTypes {
     subjects: Subject[];
@@ -52,11 +53,30 @@ export const Subjects: React.FC<PropTypes> = ({ subjects, groupUnits }) => {
         },
     ];
 
+    const onFilterTextBoxChanged = useCallback(() => {
+        (gridRef.current as any).api.setQuickFilter(
+            (document.getElementById('filter-text-box') as HTMLInputElement).value
+        );
+    }, []);
+
     return (
         <>
             <AddSubjectDialog open={open} setOpen={setOpen} groupUnits={groupUnits} />
             <OverviewHeader>
-                <OverviewTitle>Предметы</OverviewTitle>
+                <div style={{ display: 'flex' }}>
+                <TextField
+                        id="filter-text-box"
+                        variant="outlined"
+                        onInput={onFilterTextBoxChanged}
+                        size="small"
+                        style={{ marginRight: 15 }}
+                        InputProps={{
+                            endAdornment: <SearchIcon />,
+                        }}
+                        placeholder="Search"
+                    />
+                     <OverviewTitle>Предметы</OverviewTitle>
+                </div>
                 <Button variant="contained" onClick={() => setOpen(true)}>
                     Добавить предмет
                 </Button>

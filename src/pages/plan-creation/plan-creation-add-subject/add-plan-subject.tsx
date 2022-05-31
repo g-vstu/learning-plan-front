@@ -84,6 +84,7 @@ export const AddPlanDialog: React.FC<PropTypes> = ({ open, setOpen, nodes }) => 
         if (checkFiltered) {
             console.log('error');
         } else {
+            debugger;
             if (!isNewSubject) {
                 if (!checkFiltered) {
                     const node = {
@@ -107,6 +108,8 @@ export const AddPlanDialog: React.FC<PropTypes> = ({ open, setOpen, nodes }) => 
 
     const onTabChange = (event, newValue) => {
         setTabValue(newValue);
+        const reslut = newValue === TABS.EXISTING_SUBJECT.value ? false : true;
+        setIsNewSubject(reslut);
     };
 
     return (

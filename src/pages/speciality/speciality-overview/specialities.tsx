@@ -1,5 +1,5 @@
-import React, { useRef, useState } from 'react';
-import { Button } from '@mui/material';
+import React, { useCallback, useRef, useState } from 'react';
+import { Button, TextField } from '@mui/material';
 import { defaultColDef, defaultSize, defaultTheme } from 'config/constants';
 import { AgGridReact } from '@ag-grid-community/react';
 import { Speciality } from 'types';
@@ -8,6 +8,7 @@ import { useAgGridModules } from 'hooks/useAgGridModules';
 import { OverviewHeader } from 'components/overview-header';
 import { OverviewTitle } from 'components/overview-title';
 import { AddSpecialityDialog } from './add-speciality-dialog';
+import { Search as SearchIcon } from '@mui/icons-material';
 
 interface PropTypes {
     specialities: Speciality[];
@@ -41,11 +42,30 @@ export const Specialities: React.FC<PropTypes> = ({ specialities }) => {
         },
     ];
 
+    const onFilterTextBoxChanged = useCallback(() => {
+        (gridRef.current as any).api.setQuickFilter(
+            (document.getElementById('filter-text-box') as HTMLInputElement).value
+        );
+    }, []);
+
     return (
         <>
             <AddSpecialityDialog open={open} setOpen={setOpen} />
             <OverviewHeader>
-                <OverviewTitle>Специальности</OverviewTitle>
+                <div style={{ display: 'flex' }}>
+                    <TextField
+                        id="filter-text-box"
+                        variant="outlined"
+                        onInput={onFilterTextBoxChanged}
+                        size="small"
+                        style={{ marginRight: 15 }}
+                        InputProps={{
+                            endAdornment: <SearchIcon />,
+                        }}
+                        placeholder="Search"
+                    />
+                    <OverviewTitle>Специальности</OverviewTitle>
+                </div>
                 <Button variant="contained" onClick={() => setOpen(true)}>
                     Добавить специальность
                 </Button>

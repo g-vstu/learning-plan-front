@@ -5,6 +5,7 @@
   "dependencies": {
     "@ag-grid-community/client-side-row-model": "^27.3.0",
     "@ag-grid-community/react": "^27.3.0",
+    "@ag-grid-enterprise/set-filter": "^27.3.0",
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
     "@mui/icons-material": "^5.6.2",

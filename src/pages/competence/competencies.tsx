@@ -1,5 +1,5 @@
-import React, { useRef, useState } from 'react';
-import { Button } from '@mui/material';
+import React, { useCallback, useRef, useState } from 'react';
+import { Button, TextField } from '@mui/material';
 import { defaultColDef, defaultSize, defaultTheme } from 'config/constants';
 import { AgGridReact } from '@ag-grid-community/react';
 import { GroupUnit, SubCompetence } from 'types';
@@ -7,6 +7,7 @@ import { useAgGridModules } from 'hooks/useAgGridModules';
 import { OverviewHeader } from 'components/overview-header';
 import { OverviewTitle } from 'components/overview-title';
 import { AddCompetenceDialog } from './add-competency-dialog';
+import { Search as SearchIcon } from '@mui/icons-material';
 
 interface PropTypes {
     subCompetencies: SubCompetence[];
@@ -44,11 +45,30 @@ export const Competencies: React.FC<PropTypes> = ({ subCompetencies }) => {
         },
     ];
 
+    const onFilterTextBoxChanged = useCallback(() => {
+        (gridRef.current as any).api.setQuickFilter(
+            (document.getElementById('filter-text-box') as HTMLInputElement).value
+        );
+    }, []);
+
     return (
         <>
             <AddCompetenceDialog open={open} setOpen={setOpen} />
             <OverviewHeader>
-                <OverviewTitle>Компетенции</OverviewTitle>
+                <div style={{ display: 'flex' }}>
+                    <TextField
+                        id="filter-text-box"
+                        variant="outlined"
+                        onInput={onFilterTextBoxChanged}
+                        size="small"
+                        style={{ marginRight: 15 }}
+                        InputProps={{
+                            endAdornment: <SearchIcon />,
+                        }}
+                        placeholder="Search"
+                    />
+                    <OverviewTitle>Компетенции</OverviewTitle>
+                </div>
                 <Button variant="contained" onClick={() => setOpen(true)}>
                     Добавить компетенцию
                 </Button>

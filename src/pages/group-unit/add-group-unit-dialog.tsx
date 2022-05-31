@@ -59,9 +59,9 @@ export const AddGroupUnitDialog: React.FC<any> = ({ open, setOpen }) => {
                             <FieldContainer>
                                 <Grid container>
                                     <Grid item xs={9}>
-                                    <Typography fontWeight={700} variant="h5">
-                                                Добавить модуль
-                                            </Typography>
+                                        <Typography fontWeight={700} variant="h5">
+                                            Добавить модуль
+                                        </Typography>
                                     </Grid>
                                     <Grid item xs={3}>
                                         <div
