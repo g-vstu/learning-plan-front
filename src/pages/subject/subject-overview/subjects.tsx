@@ -9,6 +9,8 @@ import { OverviewHeader } from 'components/overview-header';
 import { OverviewTitle } from 'components/overview-title';
 import { AddSubjectDialog } from './add-subject-dialog';
 import { Search as SearchIcon } from '@mui/icons-material';
+import { DeleteCell } from 'components/delete-cell';
+import { deleteSubject } from 'store/subject/actions';
 
 interface PropTypes {
     subjects: Subject[];
@@ -51,6 +53,15 @@ export const Subjects: React.FC<PropTypes> = ({ subjects, groupUnits }) => {
             width: 140,
             headerName: 'Компонент',
         },
+        {
+            width: 140,
+            headerName: 'Удалить',
+            cellRenderer: DeleteCell,
+            cellRendererParams: ({ data }) => ({
+                id: data.id,
+                method: deleteSubject,
+            }),
+        },
     ];
 
     const onFilterTextBoxChanged = useCallback(() => {
@@ -64,7 +75,7 @@ export const Subjects: React.FC<PropTypes> = ({ subjects, groupUnits }) => {
             <AddSubjectDialog open={open} setOpen={setOpen} groupUnits={groupUnits} />
             <OverviewHeader>
                 <div style={{ display: 'flex' }}>
-                <TextField
+                    <TextField
                         id="filter-text-box"
                         variant="outlined"
                         onInput={onFilterTextBoxChanged}
@@ -75,7 +86,7 @@ export const Subjects: React.FC<PropTypes> = ({ subjects, groupUnits }) => {
                         }}
                         placeholder="Search"
                     />
-                     <OverviewTitle>Предметы</OverviewTitle>
+                    <OverviewTitle>Предметы</OverviewTitle>
                 </div>
                 <Button variant="contained" onClick={() => setOpen(true)}>
                     Добавить предмет

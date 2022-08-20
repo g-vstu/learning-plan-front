@@ -13,3 +13,7 @@ export const addSubjectRequest = async (subject, groupUnitId) => {
     );
     return newSubject;
 };
+
+export const deleteSubjectRequest = async (id) => {
+    await instance.delete(`${DEVELOPMENT}/subject/${id}`);
+};

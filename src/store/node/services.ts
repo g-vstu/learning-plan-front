@@ -14,3 +14,7 @@ export const createNodeRequest = async (node, subjectId, plan: Plan) => {
     );
     return newNode;
 };
+
+export const deleteNodeRequest = async (id) => {
+    await instance.delete(`${DEVELOPMENT}/node/${id}`);
+};

@@ -8,6 +8,9 @@ import { OverviewHeader } from 'components/overview-header';
 import { OverviewTitle } from 'components/overview-title';
 import { AddGroupUnitDialog } from './add-group-unit-dialog';
 import { Search as SearchIcon } from '@mui/icons-material';
+import { ColDef } from '@ag-grid-community/core';
+import { DeleteCell } from '../../components/delete-cell';
+import { deleteGroupUnit } from 'store/group-unit/actions';
 
 interface PropTypes {
     groupUnits: GroupUnit[];
@@ -27,7 +30,7 @@ export const GroupUnits: React.FC<PropTypes> = ({ groupUnits }) => {
         setGridColumnApi(params.columnApi);
     };
 
-    const specialititesColumns = [
+    const specialititesColumns: ColDef[] = [
         {
             field: 'name',
             width: 140,
@@ -43,6 +46,15 @@ export const GroupUnits: React.FC<PropTypes> = ({ groupUnits }) => {
             width: 140,
             headerName: 'Компонент',
         },
+        {
+            width: 140,
+            headerName: 'Удалить',
+            cellRenderer: DeleteCell,
+            cellRendererParams: ({ data }) => ({
+                id: data.id,
+                method: deleteGroupUnit,
+            }),
+        },
     ];
 
     const onFilterTextBoxChanged = useCallback(() => {
@@ -55,7 +67,7 @@ export const GroupUnits: React.FC<PropTypes> = ({ groupUnits }) => {
         <>
             <AddGroupUnitDialog open={open} setOpen={setOpen} />
             <OverviewHeader>
-            <div style={{ display: 'flex' }}>
+                <div style={{ display: 'flex' }}>
                     <TextField
                         id="filter-text-box"
                         variant="outlined"

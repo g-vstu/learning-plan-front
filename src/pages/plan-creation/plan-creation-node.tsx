@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { IconButton, TableCell, TableRow, TextField, Typography } from '@mui/material';
+import { IconButton, Stack, TableCell, TableRow, TextField, Typography } from '@mui/material';
 import { CourseWorkType, Node, Plan, Semester, SemesterType } from 'types';
 import { PlanCreationSemester } from './plan-creation-semester';
 import AddIcon from '@mui/icons-material/Add';
@@ -8,10 +8,12 @@ import { createSemester } from 'store/semester/actions';
 import { useCalculateTotalParams } from 'hooks/useCalculateTotalParams';
 import { useCalculateTotalTests } from 'hooks/useCalculateTests';
 import { makeStyles } from '@mui/styles';
-import { blue, lightGreen, lime } from '@mui/material/colors';
+import { blue, lightGreen, lime, red } from '@mui/material/colors';
 import { selectSubCompetencies } from 'store/sub-competence/selectors';
 import { AddSemesterDialog } from './plan-creation-add-semester-dialog';
 import { PlanCreationSemesterWork } from './plan-creation-semester-work';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { deleteNode } from 'store/node/actions';
 
 interface PropTypes {
     node: Node;
@@ -53,22 +55,11 @@ export const PlanCreationNode: React.FC<PropTypes> = ({
         useCalculateTotalParams(associatedSemesters);
 
     const handleCreateNewSemester = () => {
-        /*const newSemester: Semester = {
-            courceWorkHours: 0,
-            courceWorkZe: 0,
-            courseWorkType: null,
-            laboratory: 0,
-            lecture: 0,
-            number: maxNumber + 1,
-            practice: 0,
-            rgr: 0,
-            selfeducation: 0,
-            seminar: 0,
-            type: SemesterType.Test,
-            ze: 0,
-        };
-        dispatch(createSemester(newSemester, node));*/
         setOpen(true);
+    };
+
+    const handleDeleteNode = () => {
+        dispatch(deleteNode(node.idNode));
     };
 
     const addSemestersAmount = semestersWeeks?.length - associatedSemesters?.length;
@@ -83,7 +74,12 @@ export const PlanCreationNode: React.FC<PropTypes> = ({
         <>
             <AddSemesterDialog open={open} setOpen={setOpen} node={node} maxNumber={maxNumber} />
             <TableRow>
-                <TableCell align="center">{node?.nodeNumber}</TableCell>
+                <TableCell align="center">
+                    <Stack direction="row" alignItems="center">
+                        <DeleteIcon onClick={handleDeleteNode} sx={{ color: red[500] }} />
+                        {node?.nodeNumber}
+                    </Stack>
+                </TableCell>
                 <TableCell align="center" className={classes.mainCell}>
                     {node?.idSubject?.name}
                 </TableCell>

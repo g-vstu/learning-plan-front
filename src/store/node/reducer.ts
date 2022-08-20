@@ -1,6 +1,6 @@
 import { Reducer } from 'redux';
 import { NodeState } from 'types/node';
-import { CREATE_NODE, GET_NODES } from './types';
+import { CREATE_NODE, DELETE_NODE, GET_NODES } from './types';
 
 const initialState: NodeState = {
     nodes: [],
@@ -17,6 +17,8 @@ const nodeReducer: Reducer<NodeState> = (state: NodeState = initialState, action
             return onGetNodesSuccess(state, action.payload);
         case GET_NODES.failure:
             return onGetNodesFailure(state, action.payload);
+        case DELETE_NODE.success:
+            return onDeleteNode(state, action.payload);
 
         case CREATE_NODE.success:
             return onCreateNodeSuccess(state, action.payload);
@@ -51,5 +53,11 @@ const onCreateNodeSuccess = (state: NodeState, payload): NodeState => {
         nodes: [...state.nodes, payload.newNode],
     };
 };
+
+const onDeleteNode = (state: NodeState, payload): NodeState => ({
+    ...state,
+    loading: false,
+    nodes: state.nodes.filter((node) => node.idNode !== payload.id),
+});
 
 export default nodeReducer;

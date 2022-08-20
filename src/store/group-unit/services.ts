@@ -13,3 +13,7 @@ export const createGroupUnitRequest = async (groupUnit, groupComponentId) => {
     );
     return newGroupUnit;
 };
+
+export const deleteGroupUnitRequest = async (id) => {
+    await instance.delete(`${DEVELOPMENT}/group_units/${id}`);
+};

@@ -5,3 +5,4 @@ export const CREATE_NODE: AsyncActionSet = createAsyncActionSet('CREATE_NODE');
 export const CREATE_NODE_WITH_SUBJECT: AsyncActionSet = createAsyncActionSet(
     'CREATE_NODE_WITH_SUBJECT'
 );
+export const DELETE_NODE: AsyncActionSet = createAsyncActionSet('DELETE_NODE');

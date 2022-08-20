@@ -1,9 +1,9 @@
 import { ThunkAction } from 'redux-thunk';
 import { Action, Dispatch } from 'redux';
 import { RootState } from 'store';
-import { CREATE_NODE_WITH_SUBJECT, CREATE_NODE, GET_NODES } from './types';
+import { CREATE_NODE_WITH_SUBJECT, CREATE_NODE, GET_NODES, DELETE_NODE } from './types';
 import { Node, Subject } from 'types';
-import { createNodeRequest, fetchNodes } from './services';
+import { createNodeRequest, deleteNodeRequest, fetchNodes } from './services';
 import { addSubjectRequest } from 'store/subject/services';
 import { ADD_SUBJECT } from 'store/subject/types';
 
@@ -69,6 +69,24 @@ export const createNodeWithNewSubject = (
         } catch (error) {
             dispatch({
                 type: CREATE_NODE.failure,
+                payload: { error },
+            });
+        }
+    };
+};
+
+export const deleteNode = (id: number): ThunkAction<Promise<void>, RootState, null, Action> => {
+    return async (dispatch: Dispatch) => {
+        dispatch({ type: DELETE_NODE.start });
+        try {
+            await deleteNodeRequest(id);
+            dispatch({
+                type: DELETE_NODE.success,
+                payload: { id },
+            });
+        } catch (error) {
+            dispatch({
+                type: DELETE_NODE.failure,
                 payload: { error },
             });
         }

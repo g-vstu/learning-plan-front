@@ -6,7 +6,7 @@ export const PREFIX = 'vstu';
 export const defaultTheme = 'ag-theme-material';
 
 export const defaultSize = {
-    height: 575,
+    height: 780,
     width: '100%',
 };
 
