@@ -1,0 +1,8 @@
+version: "3.8"
+services:
+  student:
+    build: .
+    container_name: student-c
+    ports:
+      - '3000:3000'
+
