@@ -5,6 +5,7 @@ export interface GroupUnit {
     name: string;
     unitNumber: string;
     idGroupComponents: GroupComponent;
+    idPlana: number;
 }
 
 export interface GroupUnitState {

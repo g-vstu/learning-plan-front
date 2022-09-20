@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     Button,
     Container,
@@ -16,10 +16,12 @@ import CloseIcon from '@mui/icons-material/Close';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectGroupComponents } from 'store/group-component/selectors';
 import { createGroupUnit } from 'store/group-unit/actions';
+import { selectCurrentPlan } from 'store/plan/selectors';
 
 export const AddGroupUnitDialog: React.FC<any> = ({ open, setOpen }) => {
     const dispatch = useDispatch();
     const groupComponents = useSelector(selectGroupComponents);
+    const currentPlan = useSelector(selectCurrentPlan);
 
     const [newGroupUnit, setNewGroupUnit] = useState({
         name: '',
@@ -40,8 +42,17 @@ export const AddGroupUnitDialog: React.FC<any> = ({ open, setOpen }) => {
     };
 
     const handleAddGroupUnit = () => {
-        dispatch(createGroupUnit(newGroupUnit, component));
+        dispatch(
+            createGroupUnit(
+                {
+                    ...newGroupUnit,
+                    idPlana: currentPlan.id,
+                },
+                component
+            )
+        );
     };
+    console.log(groupComponents);
 
     return (
         <Dialog open={open} onClose={() => setOpen(false)} maxWidth="xs" fullWidth>

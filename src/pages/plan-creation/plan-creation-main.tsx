@@ -1,8 +1,11 @@
-import { TableCell, TableRow } from '@mui/material';
+import { Stack, TableCell, TableRow, Typography } from '@mui/material';
+import { DeleteCell } from 'components/delete-cell';
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { deleteGroupUnit } from 'store/group-unit/actions';
 import { selectGroupUnits } from 'store/group-unit/selectors';
-import { GroupComponentName, Node, Plan, Semester, Subject } from 'types';
+import { selectCurrentPlan } from 'store/plan/selectors';
+import { GroupComponentName, Node, Plan, Semester } from 'types';
 import { PlanCreationNode } from './plan-creation-node';
 import { PlanCreationOverall } from './plan-cretion-overall-component';
 
@@ -10,7 +13,6 @@ interface PropTypes {
     associatedSemesters: Semester[];
     associatedNodes: Node[];
     semestersWeeks?: any;
-    associatedSubjects: Subject[];
     semesters: Semester[];
     plans: Plan[];
     groupComponent: GroupComponentName;
@@ -20,14 +22,16 @@ export const PlanCreationMain: React.FC<PropTypes> = ({
     associatedNodes,
     associatedSemesters,
     semestersWeeks,
-    associatedSubjects,
     semesters,
     plans,
     groupComponent,
 }) => {
     const groupUnits = useSelector(selectGroupUnits);
+    const currentPlan = useSelector(selectCurrentPlan);
+
     const associateUnits = groupUnits?.filter(
-        (unit) => unit?.idGroupComponents?.name === groupComponent
+        (unit) =>
+            unit?.idGroupComponents?.name === groupComponent && unit?.idPlana === currentPlan?.id
     );
     return (
         <>
@@ -41,7 +45,10 @@ export const PlanCreationMain: React.FC<PropTypes> = ({
                         <TableRow>
                             <TableCell>{unit?.unitNumber}</TableCell>
                             <TableCell style={{ backgroundColor: '#bbdefb' }}>
-                                {unit?.name}
+                                <Stack direction="row">
+                                    <DeleteCell id={unit?.id} method={deleteGroupUnit} />
+                                    <Typography>{unit?.name}</Typography>
+                                </Stack>
                             </TableCell>
                         </TableRow>
                         {unitNodes?.map((node) => (

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import {
     Button,
-    Divider,
     Paper,
     Table,
     TableBody,
@@ -17,12 +16,12 @@ import { BackButton } from 'components/back-button';
 import { useHistory } from 'react-router-dom';
 import { PREFIX } from 'config/constants';
 import { TableSemesterCell } from './plan-creation-table/table-semester.cell';
-import { useSelector } from 'react-redux';
-import { selectSubjects } from 'store/subject/selectors';
 import { makeStyles } from '@mui/styles';
 import { PlanCreationMain } from './plan-creation-main';
 import { AddPlanDialog } from './plan-creation-add-subject/add-plan-subject';
 import { AddGroupUnitDialog } from 'pages/group-unit/add-group-unit-dialog';
+import { useGetAssociatedNodes } from 'hooks/useGetAssociatedNodes';
+import { useGetAssociatedSemesters } from 'hooks/useGetAssociatedSemesters';
 
 interface PropTypes {
     plans: Plan[];
@@ -65,64 +64,11 @@ export const PlanCreation: React.FC<PropTypes> = ({ plans, semesters, nodes }) =
     const [open, setOpen] = useState(false);
     const [openUnitDialog, setOpenUnitDialog] = useState(false);
 
-    const subjects = useSelector(selectSubjects);
+    const { govNodes, highEduNodes, optionalEduNodes, additionalNodes } =
+        useGetAssociatedNodes(nodes);
 
-    const govSubjects = subjects?.filter(
-        (subject) => subject?.idUnit?.idGroupComponents?.name === GroupComponentName.GovComponent
-    );
-    const highEduSubjects = subjects?.filter(
-        (subject) =>
-            subject?.idUnit?.idGroupComponents?.name === GroupComponentName.HighEduComponent
-    );
-    const optionalSubjects = subjects?.filter(
-        (subject) =>
-            subject?.idUnit?.idGroupComponents?.name === GroupComponentName.OptionalComponent
-    );
-    const additionalSubjects = subjects?.filter(
-        (subject) =>
-            subject?.idUnit?.idGroupComponents?.name === GroupComponentName.AdditionalComponent
-    );
-
-    const govNodes = nodes?.filter((node) => {
-        const con =
-            node?.idSubject?.idUnit?.idGroupComponents?.name === GroupComponentName.GovComponent;
-        return con;
-    });
-    const highEduNodes = nodes?.filter(
-        (node) =>
-            node?.idSubject?.idUnit?.idGroupComponents?.name === GroupComponentName.HighEduComponent
-    );
-    const optionalEduNodes = nodes?.filter(
-        (node) =>
-            node?.idSubject?.idUnit?.idGroupComponents?.name ===
-            GroupComponentName.OptionalComponent
-    );
-    const additionalNodes = nodes?.filter(
-        (node) =>
-            node?.idSubject?.idUnit?.idGroupComponents?.name ===
-            GroupComponentName.AdditionalComponent
-    );
-
-    const govSemesters = semesters?.filter(
-        (semester) =>
-            semester?.idNode?.idSubject?.idUnit?.idGroupComponents?.name ===
-            GroupComponentName?.GovComponent
-    );
-    const highEduSemesters = semesters?.filter(
-        (semester) =>
-            semester?.idNode?.idSubject?.idUnit?.idGroupComponents?.name ===
-            GroupComponentName?.HighEduComponent
-    );
-    const optionalEduSemesters = semesters?.filter(
-        (semester) =>
-            semester?.idNode?.idSubject?.idUnit?.idGroupComponents?.name ===
-            GroupComponentName?.OptionalComponent
-    );
-    const additionalSemesters = semesters?.filter(
-        (semester) =>
-            semester?.idNode?.idSubject?.idUnit?.idGroupComponents?.name ===
-            GroupComponentName.AdditionalComponent
-    );
+    const { govSemesters, highEduSemesters, optionalEduSemesters, additionalSemesters } =
+        useGetAssociatedSemesters(semesters);
 
     return (
         <>
@@ -180,7 +126,6 @@ export const PlanCreation: React.FC<PropTypes> = ({ plans, semesters, nodes }) =
                                 associatedNodes={govNodes}
                                 associatedSemesters={govSemesters}
                                 semesters={semesters}
-                                associatedSubjects={govSubjects}
                                 plans={plans}
                                 semestersWeeks={semestersWeeks}
                                 groupComponent={GroupComponentName.GovComponent}
@@ -189,7 +134,6 @@ export const PlanCreation: React.FC<PropTypes> = ({ plans, semesters, nodes }) =
                                 associatedNodes={highEduNodes}
                                 associatedSemesters={highEduSemesters}
                                 semesters={semesters}
-                                associatedSubjects={highEduSubjects}
                                 plans={plans}
                                 semestersWeeks={semestersWeeks}
                                 groupComponent={GroupComponentName.HighEduComponent}
@@ -198,7 +142,6 @@ export const PlanCreation: React.FC<PropTypes> = ({ plans, semesters, nodes }) =
                                 associatedNodes={optionalEduNodes}
                                 associatedSemesters={optionalEduSemesters}
                                 semesters={semesters}
-                                associatedSubjects={optionalSubjects}
                                 plans={plans}
                                 semestersWeeks={semestersWeeks}
                                 groupComponent={GroupComponentName.OptionalComponent}
@@ -207,7 +150,6 @@ export const PlanCreation: React.FC<PropTypes> = ({ plans, semesters, nodes }) =
                                 associatedNodes={additionalNodes}
                                 associatedSemesters={additionalSemesters}
                                 semesters={semesters}
-                                associatedSubjects={additionalSubjects}
                                 plans={plans}
                                 semestersWeeks={semestersWeeks}
                                 groupComponent={GroupComponentName.AdditionalComponent}

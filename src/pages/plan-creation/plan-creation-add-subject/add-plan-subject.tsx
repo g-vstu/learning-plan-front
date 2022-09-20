@@ -8,7 +8,6 @@ import {
     IconButton,
     Tab,
     Tabs,
-    TextField,
     Typography,
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
@@ -19,7 +18,6 @@ import { Node } from 'types';
 import { createNode, createNodeWithNewSubject } from 'store/node/actions';
 import { ExistSubjectForm } from './exist-subject-form';
 import { NewSubjectForm } from './new-subject-form';
-import { blue, green } from '@mui/material/colors';
 import { FieldContainer } from 'components/field-container';
 
 interface PropTypes {
@@ -57,10 +55,6 @@ export const AddPlanDialog: React.FC<PropTypes> = ({ open, setOpen, nodes }) => 
         setSelectedSubject(e.target.value as any);
     };
 
-    const hanldeChangeSubjectMode = () => {
-        setIsNewSubject(!isNewSubject);
-    };
-
     const [newSubject, setNewSubject] = useState({
         name: '',
         shifr: '',
@@ -76,7 +70,7 @@ export const AddPlanDialog: React.FC<PropTypes> = ({ open, setOpen, nodes }) => 
     };
 
     const handleChangeTypeUnit = (e) => {
-        setUnit(e.target.value as any);
+        setUnit(e.target.value as string);
     };
 
     const hanldeAddSubjectToPlan = () => {
@@ -84,7 +78,6 @@ export const AddPlanDialog: React.FC<PropTypes> = ({ open, setOpen, nodes }) => 
         if (checkFiltered) {
             console.log('error');
         } else {
-            debugger;
             if (!isNewSubject) {
                 if (!checkFiltered) {
                     const node = {

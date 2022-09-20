@@ -65,7 +65,6 @@ export const getGlobalPlan = (
             const plansWithAssociatedSpeciality = plans.filter(
                 (plan) => plan?.idSpeciality?.id === speciality?.id
             );
-
             const nodes: Node[] = await fetchNodes();
             const associatedNodes = nodes.filter((node) => node?.idPlan?.id === necessaryPlan.id);
 

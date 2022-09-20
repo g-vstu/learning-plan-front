@@ -1,4 +1,5 @@
 import { Speciality } from './speciality';
+import { Subject } from './subject';
 
 export enum EducationForm {
     FullTime = 'очная',
@@ -18,6 +19,8 @@ export interface Plan {
     learnYear: string;
     regNumber: string;
     utvDate: string;
+    //NEW
+    idSubject: Subject;
 }
 
 export interface PlanState {
