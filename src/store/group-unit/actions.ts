@@ -1,8 +1,13 @@
 import { ThunkAction } from 'redux-thunk';
 import { Action, Dispatch } from 'redux';
 import { RootState } from 'store';
-import { CREATE_GROUP_UNIT, DELETE_GROUP_UNIT, GET_GROUP_UNITS } from './types';
-import { createGroupUnitRequest, deleteGroupUnitRequest, fetchGroupUnits } from './services';
+import { CREATE_GROUP_UNIT, DELETE_GROUP_UNIT, GET_GROUP_UNITS, UPDATE_GROUP_UNIT } from './types';
+import {
+    createGroupUnitRequest,
+    deleteGroupUnitRequest,
+    fetchGroupUnits,
+    updateGroupUnitsRequest,
+} from './services';
 import { GroupUnit } from 'types';
 
 export const getGroupUnits = (): ThunkAction<Promise<void>, RootState, null, Action> => {
@@ -41,6 +46,30 @@ export const createGroupUnit = (
         } catch (error) {
             dispatch({
                 type: CREATE_GROUP_UNIT.failure,
+                payload: { error },
+            });
+        }
+    };
+};
+
+export const updateGroupUnit = (
+    groupUnit,
+    groupComponentId
+): ThunkAction<Promise<void>, RootState, null, Action> => {
+    return async (dispatch: Dispatch) => {
+        dispatch({ type: UPDATE_GROUP_UNIT.start });
+        try {
+            const updatedGroupUnit: GroupUnit = await updateGroupUnitsRequest(
+                groupUnit,
+                groupComponentId
+            );
+            dispatch({
+                type: UPDATE_GROUP_UNIT.success,
+                payload: { updatedGroupUnit },
+            });
+        } catch (error) {
+            dispatch({
+                type: UPDATE_GROUP_UNIT.failure,
                 payload: { error },
             });
         }

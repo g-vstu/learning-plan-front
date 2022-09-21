@@ -17,3 +17,11 @@ export const createGroupUnitRequest = async (groupUnit, groupComponentId) => {
 export const deleteGroupUnitRequest = async (id) => {
     await instance.delete(`${DEVELOPMENT}/group_units/${id}`);
 };
+
+export const updateGroupUnitsRequest = async (groupUnit, groupComponentId) => {
+    const { data: newGroupUnit } = await instance.post(
+        `${DEVELOPMENT}/group_units?groupComponentsId=${groupComponentId}`,
+        groupUnit
+    );
+    return newGroupUnit;
+};

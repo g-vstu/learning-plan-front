@@ -1,6 +1,6 @@
 import { Reducer } from 'redux';
 import { GroupUnitState } from 'types';
-import { CREATE_GROUP_UNIT, DELETE_GROUP_UNIT, GET_GROUP_UNITS } from './types';
+import { CREATE_GROUP_UNIT, DELETE_GROUP_UNIT, GET_GROUP_UNITS, UPDATE_GROUP_UNIT } from './types';
 
 const initialState: GroupUnitState = {
     groupUnits: [],
@@ -25,6 +25,9 @@ const groupUnitReducer: Reducer<GroupUnitState> = (
 
         case CREATE_GROUP_UNIT.success:
             return onCreateGroupUnitSuccess(state, action.payload);
+
+        case UPDATE_GROUP_UNIT.success:
+            return onUpdateGroupUnit(state, action.payload);
 
         default:
             return state;
@@ -59,5 +62,19 @@ const onDeleteGroupUnit = (state: GroupUnitState, payload): GroupUnitState => ({
     ...state,
     groupUnits: state.groupUnits.filter((groupUnit) => groupUnit.id !== payload.id),
 });
+
+const onUpdateGroupUnit = (state: GroupUnitState, payload): GroupUnitState => {
+    const newGroupUnits = state.groupUnits.map((unit) => {
+        if (unit?.id === payload.updatedGroupUnit?.id) {
+            return payload.updatedGroupUnit;
+        } else {
+            return unit;
+        }
+    });
+    return {
+        ...state,
+        groupUnits: newGroupUnits,
+    };
+};
 
 export default groupUnitReducer;

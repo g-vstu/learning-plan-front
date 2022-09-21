@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { IconButton, Stack, TableCell, TableRow, TextField, Typography } from '@mui/material';
-import { CourseWorkType, Node, Plan, Semester, SemesterType } from 'types';
+import { IconButton, Stack, TableCell, TableRow } from '@mui/material';
+import { CourseWorkType, Node, Plan, Semester } from 'types';
 import { PlanCreationSemester } from './plan-creation-semester';
 import AddIcon from '@mui/icons-material/Add';
 import { useDispatch, useSelector } from 'react-redux';
-import { createSemester } from 'store/semester/actions';
 import { useCalculateTotalParams } from 'hooks/useCalculateTotalParams';
 import { useCalculateTotalTests } from 'hooks/useCalculateTests';
 import { makeStyles } from '@mui/styles';
