@@ -1,6 +1,6 @@
 import { Reducer } from 'redux';
-import { NodeState } from 'types/node';
-import { CREATE_NODE, DELETE_NODE, GET_NODES } from './types';
+import { Node, NodeState } from 'types/node';
+import { CREATE_NODE, DELETE_NODE, GET_NODES, UPDATE_NODE } from './types';
 
 const initialState: NodeState = {
     nodes: [],
@@ -22,6 +22,8 @@ const nodeReducer: Reducer<NodeState> = (state: NodeState = initialState, action
 
         case CREATE_NODE.success:
             return onCreateNodeSuccess(state, action.payload);
+        case UPDATE_NODE.success:
+            return onUpdateNode(state, action.payload);
 
         default:
             return state;
@@ -59,5 +61,19 @@ const onDeleteNode = (state: NodeState, payload): NodeState => ({
     loading: false,
     nodes: state.nodes.filter((node) => node.idNode !== payload.id),
 });
+
+const onUpdateNode = (state: NodeState, payload: { updatedNode: Node }): NodeState => {
+    const newNodes = state.nodes.map((node) => {
+        if (node?.idNode === payload.updatedNode?.idNode) {
+            return payload.updatedNode;
+        } else {
+            return node;
+        }
+    });
+    return {
+        ...state,
+        nodes: newNodes,
+    };
+};
 
 export default nodeReducer;

@@ -1,7 +1,13 @@
 import { ThunkAction } from 'redux-thunk';
 import { Action, Dispatch } from 'redux';
 import { RootState } from 'store';
-import { CREATE_NODE_WITH_SUBJECT, CREATE_NODE, GET_NODES, DELETE_NODE } from './types';
+import {
+    CREATE_NODE_WITH_SUBJECT,
+    CREATE_NODE,
+    GET_NODES,
+    DELETE_NODE,
+    UPDATE_NODE,
+} from './types';
 import { Node, Subject } from 'types';
 import { createNodeRequest, deleteNodeRequest, fetchNodes } from './services';
 import { addSubjectRequest } from 'store/subject/services';
@@ -41,6 +47,28 @@ export const createNode = (
         } catch (error) {
             dispatch({
                 type: CREATE_NODE.failure,
+                payload: { error },
+            });
+        }
+    };
+};
+
+export const updateNode = (
+    node: { idCathedra: number; nodeNumber: string },
+    subjectId,
+    plan
+): ThunkAction<Promise<void>, RootState, null, Action> => {
+    return async (dispatch: Dispatch) => {
+        dispatch({ type: UPDATE_NODE.start });
+        try {
+            const updatedNode: Node = await createNodeRequest(node, subjectId, plan);
+            dispatch({
+                type: UPDATE_NODE.success,
+                payload: { updatedNode },
+            });
+        } catch (error) {
+            dispatch({
+                type: UPDATE_NODE.failure,
                 payload: { error },
             });
         }

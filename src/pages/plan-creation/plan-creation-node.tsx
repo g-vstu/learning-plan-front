@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { IconButton, Stack, TableCell, TableRow } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { IconButton, Stack, TableCell, TableRow, TextField, Typography } from '@mui/material';
 import { CourseWorkType, Node, Plan, Semester } from 'types';
 import { PlanCreationSemester } from './plan-creation-semester';
 import AddIcon from '@mui/icons-material/Add';
@@ -7,12 +7,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useCalculateTotalParams } from 'hooks/useCalculateTotalParams';
 import { useCalculateTotalTests } from 'hooks/useCalculateTests';
 import { makeStyles } from '@mui/styles';
-import { blue, lightGreen, lime, red } from '@mui/material/colors';
+import { blue, green, lightGreen, lime, red } from '@mui/material/colors';
 import { selectSubCompetencies } from 'store/sub-competence/selectors';
 import { AddSemesterDialog } from './plan-creation-add-semester-dialog';
 import { PlanCreationSemesterWork } from './plan-creation-semester-work';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { deleteNode } from 'store/node/actions';
+import { deleteNode, updateNode } from 'store/node/actions';
+import EditIcon from '@mui/icons-material/Edit';
+import DoneIcon from '@mui/icons-material/Done';
+import DoDisturbIcon from '@mui/icons-material/DoDisturb';
+import { selectCurrentPlan } from 'store/plan/selectors';
 
 interface PropTypes {
     node: Node;
@@ -38,6 +42,16 @@ export const PlanCreationNode: React.FC<PropTypes> = ({
 }) => {
     const classes = useStyles();
     const dispatch = useDispatch();
+    const currentPlan = useSelector(selectCurrentPlan);
+
+    const [nodeData, setNodeData] = useState(node);
+
+    useEffect(() => {
+        setNodeData(node);
+    }, [node]);
+
+    const [editMode, setEditMode] = useState(false);
+    const [isCanceledState, setIsCanceledState] = useState(false);
 
     const [open, setOpen] = useState(false);
 
@@ -69,18 +83,70 @@ export const PlanCreationNode: React.FC<PropTypes> = ({
         (competence) => competence?.idSubject?.id === node?.idSubject?.id
     );
 
+    const handleChangeNodeData = (e) => {
+        setNodeData({
+            ...nodeData,
+            [e.target.name]: e.target.value,
+        });
+    };
+
+    const handleSaveNode = () => {
+        dispatch(updateNode(nodeData, nodeData?.idSubject?.id, currentPlan));
+        setEditMode(false);
+    };
+
+    useEffect(() => {
+        setNodeData(node);
+    }, [isCanceledState]);
+
     return (
         <>
             <AddSemesterDialog open={open} setOpen={setOpen} node={node} maxNumber={maxNumber} />
             <TableRow>
                 <TableCell align="center">
                     <Stack direction="row" alignItems="center">
-                        <DeleteIcon onClick={handleDeleteNode} sx={{ color: red[500] }} />
-                        {node?.nodeNumber}
+                        {editMode ? (
+                            <>
+                                <IconButton onClick={handleSaveNode}>
+                                    <DoneIcon style={{ color: green[600] }} />
+                                </IconButton>
+                                <IconButton
+                                    onClick={() => {
+                                        setEditMode(false);
+                                        setIsCanceledState(!isCanceledState);
+                                    }}
+                                >
+                                    <DoDisturbIcon style={{ color: red[600] }} />
+                                </IconButton>
+                                <TextField
+                                    name="nodeNumber"
+                                    value={nodeData?.nodeNumber}
+                                    onChange={handleChangeNodeData}
+                                    size="small"
+                                    style={{ width: 70, textAlign: 'center' }}
+                                />
+                            </>
+                        ) : (
+                            <>
+                                <DeleteIcon onClick={handleDeleteNode} sx={{ color: red[500] }} />
+                                <EditIcon onClick={() => setEditMode(true)} />
+                                <Typography> {nodeData?.nodeNumber}</Typography>
+                            </>
+                        )}
                     </Stack>
                 </TableCell>
                 <TableCell align="center" className={classes.mainCell}>
-                    {node?.idSubject?.name}
+                    {editMode ? (
+                        <TextField
+                            name="name"
+                            value={nodeData?.idSubject?.name}
+                            onChange={handleChangeNodeData}
+                            size="small"
+                            style={{ width: 240, textAlign: 'center' }}
+                        />
+                    ) : (
+                        <Typography>{nodeData?.idSubject?.name}</Typography>
+                    )}
                 </TableCell>
                 <TableCell align="center" className={classes.mainCell}>
                     {totalExams}
