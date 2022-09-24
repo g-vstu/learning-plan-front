@@ -1,6 +1,12 @@
 import { Reducer } from 'redux';
 import { SemesterState } from 'types';
-import { CREATE_SEMESTER, GET_SEMESTERS, GET_WEEKS_SEMESTERS, UPDATE_SEMESTER } from './types';
+import {
+    CREATE_SEMESTER,
+    DELETE_SEMESTER,
+    GET_SEMESTERS,
+    GET_WEEKS_SEMESTERS,
+    UPDATE_SEMESTER,
+} from './types';
 
 const initialState: SemesterState = {
     semesters: [],
@@ -32,6 +38,9 @@ const semesterReducer: Reducer<SemesterState> = (state: SemesterState = initialS
             return onGetWeeksSemestersSuccess(state, action.payload);
         case GET_WEEKS_SEMESTERS.failure:
             return onGetWeeksSemestersFailure(state, action.payload);
+
+        case DELETE_SEMESTER.success:
+            return onDeleteSemester(state, action.payload);
 
         default:
             return state;
@@ -91,6 +100,15 @@ const onUpdateSemesterSuccess = (state: SemesterState, payload): SemesterState =
             return semester;
         }
     });
+    return {
+        ...state,
+        semesters: newSemesters,
+    };
+};
+
+const onDeleteSemester = (state: SemesterState, paylod: { semesterId: number }): SemesterState => {
+    const newSemesters = state.semesters.filter((semester) => semester?.id !== paylod.semesterId);
+
     return {
         ...state,
         semesters: newSemesters,

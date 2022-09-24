@@ -1,9 +1,16 @@
 import { ThunkAction } from 'redux-thunk';
 import { Action, Dispatch } from 'redux';
 import { RootState } from 'store';
-import { CREATE_SEMESTER, GET_SEMESTERS, GET_WEEKS_SEMESTERS, UPDATE_SEMESTER } from './types';
+import {
+    CREATE_SEMESTER,
+    DELETE_SEMESTER,
+    GET_SEMESTERS,
+    GET_WEEKS_SEMESTERS,
+    UPDATE_SEMESTER,
+} from './types';
 import {
     createSemesterRequest,
+    deleteSemesterRequest,
     fetchSemesters,
     fetchWeeksSemesters,
     updateSemesterRequest,
@@ -81,6 +88,24 @@ export const createSemester = (
         } catch (error) {
             dispatch({
                 type: CREATE_SEMESTER.failure,
+                payload: { error },
+            });
+        }
+    };
+};
+
+export const deleteSemester = (semesterId): ThunkAction<Promise<void>, RootState, null, Action> => {
+    return async (dispatch: Dispatch) => {
+        dispatch({ type: DELETE_SEMESTER.start });
+        try {
+            await deleteSemesterRequest(semesterId);
+            dispatch({
+                type: DELETE_SEMESTER.success,
+                payload: { semesterId },
+            });
+        } catch (error) {
+            dispatch({
+                type: DELETE_SEMESTER.failure,
                 payload: { error },
             });
         }

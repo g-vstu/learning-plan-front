@@ -19,11 +19,17 @@ import DoDisturbIcon from '@mui/icons-material/DoDisturb';
 import { selectCurrentPlan } from 'store/plan/selectors';
 import { useEditMode } from 'hooks/useEditMode';
 
-interface PropTypes {
+interface SemesterWeek {
+    id: number;
+    semsteerNumber: number;
+    semesterWeeks: number;
+}
+
+interface PlanCreationNodeProps {
     node: Node;
     semesters: Semester[];
     plans: Plan[];
-    semestersWeeks: any;
+    semestersWeeks: SemesterWeek[];
 }
 
 const useStyles = makeStyles({
@@ -35,7 +41,7 @@ const useStyles = makeStyles({
     },
 });
 
-export const PlanCreationNode: React.FC<PropTypes> = ({
+export const PlanCreationNode: React.FC<PlanCreationNodeProps> = ({
     node,
     semesters,
     plans,
@@ -59,24 +65,35 @@ export const PlanCreationNode: React.FC<PropTypes> = ({
         ?.filter((semester) => semester?.idNode?.idNode === node?.idNode)
         .sort((firstSeminar, secondSeminar) => firstSeminar?.number - secondSeminar?.number);
 
+    const associatedSemestersNumber = associatedSemesters.map((semester) => semester?.number);
+
+    const showSemesters = semestersWeeks.map((week) => {
+        if (associatedSemestersNumber?.includes(week?.semsteerNumber)) {
+            return associatedSemesters.find(
+                (associatedSemester) => associatedSemester?.number === week?.semsteerNumber
+            );
+        } else {
+            return { semesterNumber: week?.semsteerNumber };
+        }
+    });
+
     const associatedPlan = plans?.find((plan) => plan?.id === node?.idPlan?.id);
-    const maxNumber = associatedSemesters.length;
 
     const { totalExams, totalTests, totalRgrs, totalZe } =
         useCalculateTotalTests(associatedSemesters);
     const { totalClass, totalAuditore, totalPractice, totalLecture, totalLab, totalSeminar } =
         useCalculateTotalParams(associatedSemesters);
 
-    const handleCreateNewSemester = () => {
+    const [currentSemesterNumber, setCurrentSemesterNumber] = useState(null);
+
+    const handleCreateNewSemester = (semNumber) => {
         setOpen(true);
+        setCurrentSemesterNumber(semNumber);
     };
 
     const handleDeleteNode = () => {
         dispatch(deleteNode(node.idNode));
     };
-
-    const addSemestersAmount = semestersWeeks?.length - associatedSemesters?.length;
-    const emptyWeeksSemesers = semestersWeeks?.slice(semestersWeeks?.length - addSemestersAmount);
 
     const subCompetencies = useSelector(selectSubCompetencies);
     const associatedCompetence = subCompetencies.find(
@@ -90,7 +107,12 @@ export const PlanCreationNode: React.FC<PropTypes> = ({
 
     return (
         <>
-            <AddSemesterDialog open={open} setOpen={setOpen} node={node} maxNumber={maxNumber} />
+            <AddSemesterDialog
+                open={open}
+                setOpen={setOpen}
+                node={node}
+                currentSemesterNumber={currentSemesterNumber}
+            />
             <TableRow>
                 <TableCell align="center">
                     <Stack direction="row" alignItems="center">
@@ -160,25 +182,24 @@ export const PlanCreationNode: React.FC<PropTypes> = ({
                     {totalSeminar}
                 </TableCell>
 
-                {associatedSemesters?.map((semester) => {
-                    return (
-                        <>
-                            {semester?.courseWorkType === CourseWorkType.Project ? (
-                                <PlanCreationSemesterWork key={semester?.id} semester={semester} />
-                            ) : (
-                                <PlanCreationSemester key={semester?.id} semester={semester} />
-                            )}
-                        </>
-                    );
-                })}
-                {emptyWeeksSemesers?.map((week) => {
-                    return (
-                        <TableCell align="center" key={week?.id}>
-                            {week?.semsteerNumber - 1 === maxNumber ? (
-                                <IconButton onClick={() => handleCreateNewSemester()}>
-                                    <AddIcon />
-                                </IconButton>
-                            ) : null}
+                {showSemesters?.map((semester: Semester) => {
+                    return semester?.id ? (
+                        semester?.courseWorkType === CourseWorkType.Project ? (
+                            <PlanCreationSemesterWork key={semester?.id} semester={semester} />
+                        ) : (
+                            <PlanCreationSemester key={semester?.id} semester={semester} />
+                        )
+                    ) : (
+                        <TableCell align="center">
+                            <IconButton
+                                onClick={() => {
+                                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                                    //@ts-ignore
+                                    handleCreateNewSemester(semester?.semesterNumber);
+                                }}
+                            >
+                                <AddIcon />
+                            </IconButton>
                         </TableCell>
                     );
                 })}

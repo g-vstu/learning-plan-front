@@ -29,3 +29,7 @@ export const createSemesterRequest = async (semester: Semester, node) => {
 
     return newSemester;
 };
+
+export const deleteSemesterRequest = async (semesterId) => {
+    await instance.delete(`${DEVELOPMENT}/semestr/${semesterId}`);
+};

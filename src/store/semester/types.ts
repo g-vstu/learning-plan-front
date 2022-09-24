@@ -5,3 +5,5 @@ export const GET_WEEKS_SEMESTERS: AsyncActionSet = createAsyncActionSet('GET_WEE
 
 export const UPDATE_SEMESTER: AsyncActionSet = createAsyncActionSet('UPDATE_SEMESTER');
 export const CREATE_SEMESTER: AsyncActionSet = createAsyncActionSet('CREATE_SEMESTER');
+
+export const DELETE_SEMESTER: AsyncActionSet = createAsyncActionSet('DELETE_SEMESTER');

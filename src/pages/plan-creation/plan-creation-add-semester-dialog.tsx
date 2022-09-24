@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, Container, Dialog, DialogContent } from '@mui/material';
 import { useDispatch } from 'react-redux';
 import { CourseWorkType, Node, Semester, SemesterType } from 'types';
@@ -10,21 +10,15 @@ interface PropTypes {
     open: boolean;
     setOpen: (param: boolean) => void;
     node: Node;
-    maxNumber: number;
+    currentSemesterNumber: number;
 }
 
-const TABS = {
-    SUBJECT: {
-        label: 'Дсциплина',
-        value: 'subject',
-    },
-    NEW_SUBJECT: {
-        label: 'Курсовая работа/проект',
-        value: 'newSubject',
-    },
-};
-
-export const AddSemesterDialog: React.FC<PropTypes> = ({ open, setOpen, node, maxNumber }) => {
+export const AddSemesterDialog: React.FC<PropTypes> = ({
+    open,
+    setOpen,
+    node,
+    currentSemesterNumber,
+}) => {
     const dispatch = useDispatch();
 
     const handleCreateSubjectSemester = () => {
@@ -34,7 +28,7 @@ export const AddSemesterDialog: React.FC<PropTypes> = ({ open, setOpen, node, ma
             courseWorkType: null,
             laboratory: 0,
             lecture: 0,
-            number: maxNumber + 1,
+            number: currentSemesterNumber,
             practice: 0,
             rgr: 0,
             selfeducation: 0,
@@ -53,7 +47,7 @@ export const AddSemesterDialog: React.FC<PropTypes> = ({ open, setOpen, node, ma
             courseWorkType: CourseWorkType.Project,
             laboratory: 0,
             lecture: 0,
-            number: maxNumber + 1,
+            number: currentSemesterNumber,
             practice: 0,
             rgr: 0,
             selfeducation: 0,
