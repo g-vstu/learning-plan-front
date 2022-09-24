@@ -9,6 +9,7 @@ import { PlanCreationNode } from './plan-creation-node';
 import { deleteGroupUnit, updateGroupUnit } from 'store/group-unit/actions';
 import { GroupUnit, Node, Plan, Semester } from 'types';
 import { useDispatch } from 'react-redux';
+import { useEditMode } from 'hooks/useEditMode';
 
 interface PlanCreationUnitProps {
     unit: GroupUnit;
@@ -26,32 +27,21 @@ export const PlanCreationUnit: React.FC<PlanCreationUnitProps> = ({
     semesters,
 }) => {
     const dispatch = useDispatch();
-    const [unitData, setUnitData] = useState(unit);
 
-    useEffect(() => {
-        setUnitData(unit);
-    }, [unit]);
-
-    const [editMode, setEditMode] = useState(false);
-    const [isCanceledState, setIsCanceledState] = useState(false);
+    const {
+        editMode,
+        setEditMode,
+        entityData: unitData,
+        handleChangeEntityData: handleChangeUnitData,
+        handleCancelClick,
+    } = useEditMode(unit);
 
     const unitNodes = associatedNodes?.filter((node) => node?.idSubject?.idUnit?.id === unit?.id);
-
-    const handleChangeUnitData = (e) => {
-        setUnitData({
-            ...unitData,
-            [e.target.name]: e.target.value,
-        });
-    };
 
     const handleSaveGroupUnit = () => {
         dispatch(updateGroupUnit(unitData, unitData?.idGroupComponents?.id));
         setEditMode(false);
     };
-
-    useEffect(() => {
-        setUnitData(unit);
-    }, [isCanceledState]);
 
     return (
         <>
@@ -63,12 +53,7 @@ export const PlanCreationUnit: React.FC<PlanCreationUnitProps> = ({
                                 <IconButton onClick={handleSaveGroupUnit}>
                                     <DoneIcon style={{ color: green[600] }} />
                                 </IconButton>
-                                <IconButton
-                                    onClick={() => {
-                                        setEditMode(false);
-                                        setIsCanceledState(!isCanceledState);
-                                    }}
-                                >
+                                <IconButton onClick={handleCancelClick}>
                                     <DoDisturbIcon style={{ color: red[600] }} />
                                 </IconButton>
                                 <TextField

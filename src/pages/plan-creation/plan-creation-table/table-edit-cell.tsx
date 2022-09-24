@@ -8,9 +8,10 @@ export const TableEditCell: React.FC<any> = ({ editMode, value, name, handleUpda
             {editMode ? (
                 <TextField
                     name={name}
+                    type="number"
                     value={value}
                     onChange={(e) => {
-                        handleUpdateSemester(e);
+                        handleUpdateSemester(e, true);
                     }}
                     size="small"
                     variant="standard"

@@ -9,6 +9,7 @@ import { updateSemester } from 'store/semester/actions';
 import { Semester } from 'types';
 import { makeStyles } from '@mui/styles';
 import { indigo, lightGreen } from '@mui/material/colors';
+import { useEditMode } from 'hooks/useEditMode';
 
 interface PropTypes {
     semester: Semester;
@@ -26,9 +27,18 @@ const useStyles = makeStyles({
 export const PlanCreationSemester: React.FC<PropTypes> = ({ semester }) => {
     const classes = useStyles();
     const dispatch = useDispatch();
-    const [semesterData, setSemesterData] = useState(semester);
-    const [editMode, setEditMode] = useState(false);
-    const [isCanceledState, setIsCanceledState] = useState(false);
+
+    const {
+        editMode,
+        setEditMode,
+        entityData: semesterData,
+        handleChangeEntityData: handleUpdateSemester,
+        handleCancelClick,
+    } = useEditMode(semester);
+
+    //const [semesterData, setSemesterData] = useState(semester);
+    //const [editMode, setEditMode] = useState(false);
+    //const [isCanceledState, setIsCanceledState] = useState(false);
 
     const [subTotal, setSubTotal] = useState(
         semesterData?.lecture + semesterData?.practice + semesterData?.laboratory
@@ -44,21 +54,22 @@ export const PlanCreationSemester: React.FC<PropTypes> = ({ semester }) => {
         setSubTotal(result);
     }, [semesterData]);
 
-    useEffect(() => {
+    /*useEffect(() => {
         setSemesterData(semester);
-    }, [isCanceledState]);
+    }, [isCanceledState]);*/
 
-    useEffect(() => {
+    /*useEffect(() => {
         setSemesterData(semester);
-    }, [semester]);
+    }, [semester]);*/
 
-    const handleUpdateSemester = (e) => {
+    /*const handleUpdateSemester = (e) => {
         console.log(semesterData);
+        debugger;
         setSemesterData({
             ...semesterData,
             [e.target.name]: +e.target.value,
         });
-    };
+    };*/
 
     const handleSaveSemester = () => {
         dispatch(updateSemester(semesterData));
@@ -73,12 +84,7 @@ export const PlanCreationSemester: React.FC<PropTypes> = ({ semester }) => {
                         <IconButton onClick={() => handleSaveSemester()}>
                             <DoneIcon />
                         </IconButton>
-                        <IconButton
-                            onClick={() => {
-                                setEditMode(false);
-                                setIsCanceledState(!isCanceledState);
-                            }}
-                        >
+                        <IconButton onClick={handleCancelClick}>
                             <DoDisturbIcon />
                         </IconButton>
                     </div>

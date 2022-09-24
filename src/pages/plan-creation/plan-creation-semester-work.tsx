@@ -9,6 +9,7 @@ import { updateSemester } from 'store/semester/actions';
 import { Semester } from 'types';
 import { makeStyles } from '@mui/styles';
 import { indigo, lightGreen } from '@mui/material/colors';
+import { useEditMode } from 'hooks/useEditMode';
 
 interface PropTypes {
     semester: Semester;
@@ -24,11 +25,15 @@ const useStyles = makeStyles({
 });
 
 export const PlanCreationSemesterWork: React.FC<PropTypes> = ({ semester }) => {
-    const classes = useStyles();
     const dispatch = useDispatch();
-    const [semesterData, setSemesterData] = useState(semester);
-    const [editMode, setEditMode] = useState(false);
-    const [isCanceledState, setIsCanceledState] = useState(false);
+
+    const {
+        editMode,
+        setEditMode,
+        entityData: semesterData,
+        handleChangeEntityData: handleUpdateSemester,
+        handleCancelClick,
+    } = useEditMode(semester);
 
     const [subTotal, setSubTotal] = useState(
         semesterData?.lecture + semesterData?.practice + semesterData?.laboratory
@@ -44,22 +49,6 @@ export const PlanCreationSemesterWork: React.FC<PropTypes> = ({ semester }) => {
         setSubTotal(result);
     }, [semesterData]);
 
-    useEffect(() => {
-        setSemesterData(semester);
-    }, [isCanceledState]);
-
-    useEffect(() => {
-        setSemesterData(semester);
-    }, [semester]);
-
-    const handleUpdateSemester = (e) => {
-        console.log(semesterData);
-        setSemesterData({
-            ...semesterData,
-            [e.target.name]: +e.target.value,
-        });
-    };
-
     const handleSaveSemester = () => {
         dispatch(updateSemester(semesterData));
         setEditMode(false);
@@ -73,12 +62,7 @@ export const PlanCreationSemesterWork: React.FC<PropTypes> = ({ semester }) => {
                         <IconButton onClick={() => handleSaveSemester()}>
                             <DoneIcon />
                         </IconButton>
-                        <IconButton
-                            onClick={() => {
-                                setEditMode(false);
-                                setIsCanceledState(!isCanceledState);
-                            }}
-                        >
+                        <IconButton onClick={handleCancelClick}>
                             <DoDisturbIcon />
                         </IconButton>
                     </div>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { IconButton, Stack, TableCell, TableRow, TextField, Typography } from '@mui/material';
 import { CourseWorkType, Node, Plan, Semester } from 'types';
 import { PlanCreationSemester } from './plan-creation-semester';
@@ -17,6 +17,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DoneIcon from '@mui/icons-material/Done';
 import DoDisturbIcon from '@mui/icons-material/DoDisturb';
 import { selectCurrentPlan } from 'store/plan/selectors';
+import { useEditMode } from 'hooks/useEditMode';
 
 interface PropTypes {
     node: Node;
@@ -44,14 +45,13 @@ export const PlanCreationNode: React.FC<PropTypes> = ({
     const dispatch = useDispatch();
     const currentPlan = useSelector(selectCurrentPlan);
 
-    const [nodeData, setNodeData] = useState(node);
-
-    useEffect(() => {
-        setNodeData(node);
-    }, [node]);
-
-    const [editMode, setEditMode] = useState(false);
-    const [isCanceledState, setIsCanceledState] = useState(false);
+    const {
+        editMode,
+        setEditMode,
+        entityData: nodeData,
+        handleChangeEntityData: handleChangeNodeData,
+        handleCancelClick,
+    } = useEditMode(node);
 
     const [open, setOpen] = useState(false);
 
@@ -83,21 +83,10 @@ export const PlanCreationNode: React.FC<PropTypes> = ({
         (competence) => competence?.idSubject?.id === node?.idSubject?.id
     );
 
-    const handleChangeNodeData = (e) => {
-        setNodeData({
-            ...nodeData,
-            [e.target.name]: e.target.value,
-        });
-    };
-
     const handleSaveNode = () => {
         dispatch(updateNode(nodeData, nodeData?.idSubject?.id, currentPlan));
         setEditMode(false);
     };
-
-    useEffect(() => {
-        setNodeData(node);
-    }, [isCanceledState]);
 
     return (
         <>
@@ -110,12 +99,7 @@ export const PlanCreationNode: React.FC<PropTypes> = ({
                                 <IconButton onClick={handleSaveNode}>
                                     <DoneIcon style={{ color: green[600] }} />
                                 </IconButton>
-                                <IconButton
-                                    onClick={() => {
-                                        setEditMode(false);
-                                        setIsCanceledState(!isCanceledState);
-                                    }}
-                                >
+                                <IconButton onClick={handleCancelClick}>
                                     <DoDisturbIcon style={{ color: red[600] }} />
                                 </IconButton>
                                 <TextField
@@ -138,7 +122,7 @@ export const PlanCreationNode: React.FC<PropTypes> = ({
                 <TableCell align="center" className={classes.mainCell}>
                     {editMode ? (
                         <TextField
-                            name="name"
+                            name="subjectName"
                             value={nodeData?.idSubject?.name}
                             onChange={handleChangeNodeData}
                             size="small"
