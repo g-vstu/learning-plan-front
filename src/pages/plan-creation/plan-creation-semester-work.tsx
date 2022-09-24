@@ -7,22 +7,11 @@ import DoDisturbIcon from '@mui/icons-material/DoDisturb';
 import { useDispatch } from 'react-redux';
 import { updateSemester } from 'store/semester/actions';
 import { Semester } from 'types';
-import { makeStyles } from '@mui/styles';
-import { indigo, lightGreen } from '@mui/material/colors';
 import { useEditMode } from 'hooks/useEditMode';
 
 interface PropTypes {
     semester: Semester;
 }
-
-const useStyles = makeStyles({
-    cell: {
-        backgroundColor: lightGreen[400],
-    },
-    hoursCell: {
-        backgroundColor: indigo[50],
-    },
-});
 
 export const PlanCreationSemesterWork: React.FC<PropTypes> = ({ semester }) => {
     const dispatch = useDispatch();

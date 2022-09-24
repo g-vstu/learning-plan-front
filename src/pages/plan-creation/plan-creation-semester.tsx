@@ -36,10 +36,6 @@ export const PlanCreationSemester: React.FC<PropTypes> = ({ semester }) => {
         handleCancelClick,
     } = useEditMode(semester);
 
-    //const [semesterData, setSemesterData] = useState(semester);
-    //const [editMode, setEditMode] = useState(false);
-    //const [isCanceledState, setIsCanceledState] = useState(false);
-
     const [subTotal, setSubTotal] = useState(
         semesterData?.lecture + semesterData?.practice + semesterData?.laboratory
     );
@@ -53,23 +49,6 @@ export const PlanCreationSemester: React.FC<PropTypes> = ({ semester }) => {
         const result = semesterData?.lecture + semesterData?.practice + semesterData?.laboratory;
         setSubTotal(result);
     }, [semesterData]);
-
-    /*useEffect(() => {
-        setSemesterData(semester);
-    }, [isCanceledState]);*/
-
-    /*useEffect(() => {
-        setSemesterData(semester);
-    }, [semester]);*/
-
-    /*const handleUpdateSemester = (e) => {
-        console.log(semesterData);
-        debugger;
-        setSemesterData({
-            ...semesterData,
-            [e.target.name]: +e.target.value,
-        });
-    };*/
 
     const handleSaveSemester = () => {
         dispatch(updateSemester(semesterData));
