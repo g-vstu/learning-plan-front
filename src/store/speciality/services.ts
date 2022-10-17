@@ -15,3 +15,12 @@ export const createSpecialityRequest = async (speciality) => {
     const { data: newSpeciality } = await instance.post(`${DEVELOPMENT}/speciality`, speciality);
     return newSpeciality;
 };
+
+export const updateSpecialityRequest = async (speciality) => {
+    const { data: updatedSpeciality } = await instance.post(
+        `${DEVELOPMENT}/speciality`,
+        speciality
+    );
+
+    return updatedSpeciality;
+};

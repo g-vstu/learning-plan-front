@@ -18,6 +18,7 @@ import DoneIcon from '@mui/icons-material/Done';
 import DoDisturbIcon from '@mui/icons-material/DoDisturb';
 import { selectCurrentPlan } from 'store/plan/selectors';
 import { useEditMode } from 'hooks/useEditMode';
+import { updateSpeciality } from 'store/speciality/actions';
 
 interface SemesterWeek {
     id: number;
@@ -57,6 +58,7 @@ export const PlanCreationNode: React.FC<PlanCreationNodeProps> = ({
         entityData: nodeData,
         handleChangeEntityData: handleChangeNodeData,
         handleCancelClick,
+        handleChangeNode,
     } = useEditMode(node);
 
     const [open, setOpen] = useState(false);
@@ -101,7 +103,9 @@ export const PlanCreationNode: React.FC<PlanCreationNodeProps> = ({
     );
 
     const handleSaveNode = () => {
+        debugger;
         dispatch(updateNode(nodeData, nodeData?.idSubject?.id, currentPlan));
+        dispatch(updateSpeciality(nodeData?.idSubject));
         setEditMode(false);
     };
 
@@ -146,7 +150,7 @@ export const PlanCreationNode: React.FC<PlanCreationNodeProps> = ({
                         <TextField
                             name="subjectName"
                             value={nodeData?.idSubject?.name}
-                            onChange={handleChangeNodeData}
+                            onChange={handleChangeNode}
                             size="small"
                             style={{ width: 240, textAlign: 'center' }}
                         />

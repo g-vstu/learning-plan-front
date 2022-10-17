@@ -1,6 +1,6 @@
 import { Reducer } from 'redux';
 import { SpecialityState } from 'types';
-import { CREATE_SPECIALITY, GET_SPECIALITIES, SET_CURRENT_SPECIALITY } from './types';
+import { CREATE_SPECIALITY, GET_SPECIALITIES, SET_CURRENT_SPECIALITY, UPDATE_SPECIALITY } from './types';
 
 const initialState: SpecialityState = {
     specialities: [],
@@ -26,6 +26,9 @@ const specialityReducer: Reducer<SpecialityState> = (
 
         case CREATE_SPECIALITY.success:
             return onCreateSpecialitySuccess(state, action.payload);
+        case UPDATE_SPECIALITY.success:
+            return onUpdateSpeciality(state, action.payload);
+
 
         default:
             return state;
@@ -60,5 +63,19 @@ const onCreateSpecialitySuccess = (state: SpecialityState, payload): SpecialityS
     ...state,
     specialities: [...state.specialities, payload.newSpeciality],
 });
+
+const onUpdateSpeciality = (state: SpecialityState, payload): SpecialityState => {
+    const newSpecialities = state.specialities.map((speciality) => {
+        if (speciality?.id === payload.newSpeciality?.id) {
+            return payload.newSpeciality;
+        } else {
+            return speciality;
+        }
+    });
+    return {
+        ...state,
+        specialities: newSpecialities,
+    };
+}
 
 export default specialityReducer;

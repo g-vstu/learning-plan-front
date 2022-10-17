@@ -1,9 +1,9 @@
 import { ThunkAction } from 'redux-thunk';
 import { Action, Dispatch } from 'redux';
 import { RootState } from 'store';
-import { CREATE_SPECIALITY, GET_SPECIALITIES } from './types';
+import { CREATE_SPECIALITY, GET_SPECIALITIES, UPDATE_SPECIALITY } from './types';
 import { Plan, Speciality } from 'types';
-import { createSpecialityRequest, fetchSpecialities } from './services';
+import { createSpecialityRequest, fetchSpecialities, updateSpecialityRequest } from './services';
 
 export const getSpecialities = (): ThunkAction<Promise<void>, RootState, null, Action> => {
     return async (dispatch: Dispatch) => {
@@ -37,6 +37,26 @@ export const createSpeciality = (
         } catch (error) {
             dispatch({
                 type: CREATE_SPECIALITY.failure,
+                payload: { error },
+            });
+        }
+    };
+};
+
+export const updateSpeciality = (
+    speciality
+): ThunkAction<Promise<void>, RootState, null, Action> => {
+    return async (dispatch: Dispatch) => {
+        dispatch({ type: UPDATE_SPECIALITY.start });
+        try {
+            const newSpeciality: Speciality = await updateSpecialityRequest(speciality);
+            dispatch({
+                type: UPDATE_SPECIALITY.success,
+                payload: { newSpeciality },
+            });
+        } catch (error) {
+            dispatch({
+                type: UPDATE_SPECIALITY.failure,
                 payload: { error },
             });
         }

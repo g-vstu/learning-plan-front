@@ -4,3 +4,5 @@ export const GET_SPECIALITIES: AsyncActionSet = createAsyncActionSet('GET_SPECIA
 export const SET_CURRENT_SPECIALITY: AsyncActionSet =
     createAsyncActionSet('SET_CURRENT_SPECIALITY');
 export const CREATE_SPECIALITY: AsyncActionSet = createAsyncActionSet('CREATE_SPECIALITY');
+
+export const UPDATE_SPECIALITY: AsyncActionSet = createAsyncActionSet('UPDATE_SPECIALITY');

@@ -27,6 +27,17 @@ export const useEditMode = <T>(data: T) => {
         }
     };
 
+    const handleChangeNode = (e) => {
+        setEntityData({
+            ...entityData,
+            idSubject: {
+                //@ts-ignore
+                ...entityData.idSubject,
+                name: e.target.value,
+            },
+        });
+    };
+
     const handleCancelClick = () => {
         setEditMode(false);
         setIsCanceledState(!isCanceledState);
@@ -38,5 +49,6 @@ export const useEditMode = <T>(data: T) => {
         entityData,
         handleChangeEntityData,
         handleCancelClick,
+        handleChangeNode,
     };
 };
