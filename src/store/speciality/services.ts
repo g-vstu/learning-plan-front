@@ -21,6 +21,5 @@ export const updateSpecialityRequest = async (speciality) => {
         `${DEVELOPMENT}/speciality`,
         speciality
     );
-
     return updatedSpeciality;
 };

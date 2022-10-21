@@ -18,7 +18,7 @@ import DoneIcon from '@mui/icons-material/Done';
 import DoDisturbIcon from '@mui/icons-material/DoDisturb';
 import { selectCurrentPlan } from 'store/plan/selectors';
 import { useEditMode } from 'hooks/useEditMode';
-import { updateSpeciality } from 'store/speciality/actions';
+import { updateSubject } from 'store/subject/actions';
 
 interface SemesterWeek {
     id: number;
@@ -103,9 +103,11 @@ export const PlanCreationNode: React.FC<PlanCreationNodeProps> = ({
     );
 
     const handleSaveNode = () => {
+        // обновление ноды (дисциплины)
         debugger;
         dispatch(updateNode(nodeData, nodeData?.idSubject?.id, currentPlan));
-        dispatch(updateSpeciality(nodeData?.idSubject));
+        dispatch(updateSubject(nodeData?.idSubject, nodeData?.idSubject.idUnit.id));
+        console.log(nodeData);
         setEditMode(false);
     };
 

@@ -23,7 +23,7 @@ export const updateSemesterRequest = async (semester: Semester) => {
 
 export const createSemesterRequest = async (semester: Semester, node) => {
     const { data: newSemester } = await instance.post(
-        `${DEVELOPMENT}/semestr?nodeId=${node?.idNode}`,
+        `${DEVELOPMENT}/semestr?nodeId=${node?.id}`,
         semester
     );
 

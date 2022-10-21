@@ -17,3 +17,10 @@ export const addSubjectRequest = async (subject, groupUnitId) => {
 export const deleteSubjectRequest = async (id) => {
     await instance.delete(`${DEVELOPMENT}/subject/${id}`);
 };
+export const updateSubjectRequest = async (subject, unitId) => {
+    const { data: updatedSubject } = await instance.post(
+        `${DEVELOPMENT}/subject?unitId=${unitId}`,
+        subject
+    );
+    return updatedSubject;
+};

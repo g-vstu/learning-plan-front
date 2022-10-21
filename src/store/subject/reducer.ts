@@ -1,6 +1,6 @@
 import { Reducer } from 'redux';
 import { SubjectState } from 'types';
-import { ADD_SUBJECT, DELETE_SUBJECT, GET_SUBJECTS } from './types';
+import { ADD_SUBJECT, DELETE_SUBJECT, GET_SUBJECTS, UPDATE_SUBJECT } from './types';
 
 const initialState: SubjectState = {
     subjects: [],
@@ -22,6 +22,8 @@ const subjectReducer: Reducer<SubjectState> = (state: SubjectState = initialStat
 
         case ADD_SUBJECT.success:
             return onAddSubjectSuccess(state, action.payload);
+        case UPDATE_SUBJECT.success:
+            return onUpdateSubject(state, action.payload);
 
         default:
             return state;
@@ -56,5 +58,19 @@ const onDeleteSubject = (state: SubjectState, payload): SubjectState => ({
     ...state,
     subjects: state.subjects.filter((subject) => subject.id !== payload.id),
 });
+
+const onUpdateSubject = (state: SubjectState, payload): SubjectState => {
+    const newSubject = state.subjects.map((subject) => {
+        if (subject?.id === payload.newSubject?.id) {
+            return payload.newSubject;
+        } else {
+            return subject;
+        }
+    });
+    return {
+        ...state,
+        subjects: newSubject,
+    };
+}
 
 export default subjectReducer;
