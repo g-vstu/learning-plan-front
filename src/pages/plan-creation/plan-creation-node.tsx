@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { IconButton, Stack, TableCell, TableRow, TextField, Typography } from '@mui/material';
 import { CourseWorkType, Node, Plan, Semester } from 'types';
 import { PlanCreationSemester } from './plan-creation-semester';
@@ -104,11 +104,11 @@ export const PlanCreationNode: React.FC<PlanCreationNodeProps> = ({
 
     const handleSaveNode = () => {
         // обновление ноды (дисциплины)
-        debugger;
         dispatch(updateNode(nodeData, nodeData?.idSubject?.id, currentPlan));
         dispatch(updateSubject(nodeData?.idSubject, nodeData?.idSubject.idUnit.id));
         console.log(nodeData);
         setEditMode(false);
+        window.location.reload();
     };
 
     return (

@@ -28,8 +28,6 @@ const specialityReducer: Reducer<SpecialityState> = (
             return onCreateSpecialitySuccess(state, action.payload);
         case UPDATE_SPECIALITY.success:
             return onUpdateSpeciality(state, action.payload);
-
-
         default:
             return state;
     }
