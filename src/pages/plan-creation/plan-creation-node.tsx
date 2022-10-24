@@ -62,11 +62,10 @@ export const PlanCreationNode: React.FC<PlanCreationNodeProps> = ({
     } = useEditMode(node);
 
     const [open, setOpen] = useState(false);
-
+// фильтрация семестров
     const associatedSemesters = semesters
-        ?.filter((semester) => semester?.idNode?.idNode === node?.idNode)
+        ?.filter((semester) => semester?.idNode?.id === node?.id)
         .sort((firstSeminar, secondSeminar) => firstSeminar?.number - secondSeminar?.number);
-
     const associatedSemestersNumber = associatedSemesters.map((semester) => semester?.number);
 
     const showSemesters = semestersWeeks.map((week) => {
@@ -94,7 +93,7 @@ export const PlanCreationNode: React.FC<PlanCreationNodeProps> = ({
     };
 
     const handleDeleteNode = () => {
-        dispatch(deleteNode(node.idNode));
+        dispatch(deleteNode(node.id));
     };
 
     const subCompetencies = useSelector(selectSubCompetencies);
@@ -104,11 +103,10 @@ export const PlanCreationNode: React.FC<PlanCreationNodeProps> = ({
 
     const handleSaveNode = () => {
         // обновление ноды (дисциплины)
-        dispatch(updateNode(nodeData, nodeData?.idSubject?.id, currentPlan));
         dispatch(updateSubject(nodeData?.idSubject, nodeData?.idSubject.idUnit.id));
+        dispatch(updateNode(nodeData, nodeData?.idSubject?.id, currentPlan));
         console.log(nodeData);
         setEditMode(false);
-        window.location.reload();
     };
 
     return (
@@ -189,6 +187,7 @@ export const PlanCreationNode: React.FC<PlanCreationNodeProps> = ({
                 </TableCell>
 
                 {showSemesters?.map((semester: Semester) => {
+                   // console.log(semester);
                     return semester?.id ? (
                         semester?.courseWorkType === CourseWorkType.Project ? (
                             <PlanCreationSemesterWork key={semester?.id} semester={semester} />

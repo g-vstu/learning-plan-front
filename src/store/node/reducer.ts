@@ -59,12 +59,14 @@ const onCreateNodeSuccess = (state: NodeState, payload): NodeState => {
 const onDeleteNode = (state: NodeState, payload): NodeState => ({
     ...state,
     loading: false,
-    nodes: state.nodes.filter((node) => node.idNode !== payload.id),
+    nodes: state.nodes.filter((node) => node.id !== payload.id),
 });
 
 const onUpdateNode = (state: NodeState, payload: { updatedNode: Node }): NodeState => {
+    console.log('PayLoad:;');
+    console.log(payload.updatedNode);
     const newNodes = state.nodes.map((node) => {
-        if (node?.idNode === payload.updatedNode?.idNode) {
+        if (node?.id === payload.updatedNode?.id) {
             return payload.updatedNode;
         } else {
             return node;

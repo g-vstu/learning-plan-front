@@ -2,6 +2,7 @@ import { Plan } from './plan';
 import { Subject } from './subject';
 
 export interface Node {
+    id: number;
     idNode: number;
     idCathedra: number;
     nodeNumber: string;

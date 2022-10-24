@@ -13,8 +13,9 @@ export const fetchWeeksSemesters = async () => {
 };
 
 export const updateSemesterRequest = async (semester: Semester) => {
+    console.log(semester);
     const { data: updatedSemester } = await instance.post(
-        `${DEVELOPMENT}/semestr?nodeId=${semester?.idNode?.idNode}`,
+        `${DEVELOPMENT}/semestr?nodeId=${semester?.idNode?.id}`,
         semester
     );
 
@@ -24,7 +25,7 @@ export const updateSemesterRequest = async (semester: Semester) => {
 export const createSemesterRequest = async (semester: Semester, node) => {
     //HERE (was node?.id)
     const { data: newSemester } = await instance.post(
-        `${DEVELOPMENT}/semestr?nodeId=${node?.idNode}`,
+        `${DEVELOPMENT}/semestr?nodeId=${node?.id}`,
         semester
     );
 
