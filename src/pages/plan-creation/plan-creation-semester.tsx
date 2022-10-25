@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { IconButton, TableCell, TableRow } from '@mui/material';
 import { TableEditCell } from './plan-creation-table/table-edit-cell';
+import { TableEditSelectCell } from './plan-creation-table/table-cell-edit-select';
 import DoneIcon from '@mui/icons-material/Done';
 import EditIcon from '@mui/icons-material/Edit';
 import DoDisturbIcon from '@mui/icons-material/DoDisturb';
 import { useDispatch } from 'react-redux';
 import { deleteSemester, updateSemester } from 'store/semester/actions';
-import { Semester } from 'types';
 import { makeStyles } from '@mui/styles';
 import { indigo, lightGreen, red } from '@mui/material/colors';
 import { useEditMode } from 'hooks/useEditMode';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { Semester, SemesterType } from 'types';
 
 interface PropTypes {
     semester: Semester;
@@ -132,6 +133,13 @@ export const PlanCreationSemester: React.FC<PropTypes> = ({ semester }) => {
                         value={semesterData?.laboratory}
                         handleUpdateSemester={handleUpdateSemester}
                     />
+                    <TableEditSelectCell
+                        editMode={editMode}
+                        name="type"
+                        value={semesterData?.type}
+                        selItems={[SemesterType.Test, SemesterType.Exam]}
+                        handleUpdateSemester={handleUpdateSemester}
+                    />
                     <TableEditCell
                         editMode={editMode}
                         name="ze"
@@ -147,6 +155,7 @@ export const PlanCreationSemester: React.FC<PropTypes> = ({ semester }) => {
                     <TableCell padding="none">пр</TableCell>
                     <TableCell padding="none">сем</TableCell>
                     <TableCell padding="none">лб</TableCell>
+                    <TableCell padding="none">атт</TableCell>
                     <TableCell padding="none">зе</TableCell>
                 </TableRow>
             </TableCell>
