@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 import DoneIcon from '@mui/icons-material/Done';
 import DoDisturbIcon from '@mui/icons-material/DoDisturb';
 import { green, red } from '@mui/material/colors';
@@ -10,6 +11,7 @@ import { deleteGroupUnit, updateGroupUnit } from 'store/group-unit/actions';
 import { GroupUnit, Node, Plan, Semester } from 'types';
 import { useDispatch } from 'react-redux';
 import { useEditMode } from 'hooks/useEditMode';
+import WarnDialog from '../../components/warn-dialog';
 
 interface PlanCreationUnitProps {
     unit: GroupUnit;
@@ -36,6 +38,7 @@ export const PlanCreationUnit: React.FC<PlanCreationUnitProps> = ({
         handleCancelClick,
     } = useEditMode(unit);
 
+    const [WarnOpen, setWarnOpen] = useState(false);
     const unitNodes = associatedNodes?.filter((node) => node?.idSubject?.idUnit?.id === unit?.id);
 
     const handleSaveGroupUnit = () => {
@@ -43,8 +46,20 @@ export const PlanCreationUnit: React.FC<PlanCreationUnitProps> = ({
         setEditMode(false);
     };
 
+    const handleDeleteGroupUnit = () => {
+        if (unitNodes.length !== 0) setWarnOpen(true);
+        else dispatch(deleteGroupUnit(unit.id));
+    };
+    /*
+                                <DeleteCell id={unit?.id} method={handleDeleteGroupUnit} />
+                                <EditIcon onClick={() => setEditMode(true)} />
+                                <Typography>{unit?.unitNumber}</Typography>
+*/
     return (
         <>
+            <WarnDialog title="Невозможно выполнить!" open={WarnOpen} setOpen={setWarnOpen}>
+                Вначале удалите все предметы из модуля!
+            </WarnDialog>
             <TableRow>
                 <TableCell>
                     <Stack direction="row">
@@ -66,7 +81,10 @@ export const PlanCreationUnit: React.FC<PlanCreationUnitProps> = ({
                             </>
                         ) : (
                             <>
-                                <DeleteCell id={unit?.id} method={deleteGroupUnit} />
+                                <DeleteIcon
+                                    onClick={handleDeleteGroupUnit}
+                                    style={{ color: red[600] }}
+                                />
                                 <EditIcon onClick={() => setEditMode(true)} />
                                 <Typography>{unit?.unitNumber}</Typography>
                             </>
@@ -91,7 +109,7 @@ export const PlanCreationUnit: React.FC<PlanCreationUnitProps> = ({
             </TableRow>
             {unitNodes?.map((node) => (
                 <PlanCreationNode
-                    key={node?.idNode}
+                    key={node?.id}
                     node={node}
                     semesters={semesters}
                     plans={plans}

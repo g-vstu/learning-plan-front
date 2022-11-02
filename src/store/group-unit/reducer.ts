@@ -21,6 +21,8 @@ const groupUnitReducer: Reducer<GroupUnitState> = (
         case GET_GROUP_UNITS.failure:
             return onGetGroupUnitsFailure(state, action.payload);
         case DELETE_GROUP_UNIT.success:
+            console.log('UNIT!');
+            console.log(action);
             return onDeleteGroupUnit(state, action.payload);
 
         case CREATE_GROUP_UNIT.success:

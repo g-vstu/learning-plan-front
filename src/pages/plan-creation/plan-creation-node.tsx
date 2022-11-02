@@ -13,12 +13,15 @@ import { AddSemesterDialog } from './plan-creation-add-semester-dialog';
 import { PlanCreationSemesterWork } from './plan-creation-semester-work';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { deleteNode, updateNode } from 'store/node/actions';
+
 import EditIcon from '@mui/icons-material/Edit';
 import DoneIcon from '@mui/icons-material/Done';
 import DoDisturbIcon from '@mui/icons-material/DoDisturb';
 import { selectCurrentPlan } from 'store/plan/selectors';
 import { useEditMode } from 'hooks/useEditMode';
-import { updateSubject } from 'store/subject/actions';
+import { updateSubject, deleteSubject } from 'store/subject/actions';
+import WarnDialog from '../../components/warn-dialog';
+import ConfirmDialog from '../../components/confirm-dialog';
 
 interface SemesterWeek {
     id: number;
@@ -62,7 +65,9 @@ export const PlanCreationNode: React.FC<PlanCreationNodeProps> = ({
     } = useEditMode(node);
 
     const [open, setOpen] = useState(false);
-// фильтрация семестров
+    const [ConfirmOpen, setConfirmOpen] = useState(false);
+
+    // фильтрация семестров
     const associatedSemesters = semesters
         ?.filter((semester) => semester?.idNode?.id === node?.id)
         .sort((firstSeminar, secondSeminar) => firstSeminar?.number - secondSeminar?.number);
@@ -93,7 +98,14 @@ export const PlanCreationNode: React.FC<PlanCreationNodeProps> = ({
     };
 
     const handleDeleteNode = () => {
+        // eslint-disable-next-line no-prototype-builtins
+        if (showSemesters?.some((sem) => sem.hasOwnProperty('id'))) setConfirmOpen(true);
+        else handleDeleteNodeOk();
+    };
+    const handleDeleteNodeOk = () => {
+        // удаление ноды
         dispatch(deleteNode(node.id));
+        dispatch(deleteSubject(nodeData?.idSubject?.id));
     };
 
     const subCompetencies = useSelector(selectSubCompetencies);
@@ -111,6 +123,15 @@ export const PlanCreationNode: React.FC<PlanCreationNodeProps> = ({
 
     return (
         <>
+            <ConfirmDialog
+                title="Предупреждение!"
+                open={ConfirmOpen}
+                setOpen={setConfirmOpen}
+                onConfirm={handleDeleteNodeOk}
+            >
+                Подтвердите удаление!
+            </ConfirmDialog>
+
             <AddSemesterDialog
                 open={open}
                 setOpen={setOpen}
@@ -186,13 +207,20 @@ export const PlanCreationNode: React.FC<PlanCreationNodeProps> = ({
                     {totalSeminar}
                 </TableCell>
 
-                {showSemesters?.map((semester: Semester) => {
-                   // console.log(semester);
+                {showSemesters?.map((semester: Semester, i: number) => {
+                    console.log('semester');
+                    console.log(semester);
                     return semester?.id ? (
                         semester?.courseWorkType === CourseWorkType.Project ? (
-                            <PlanCreationSemesterWork key={semester?.id} semester={semester} />
+                            <PlanCreationSemesterWork
+                                key={`${i}_${new Date().getTime()}`}
+                                semester={semester}
+                            />
                         ) : (
-                            <PlanCreationSemester key={semester?.id} semester={semester} />
+                            <PlanCreationSemester
+                                key={`${i}_${new Date().getTime()}`}
+                                semester={semester}
+                            />
                         )
                     ) : (
                         <TableCell align="center">
