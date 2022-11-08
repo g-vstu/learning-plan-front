@@ -93,6 +93,7 @@ export const PlanCreationSemester: React.FC<PropTypes> = ({ semester }) => {
                     <TableCell align="center" colSpan={4}>
                         Итог звонки
                     </TableCell>
+                    <TableCell align="center">Кол-во РГР</TableCell>
                 </TableRow>
                 <TableRow>
                     <TableCell align="center" className={classes.cell}>
@@ -101,6 +102,13 @@ export const PlanCreationSemester: React.FC<PropTypes> = ({ semester }) => {
                     <TableCell align="center" colSpan={4} className={classes.cell}>
                         {subTotal}
                     </TableCell>
+                    <TableEditCell
+                        colSpan={2}
+                        editMode={editMode}
+                        name="rgr"
+                        value={semesterData?.rgr}
+                        handleUpdateSemester={handleUpdateSemester}
+                    />
                 </TableRow>
                 <TableRow>
                     <TableEditCell

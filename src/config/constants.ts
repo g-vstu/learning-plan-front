@@ -1,7 +1,8 @@
 import { ColDef } from '@ag-grid-community/core';
 
 export const DEVELOPMENT = process.env.REACT_APP_STUDENT_PLAN_API;
-export const PREFIX = 'vstu';
+
+export const PREFIX = process.env.REACT_APP_PREFIX;
 
 export const defaultTheme = 'ag-theme-material';
 

@@ -1,6 +1,11 @@
 import { Reducer } from 'redux';
 import { SpecialityState } from 'types';
-import { CREATE_SPECIALITY, GET_SPECIALITIES, SET_CURRENT_SPECIALITY, UPDATE_SPECIALITY } from './types';
+import {
+    CREATE_SPECIALITY,
+    GET_SPECIALITIES,
+    SET_CURRENT_SPECIALITY,
+    UPDATE_SPECIALITY,
+} from './types';
 
 const initialState: SpecialityState = {
     specialities: [],
@@ -74,6 +79,6 @@ const onUpdateSpeciality = (state: SpecialityState, payload): SpecialityState =>
         ...state,
         specialities: newSpecialities,
     };
-}
+};
 
 export default specialityReducer;

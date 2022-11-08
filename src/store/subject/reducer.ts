@@ -71,6 +71,6 @@ const onUpdateSubject = (state: SubjectState, payload): SubjectState => {
         ...state,
         subjects: newSubject,
     };
-}
+};
 
 export default subjectReducer;
