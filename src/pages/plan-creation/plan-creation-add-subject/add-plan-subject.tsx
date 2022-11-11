@@ -30,17 +30,19 @@ const TABS = {
     EXISTING_SUBJECT: {
         label: 'Предмет',
         value: 'existingSubject',
+        disabled: true,
     },
     NEW_SUBJECT: {
         label: 'Новый предмет',
         value: 'newSubject',
+        disabled: false,
     },
 };
 
 export const AddPlanDialog: React.FC<PropTypes> = ({ open, setOpen, nodes }) => {
     const dispatch = useDispatch();
-    const [isNewSubject, setIsNewSubject] = useState(false);
-    const [tabValue, setTabValue] = useState(TABS.EXISTING_SUBJECT.value);
+    const [isNewSubject, setIsNewSubject] = useState(true);
+    const [tabValue, setTabValue] = useState(TABS.NEW_SUBJECT.value);
 
     const plans = useSelector(selectPlans);
     const currentPlan = useSelector(selectCurrentPlan);
