@@ -3,6 +3,7 @@ import { MenuItem, Select, TextField, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { selectGroupUnits } from 'store/group-unit/selectors';
 import { FieldContainer } from 'components/field-container';
+import { selectCurrentPlan } from 'store/plan/selectors';
 
 export const NewSubjectForm: React.FC<any> = ({
     newNodeNumber,
@@ -13,6 +14,7 @@ export const NewSubjectForm: React.FC<any> = ({
     handleChangeTypeUnit,
 }) => {
     const groupUnits = useSelector(selectGroupUnits);
+    const currentPlan = useSelector(selectCurrentPlan);
 
     return (
         <>
@@ -39,11 +41,13 @@ export const NewSubjectForm: React.FC<any> = ({
             <FieldContainer>
                 <Typography>Выберете модуль</Typography>
                 <Select fullWidth size="small" value={unit?.id} onChange={handleChangeTypeUnit}>
-                    {groupUnits?.map((groupUnit) => (
-                        <MenuItem key={groupUnit?.id} value={groupUnit?.id}>
-                            {groupUnit?.name}
-                        </MenuItem>
-                    ))}
+                    {groupUnits
+                        ?.filter((groupUnit) => groupUnit.idPlana === currentPlan.id)
+                        .map((groupUnit) => (
+                            <MenuItem key={groupUnit?.id} value={groupUnit?.id}>
+                                {groupUnit?.name}
+                            </MenuItem>
+                        ))}
                 </Select>
             </FieldContainer>
             <FieldContainer>
