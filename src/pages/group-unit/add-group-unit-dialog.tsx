@@ -52,7 +52,6 @@ export const AddGroupUnitDialog: React.FC<any> = ({ open, setOpen }) => {
             )
         );
     };
-    console.log(groupComponents);
 
     return (
         <Dialog open={open} onClose={() => setOpen(false)} maxWidth="xs" fullWidth>

@@ -72,9 +72,6 @@ export const getGlobalPlan = (
             const associatedSemesters = semesters?.filter((semester) => {
                 return (
                     associatedNodes.filter((node) => {
-                        console.log(semester);
-                        console.log(node);
-                        // idNode
                         return node?.id === semester?.idNode?.id;
                     }).length !== 0
                 );

@@ -13,7 +13,7 @@ export const fetchWeeksSemesters = async () => {
 };
 
 export const updateSemesterRequest = async (semester: Semester) => {
-    console.log(semester);
+
     const { data: updatedSemester } = await instance.post(
         `${DEVELOPMENT}/semestr?nodeId=${semester?.idNode?.id}`,
         semester

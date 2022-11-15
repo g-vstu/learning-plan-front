@@ -50,11 +50,6 @@ export const PlanCreationUnit: React.FC<PlanCreationUnitProps> = ({
         if (unitNodes.length !== 0) setWarnOpen(true);
         else dispatch(deleteGroupUnit(unit.id));
     };
-    /*
-                                <DeleteCell id={unit?.id} method={handleDeleteGroupUnit} />
-                                <EditIcon onClick={() => setEditMode(true)} />
-                                <Typography>{unit?.unitNumber}</Typography>
-*/
     return (
         <>
             <WarnDialog title="Невозможно выполнить!" open={WarnOpen} setOpen={setWarnOpen}>

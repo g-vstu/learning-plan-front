@@ -117,7 +117,6 @@ export const PlanCreationNode: React.FC<PlanCreationNodeProps> = ({
         // обновление ноды (дисциплины)
         dispatch(updateSubject(nodeData?.idSubject, nodeData?.idSubject.idUnit.id));
         dispatch(updateNode(nodeData, nodeData?.idSubject?.id, currentPlan));
-        console.log(nodeData);
         setEditMode(false);
     };
 
@@ -208,8 +207,6 @@ export const PlanCreationNode: React.FC<PlanCreationNodeProps> = ({
                 </TableCell>
 
                 {showSemesters?.map((semester: Semester, i: number) => {
-                    console.log('semester');
-                    console.log(semester);
                     return semester?.id ? (
                         semester?.courseWorkType === CourseWorkType.Project ? (
                             <PlanCreationSemesterWork

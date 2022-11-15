@@ -63,8 +63,6 @@ const onDeleteNode = (state: NodeState, payload): NodeState => ({
 });
 
 const onUpdateNode = (state: NodeState, payload: { updatedNode: Node }): NodeState => {
-    console.log('PayLoad:;');
-    console.log(payload.updatedNode);
     const newNodes = state.nodes.map((node) => {
         if (node?.id === payload.updatedNode?.id) {
             return payload.updatedNode;
