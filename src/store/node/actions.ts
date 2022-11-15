@@ -10,8 +10,8 @@ import {
 } from './types';
 import { Node, Subject } from 'types';
 import { createNodeRequest, deleteNodeRequest, fetchNodes } from './services';
-import { addSubjectRequest } from 'store/subject/services';
-import { ADD_SUBJECT } from 'store/subject/types';
+import { addSubjectRequest, updateSubjectRequest } from 'store/subject/services';
+import { ADD_SUBJECT, UPDATE_SUBJECT } from 'store/subject/types';
 
 export const getNodes = (): ThunkAction<Promise<void>, RootState, null, Action> => {
     return async (dispatch: Dispatch) => {
@@ -54,14 +54,22 @@ export const createNode = (
 };
 
 export const updateNode = (
-    node: { idCathedra: number; nodeNumber: string },
+    node,
     subjectId,
     plan
 ): ThunkAction<Promise<void>, RootState, null, Action> => {
     return async (dispatch: Dispatch) => {
         dispatch({ type: UPDATE_NODE.start });
         try {
+            const newSubject: Subject = await updateSubjectRequest(
+                node.idSubject,
+                node.idSubject.idUnit.id
+            );
             const updatedNode: Node = await createNodeRequest(node, subjectId, plan);
+            dispatch({
+                type: UPDATE_SUBJECT.success,
+                payload: { newSubject },
+            });
             dispatch({
                 type: UPDATE_NODE.success,
                 payload: { updatedNode },

@@ -115,8 +115,7 @@ export const PlanCreationNode: React.FC<PlanCreationNodeProps> = ({
 
     const handleSaveNode = () => {
         // обновление ноды (дисциплины)
-        dispatch(updateSubject(nodeData?.idSubject, nodeData?.idSubject.idUnit.id));
-        dispatch(updateNode(nodeData, nodeData?.idSubject?.id, currentPlan));
+         dispatch(updateNode(nodeData, nodeData?.idSubject?.id, currentPlan));
         setEditMode(false);
     };
 
