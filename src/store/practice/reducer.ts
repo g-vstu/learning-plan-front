@@ -1,6 +1,6 @@
 import { Reducer } from 'redux';
-import { PracticeState } from 'types';
-import { GET_PRACTICES } from './types';
+import { Practice, PracticeState } from 'types';
+import { CREATE_PRACTICE, DELETE_PRACTICE, GET_PRACTICES, UPDATE_PRACTICE } from './types';
 
 const initialState: PracticeState = {
     practices: [],
@@ -17,6 +17,13 @@ const practiceReducer: Reducer<PracticeState> = (state: PracticeState = initialS
             return onGetPracticesSuccess(state, action.payload);
         case GET_PRACTICES.failure:
             return onGetPracticesFailure(state, action.payload);
+        case DELETE_PRACTICE.success:
+            return onDeletePracticeSuccess(state, action.payload);
+
+        case CREATE_PRACTICE.success:
+            return onCreatePracticeSuccess(state, action.payload);
+        case UPDATE_PRACTICE.success:
+            return onUpdatePracticeSuccess(state, action.payload);
 
         default:
             return state;
@@ -41,5 +48,35 @@ const onGetPracticesFailure = (state: PracticeState, payload): PracticeState => 
     loading: false,
     error: payload.error,
 });
+
+const onCreatePracticeSuccess = (state: PracticeState, payload): PracticeState => {
+    return {
+        ...state,
+        practices: [...state.practices, payload.newPractice],
+    };
+};
+
+const onDeletePracticeSuccess = (state: PracticeState, payload): PracticeState => ({
+    ...state,
+    loading: false,
+    practices: state.practices.filter((practice) => practice.id !== payload.id),
+});
+
+const onUpdatePracticeSuccess = (
+    state: PracticeState,
+    payload: { updatedPractice: Practice }
+): PracticeState => {
+    const newPractice = state.practices.map((practice) => {
+        if (practice?.id === payload.updatedPractice?.id) {
+            return payload.updatedPractice;
+        } else {
+            return practice;
+        }
+    });
+    return {
+        ...state,
+        practices: newPractice,
+    };
+};
 
 export default practiceReducer;

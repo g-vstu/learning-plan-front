@@ -3,7 +3,7 @@ import { Plan } from './plan';
 export interface Practice {
     id: number;
     countWeek: number;
-    idSemester: number;
+    idSemestr: number;
     name: string;
     ze: number;
     idPlan: Plan;

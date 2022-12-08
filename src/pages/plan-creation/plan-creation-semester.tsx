@@ -56,7 +56,7 @@ export const PlanCreationSemester: React.FC<PropTypes> = ({ semester }) => {
         dispatch(updateSemester(semesterData));
         setEditMode(false);
     };
-
+    //               delete                  window.location.reload();
     return (
         <TableCell>
             <TableCell style={{ border: 'none' }}>
@@ -76,7 +76,6 @@ export const PlanCreationSemester: React.FC<PropTypes> = ({ semester }) => {
                         </IconButton>
                         <IconButton
                             onClick={() => {
-                                window.location.reload();
                                 dispatch(deleteSemester(semester?.id));
                             }}
                         >

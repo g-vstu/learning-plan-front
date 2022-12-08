@@ -10,7 +10,7 @@ import {
     TableRow,
 } from '@mui/material';
 import { VerticalTableCell } from 'components/vertical-cell';
-import { GroupComponentName, Node, Plan, Semester } from 'types';
+import { GroupComponentName, Node, Plan, Practice, Semester } from 'types';
 import { DetailsNavigationContainer } from 'components/navigation-container';
 import { BackButton } from 'components/back-button';
 import { useHistory } from 'react-router-dom';
@@ -22,11 +22,15 @@ import { AddPlanDialog } from './plan-creation-add-subject/add-plan-subject';
 import { AddGroupUnitDialog } from 'pages/group-unit/add-group-unit-dialog';
 import { useGetAssociatedNodes } from 'hooks/useGetAssociatedNodes';
 import { useGetAssociatedSemesters } from 'hooks/useGetAssociatedSemesters';
+import { useSelector } from 'react-redux';
+import { selectCurrentPlan } from 'store/plan/selectors';
+import { PracticeTable } from './practice-table/practice-table';
 
 interface PropTypes {
     plans: Plan[];
     semesters: Semester[];
     nodes: Node[];
+    practices: Practice[];
 }
 
 const useStyles = makeStyles({
@@ -58,7 +62,7 @@ const semestersWeeks = [
     { id: 8, semsteerNumber: 8, semesterWeeks: 17 },
 ];
 
-export const PlanCreation: React.FC<PropTypes> = ({ plans, semesters, nodes }) => {
+export const PlanCreation: React.FC<PropTypes> = ({ plans, semesters, nodes, practices }) => {
     const classes = useStyles();
     const history = useHistory();
     const [open, setOpen] = useState(false);
@@ -70,6 +74,13 @@ export const PlanCreation: React.FC<PropTypes> = ({ plans, semesters, nodes }) =
     const { govSemesters, highEduSemesters, optionalEduSemesters, additionalSemesters } =
         useGetAssociatedSemesters(semesters);
 
+    const currentPlan = useSelector(selectCurrentPlan);
+
+    const associatePractices = practices?.filter(
+        (practice) => practice?.idPlan.id == currentPlan?.id
+    );
+
+    // получить ассоциированные с планом практики
     return (
         <>
             <AddGroupUnitDialog open={openUnitDialog} setOpen={setOpenUnitDialog} />
@@ -157,6 +168,7 @@ export const PlanCreation: React.FC<PropTypes> = ({ plans, semesters, nodes }) =
                         </TableBody>
                     </Table>
                 </TableContainer>
+                <PracticeTable practices={associatePractices} currentPlan={currentPlan} />
             </Paper>
         </>
     );
