@@ -10,7 +10,7 @@ import {
     TableRow,
 } from '@mui/material';
 import { VerticalTableCell } from 'components/vertical-cell';
-import { GroupComponentName, Node, Plan, Practice, Semester } from 'types';
+import { GroupComponentName, Node, Plan, Practice, Semester, WeeksSemester } from 'types';
 import { DetailsNavigationContainer } from 'components/navigation-container';
 import { BackButton } from 'components/back-button';
 import { useHistory } from 'react-router-dom';
@@ -31,6 +31,7 @@ interface PropTypes {
     semesters: Semester[];
     nodes: Node[];
     practices: Practice[];
+    weeks: WeeksSemester[];
 }
 
 const useStyles = makeStyles({
@@ -62,7 +63,13 @@ const semestersWeeks = [
     { id: 8, semsteerNumber: 8, semesterWeeks: 17 },
 ];
 
-export const PlanCreation: React.FC<PropTypes> = ({ plans, semesters, nodes, practices }) => {
+export const PlanCreation: React.FC<PropTypes> = ({
+    plans,
+    semesters,
+    nodes,
+    practices,
+    weeks,
+}) => {
     const classes = useStyles();
     const history = useHistory();
     const [open, setOpen] = useState(false);
@@ -79,6 +86,8 @@ export const PlanCreation: React.FC<PropTypes> = ({ plans, semesters, nodes, pra
     const associatePractices = practices?.filter(
         (practice) => practice?.idPlan.id == currentPlan?.id
     );
+
+    const associateWeeks = weeks?.filter((week) => week?.idPlan.id == currentPlan?.id);
 
     // получить ассоциированные с планом практики
     return (
@@ -124,7 +133,7 @@ export const PlanCreation: React.FC<PropTypes> = ({ plans, semesters, nodes, pra
                                 <VerticalTableCell>Практические</VerticalTableCell>
                                 <VerticalTableCell>Семинарские</VerticalTableCell>
 
-                                {semestersWeeks?.map((week) => (
+                                {associateWeeks?.map((week) => (
                                     <TableSemesterCell key={week?.id} semesterWeek={week} />
                                 ))}
 

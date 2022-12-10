@@ -49,5 +49,6 @@ export interface SemesterState {
     weeksSemester: WeeksSemester;
     weeksSemesters: WeeksSemester[];
     loading: boolean;
+    weeksLoading: boolean;
     error: any;
 }

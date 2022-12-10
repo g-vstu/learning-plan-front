@@ -1,10 +1,22 @@
 import { DEVELOPMENT } from 'config/constants';
 import instance from 'store/auth/instance';
-import { Node, Semester } from 'types';
+import { Semester, WeeksSemester } from 'types';
 
-export const fetchSemesters = async () => {
-    const { data: semesters } = await instance.get(`${DEVELOPMENT}/semestr`);
-    return semesters;
+export const updateWeeksSemesterRequest = async (weeksSemester: WeeksSemester) => {
+    const { data: updatedWeeksSemester } = await instance.post(
+        `${DEVELOPMENT}/weeks_semestr?planId=${weeksSemester?.idPlan?.id}`,
+        weeksSemester
+    );
+    return updatedWeeksSemester;
+};
+
+export const createWeeksSemesterRequest = async (weeksSemester: WeeksSemester) => {
+    const { data: newSemester } = await instance.post(
+        `${DEVELOPMENT}/weeks_semestr?planId=${weeksSemester?.idPlan?.id}`,
+        weeksSemester
+    );
+
+    return newSemester;
 };
 
 export const fetchWeeksSemesters = async () => {
@@ -12,12 +24,24 @@ export const fetchWeeksSemesters = async () => {
     return weeksSemesters;
 };
 
+export const createWeeksSemesters = async (week: WeeksSemester, currentPlan) => {
+    const { data: newSemester } = await instance.post(
+        `${DEVELOPMENT}/weeks_semestr?planId=${currentPlan?.id}`,
+        week
+    );
+    return newSemester;
+};
+
+export const fetchSemesters = async () => {
+    const { data: semesters } = await instance.get(`${DEVELOPMENT}/semestr`);
+    return semesters;
+};
+
 export const updateSemesterRequest = async (semester: Semester) => {
     const { data: updatedSemester } = await instance.post(
         `${DEVELOPMENT}/semestr?nodeId=${semester?.idNode?.id}`,
         semester
     );
-
     return updatedSemester;
 };
 

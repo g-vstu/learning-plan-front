@@ -3,17 +3,21 @@ import { Action, Dispatch } from 'redux';
 import { RootState } from 'store';
 import {
     CREATE_SEMESTER,
+    CREATE_WEEKS_SEMESTERS,
     DELETE_SEMESTER,
     GET_SEMESTERS,
     GET_WEEKS_SEMESTERS,
     UPDATE_SEMESTER,
+    UPDATE_WEEKS_SEMESTERS,
 } from './types';
 import {
     createSemesterRequest,
+    createWeeksSemesterRequest,
     deleteSemesterRequest,
     fetchSemesters,
     fetchWeeksSemesters,
     updateSemesterRequest,
+    updateWeeksSemesterRequest,
 } from './services';
 import { Semester, WeeksSemester } from 'types';
 
@@ -39,14 +43,36 @@ export const getWeeksSemesters = (): ThunkAction<Promise<void>, RootState, null,
     return async (dispatch: Dispatch) => {
         dispatch({ type: GET_WEEKS_SEMESTERS.start });
         try {
-            const semesters: WeeksSemester[] = await fetchWeeksSemesters();
+            const weeks: WeeksSemester[] = await fetchWeeksSemesters();
             dispatch({
                 type: GET_WEEKS_SEMESTERS.success,
-                payload: { semesters },
+                payload: { weeks },
             });
         } catch (error) {
             dispatch({
                 type: GET_WEEKS_SEMESTERS.failure,
+                payload: { error },
+            });
+        }
+    };
+};
+
+export const updateWeeksSemesters = (
+    weeksSemester: WeeksSemester
+): ThunkAction<Promise<void>, RootState, null, Action> => {
+    return async (dispatch: Dispatch) => {
+        dispatch({ type: UPDATE_WEEKS_SEMESTERS.start });
+        try {
+            const updatedweeksSemester: WeeksSemester = await updateWeeksSemesterRequest(
+                weeksSemester
+            );
+            dispatch({
+                type: UPDATE_WEEKS_SEMESTERS.success,
+                payload: { weeks: updatedweeksSemester },
+            });
+        } catch (error) {
+            dispatch({
+                type: UPDATE_WEEKS_SEMESTERS.failure,
                 payload: { error },
             });
         }
@@ -67,6 +93,26 @@ export const updateSemester = (
         } catch (error) {
             dispatch({
                 type: UPDATE_SEMESTER.failure,
+                payload: { error },
+            });
+        }
+    };
+};
+
+export const createWeeksSemester = (
+    weeksSemester: WeeksSemester
+): ThunkAction<Promise<void>, RootState, null, Action> => {
+    return async (dispatch: Dispatch) => {
+        dispatch({ type: CREATE_WEEKS_SEMESTERS.start });
+        try {
+            const neWeeksSemester: Semester = await createWeeksSemesterRequest(weeksSemester);
+            dispatch({
+                type: CREATE_WEEKS_SEMESTERS.success,
+                payload: { neWeeksSemester },
+            });
+        } catch (error) {
+            dispatch({
+                type: CREATE_WEEKS_SEMESTERS.failure,
                 payload: { error },
             });
         }

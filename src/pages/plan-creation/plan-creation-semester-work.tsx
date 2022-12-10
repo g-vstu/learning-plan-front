@@ -5,9 +5,11 @@ import DoneIcon from '@mui/icons-material/Done';
 import EditIcon from '@mui/icons-material/Edit';
 import DoDisturbIcon from '@mui/icons-material/DoDisturb';
 import { useDispatch } from 'react-redux';
-import { updateSemester } from 'store/semester/actions';
+import { deleteSemester, updateSemester } from 'store/semester/actions';
 import { Semester } from 'types';
 import { useEditMode } from 'hooks/useEditMode';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { red } from '@mui/material/colors';
 
 interface PropTypes {
     semester: Semester;
@@ -56,9 +58,18 @@ export const PlanCreationSemesterWork: React.FC<PropTypes> = ({ semester }) => {
                         </IconButton>
                     </div>
                 ) : (
-                    <IconButton onClick={() => setEditMode(true)}>
-                        <EditIcon />
-                    </IconButton>
+                    <>
+                        <IconButton onClick={() => setEditMode(true)}>
+                            <EditIcon />
+                        </IconButton>
+                        <IconButton
+                            onClick={() => {
+                                dispatch(deleteSemester(semester?.id));
+                            }}
+                        >
+                            <DeleteIcon sx={{ color: red[500] }} />
+                        </IconButton>
+                    </>
                 )}
             </TableCell>
             <TableCell padding="none" style={{ border: 'none' }}>

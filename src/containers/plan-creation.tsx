@@ -2,10 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { match } from 'react-router-dom';
 import { getGlobalPlan } from 'store/plan/actions';
-import { selectPlans, selectPlansLoading } from 'store/plan/selectors';
+import { selectCurrentPlan, selectPlans, selectPlansLoading } from 'store/plan/selectors';
 import { selectNodes, selectNodesLoading } from 'store/node/selectors';
 import { selectPractices, selectPracticesLoading } from 'store/practice/selectors';
-import { selectSemesters, selectSemestersLoading } from 'store/semester/selectors';
+import {
+    selectSemesters,
+    selectSemestersLoading,
+    selectWeeksSemesters,
+    selectWeeksSemestersLoading,
+} from 'store/semester/selectors';
 import { Loader } from 'components/loader';
 import { PlanCreation } from 'pages/plan-creation/plan-creation';
 import { getSubjects } from 'store/subject/actions';
@@ -17,6 +22,7 @@ import { selectGroupUnitsLoading } from 'store/group-unit/selectors';
 import { getSubCompetencies } from 'store/sub-competence/actions';
 import { selectSubCompetenciesLoading } from 'store/sub-competence/selectors';
 import { getPractices } from 'store/practice/actions';
+import { getWeeksSemesters } from 'store/semester/actions';
 
 export const PlanCreationContanier: React.FC<{ match: match<any> }> = ({ match }) => {
     const dispatch = useDispatch();
@@ -27,11 +33,11 @@ export const PlanCreationContanier: React.FC<{ match: match<any> }> = ({ match }
     const isNodesLoading = useSelector(selectNodesLoading);
     const isSemestersLoading = useSelector(selectSemestersLoading);
     const isSubjectsLoading = useSelector(selectSubjectsLoading);
-
     const isGroupComponentsLoading = useSelector(selectGroupComponentsLoading);
     const isGroupUnitsLoading = useSelector(selectGroupUnitsLoading);
     const isSubCompetenciesLoading = useSelector(selectSubCompetenciesLoading);
     const isPracticesLoading = useSelector(selectPracticesLoading);
+    const isWeeksSemestersLoading = useSelector(selectWeeksSemestersLoading);
 
     useEffect(() => {
         if (
@@ -57,11 +63,6 @@ export const PlanCreationContanier: React.FC<{ match: match<any> }> = ({ match }
         isPracticesLoading,
     ]);
 
-    const nodes = useSelector(selectNodes);
-    const plans = useSelector(selectPlans);
-    const semesters = useSelector(selectSemesters);
-    const practices = useSelector(selectPractices);
-
     useEffect(() => {
         dispatch(getGlobalPlan(+match?.params?.id));
         dispatch(getGroupUnits());
@@ -69,7 +70,14 @@ export const PlanCreationContanier: React.FC<{ match: match<any> }> = ({ match }
         dispatch(getSubjects());
         dispatch(getSubCompetencies());
         dispatch(getPractices());
+        dispatch(getWeeksSemesters());
     }, [dispatch, match?.params?.id]);
+
+    const nodes = useSelector(selectNodes);
+    const plans = useSelector(selectPlans);
+    const semesters = useSelector(selectSemesters);
+    const practices = useSelector(selectPractices);
+    const weeks = useSelector(selectWeeksSemesters);
 
     return (
         <>
@@ -81,6 +89,7 @@ export const PlanCreationContanier: React.FC<{ match: match<any> }> = ({ match }
                     nodes={nodes}
                     semesters={semesters}
                     practices={practices}
+                    weeks={weeks}
                 />
             )}
         </>

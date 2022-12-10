@@ -76,6 +76,11 @@ export const getGlobalPlan = (
                     }).length !== 0
                 );
             });
+
+ /*           const цуулы: Week[] = await fetchNodes();
+            const associatedNodes = nodes.filter((node) => node?.idPlan?.id === necessaryPlan.id);
+*/
+
             dispatch({
                 type: GET_PLANS.success,
                 payload: { plans: plansWithAssociatedSpeciality },
