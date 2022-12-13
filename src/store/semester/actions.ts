@@ -20,6 +20,7 @@ import {
     updateWeeksSemesterRequest,
 } from './services';
 import { Semester, WeeksSemester } from 'types';
+import console from 'console';
 
 export const getSemesters = (): ThunkAction<Promise<void>, RootState, null, Action> => {
     return async (dispatch: Dispatch) => {
@@ -105,10 +106,10 @@ export const createWeeksSemester = (
     return async (dispatch: Dispatch) => {
         dispatch({ type: CREATE_WEEKS_SEMESTERS.start });
         try {
-            const neWeeksSemester: Semester = await createWeeksSemesterRequest(weeksSemester);
+            const newWeeksSemester: Semester = await createWeeksSemesterRequest(weeksSemester);
             dispatch({
                 type: CREATE_WEEKS_SEMESTERS.success,
-                payload: { neWeeksSemester },
+                payload: { newWeeksSemester },
             });
         } catch (error) {
             dispatch({

@@ -38,6 +38,7 @@ export const AddPlanDialog: React.FC<any> = ({ open, setOpen }) => {
         name: '',
         regNumber: '',
         utvDate: '2022-05-22',
+        semesterCount: 8,
     });
 
     const handlePlanChange = (e) => {
@@ -110,6 +111,8 @@ export const AddPlanDialog: React.FC<any> = ({ open, setOpen }) => {
                                     <Typography>Недели диплома</Typography>
                                     <TextField
                                         name="diplomC2ountWeek"
+                                        type="number"
+                                        required
                                         value={newPlan.diplomC2ountWeek}
                                         onChange={handlePlanChange}
                                         fullWidth
@@ -120,6 +123,7 @@ export const AddPlanDialog: React.FC<any> = ({ open, setOpen }) => {
                                     <Typography>Семестр</Typography>
                                     <TextField
                                         name="diplomIdSemestr"
+                                        required
                                         value={newPlan.diplomIdSemestr}
                                         onChange={handlePlanChange}
                                         fullWidth
@@ -127,9 +131,10 @@ export const AddPlanDialog: React.FC<any> = ({ open, setOpen }) => {
                                     />
                                 </FieldContainer>
                                 <FieldContainer>
-                                    <Typography>Имя диплома</Typography>
+                                    <Typography>Тип диплома</Typography>
                                     <TextField
                                         name="diplomName"
+                                        required
                                         value={newPlan.diplomName}
                                         onChange={handlePlanChange}
                                         fullWidth
@@ -140,6 +145,7 @@ export const AddPlanDialog: React.FC<any> = ({ open, setOpen }) => {
                                     <Typography>Диплом зе</Typography>
                                     <TextField
                                         name="diplomZe"
+                                        required
                                         value={newPlan.diplomZe}
                                         onChange={handlePlanChange}
                                         fullWidth
@@ -150,6 +156,7 @@ export const AddPlanDialog: React.FC<any> = ({ open, setOpen }) => {
                                     <Typography>форма обучения</Typography>
                                     <TextField
                                         name="educationForm"
+                                        required
                                         value={newPlan.educationForm}
                                         onChange={handlePlanChange}
                                         fullWidth
@@ -160,6 +167,7 @@ export const AddPlanDialog: React.FC<any> = ({ open, setOpen }) => {
                                     <Typography>Год принятия</Typography>
                                     <TextField
                                         name="enrollmentYear"
+                                        required
                                         value={newPlan.enrollmentYear}
                                         onChange={handlePlanChange}
                                         fullWidth
@@ -170,6 +178,7 @@ export const AddPlanDialog: React.FC<any> = ({ open, setOpen }) => {
                                     <Typography>Экзамены</Typography>
                                     <TextField
                                         name="govExam"
+                                        required
                                         value={newPlan.govExam}
                                         onChange={handlePlanChange}
                                         fullWidth
@@ -180,6 +189,7 @@ export const AddPlanDialog: React.FC<any> = ({ open, setOpen }) => {
                                     <Typography>Года обучения</Typography>
                                     <TextField
                                         name="learnYear"
+                                        required
                                         value={newPlan.learnYear}
                                         onChange={handlePlanChange}
                                         fullWidth
@@ -190,6 +200,7 @@ export const AddPlanDialog: React.FC<any> = ({ open, setOpen }) => {
                                     <Typography>Регестрационный номер</Typography>
                                     <TextField
                                         name="regNumber"
+                                        required
                                         value={newPlan.regNumber}
                                         onChange={handlePlanChange}
                                         fullWidth
@@ -200,7 +211,20 @@ export const AddPlanDialog: React.FC<any> = ({ open, setOpen }) => {
                                     <Typography>Дата утверждения</Typography>
                                     <TextField
                                         name="utvDate"
+                                        required
                                         value={newPlan.utvDate}
+                                        onChange={handlePlanChange}
+                                        fullWidth
+                                        size="small"
+                                    />
+                                </FieldContainer>
+                                <FieldContainer>
+                                    <Typography>Количество семестров</Typography>
+                                    <TextField
+                                        name="semesterCount"
+                                        required
+                                        type="number"
+                                        value={newPlan.semesterCount}
                                         onChange={handlePlanChange}
                                         fullWidth
                                         size="small"

@@ -119,15 +119,15 @@ const onUpdateSemesterSuccess = (state: SemesterState, payload): SemesterState =
 
 const onUpdateWeeksSemesterSuccess = (state: SemesterState, payload): SemesterState => {
     const newWeeksSemester = state.weeksSemesters.map((semesterWeeks) => {
-        if (semesterWeeks?.id === payload.semesterWeeks?.id) {
-            return payload.semester;
+        if (semesterWeeks?.id === payload.weeks?.id) {
+            return payload.weeks;
         } else {
-            return newWeeksSemester;
+            return semesterWeeks;
         }
     });
     return {
         ...state,
-        semesters: newWeeksSemester,
+        weeksSemesters: newWeeksSemester,
     };
 };
 

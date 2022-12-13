@@ -3,11 +3,11 @@ import { Action, Dispatch } from 'redux';
 import { RootState } from 'store';
 import { CREATE_PLAN, GET_PLANS, SET_CURRENT_PLAN } from './types';
 import { createPlanRequest, fetchPlan, fetchPlans } from './services';
-import { Node, Plan, Semester, Speciality } from 'types';
+import { Node, Plan, Semester, Speciality, WeeksSemester } from 'types';
 import { fetchNodes } from 'store/node/services';
-import { fetchSemesters } from 'store/semester/services';
+import { createWeeksSemesterRequest, fetchSemesters } from 'store/semester/services';
 import { GET_NODES } from 'store/node/types';
-import { GET_SEMESTERS } from 'store/semester/types';
+import { CREATE_WEEKS_SEMESTERS, GET_SEMESTERS } from 'store/semester/types';
 import { fetchSpeciality } from 'store/speciality/services';
 import { SET_CURRENT_SPECIALITY } from 'store/speciality/types';
 
@@ -37,6 +37,20 @@ export const createPlan = (
         dispatch({ type: CREATE_PLAN.start });
         try {
             const newPlan: Plan = await createPlanRequest(plan, specialityId);
+            for (let i = 0; i < plan.semesterCount; i++) {
+                let weeksSemester: WeeksSemester = {
+                    id: 0,
+                    idPlan: newPlan,
+                    countWeeks: 17,
+                    numberSemestr: i + 1,
+                };
+                weeksSemester = await createWeeksSemesterRequest(weeksSemester);
+                dispatch({
+                    type: CREATE_WEEKS_SEMESTERS.success,
+                    payload: { weeksSemester },
+                });
+            }
+
             dispatch({
                 type: CREATE_PLAN.success,
                 payload: { newPlan },
@@ -77,7 +91,7 @@ export const getGlobalPlan = (
                 );
             });
 
- /*           const цуулы: Week[] = await fetchNodes();
+            /*           const цуулы: Week[] = await fetchNodes();
             const associatedNodes = nodes.filter((node) => node?.idPlan?.id === necessaryPlan.id);
 */
 

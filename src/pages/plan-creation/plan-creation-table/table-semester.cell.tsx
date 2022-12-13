@@ -45,7 +45,7 @@ export const TableSemesterCell: React.FC<any> = ({ semesterWeek }) => {
                     <>
                         <EditIcon onClick={() => setEditMode(true)} />
                         <Typography>
-                            {semesterWeek?.semsteerNumber} семестр ({semesterWeek?.countWeeks}{' '}
+                            {semesterWeek?.numberSemestr} семестр ({semesterWeek?.countWeeks}{' '}
                             недель)
                         </Typography>
                     </>
