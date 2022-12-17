@@ -25,6 +25,9 @@ import { useGetAssociatedSemesters } from 'hooks/useGetAssociatedSemesters';
 import { useSelector } from 'react-redux';
 import { selectCurrentPlan } from 'store/plan/selectors';
 import { PracticeTable } from './practice-table/practice-table';
+import { OverviewHeader } from 'components/overview-header';
+import { OverviewTitle } from 'components/overview-title';
+import { CurrencyBitcoin } from '@mui/icons-material';
 
 interface PropTypes {
     plans: Plan[];
@@ -94,6 +97,13 @@ export const PlanCreation: React.FC<PropTypes> = ({
         <>
             <AddGroupUnitDialog open={openUnitDialog} setOpen={setOpenUnitDialog} />
             <AddPlanDialog open={open} setOpen={setOpen} nodes={nodes} />
+            <OverviewHeader>
+                <div style={{ display: 'flex' }}>
+                    <OverviewTitle>
+                        {currentPlan.idSpeciality.name} <br /> {currentPlan.learnYear}
+                    </OverviewTitle>
+                </div>
+            </OverviewHeader>
             <DetailsNavigationContainer>
                 <BackButton onClick={() => history.push(`/${PREFIX}/plans`)} />
                 <div>

@@ -1,8 +1,8 @@
 import { ThunkAction } from 'redux-thunk';
 import { Action, Dispatch } from 'redux';
 import { RootState } from 'store';
-import { CREATE_PLAN, GET_PLANS, SET_CURRENT_PLAN } from './types';
-import { createPlanRequest, fetchPlan, fetchPlans } from './services';
+import { CREATE_PLAN, DELETE_PLAN, GET_PLANS, SET_CURRENT_PLAN } from './types';
+import { createPlanRequest, delPlanRequest, fetchPlan, fetchPlans } from './services';
 import { Node, Plan, Semester, Speciality, WeeksSemester } from 'types';
 import { fetchNodes } from 'store/node/services';
 import { createWeeksSemesterRequest, fetchSemesters } from 'store/semester/services';
@@ -29,6 +29,25 @@ export const getPlans = (): ThunkAction<Promise<void>, RootState, null, Action> 
     };
 };
 
+export const delPlan = (id): ThunkAction<Promise<void>, RootState, null, Action> => {
+    return async (dispatch: Dispatch) => {
+        dispatch({ type: DELETE_PLAN.start });
+        try {
+            console.log('d!!!!!!!!!gaegregrt');
+            console.log(id);
+            const delPlanId = await delPlanRequest(id);
+            dispatch({
+                type: DELETE_PLAN.success,
+                id,
+            });
+        } catch (error) {
+            dispatch({
+                type: DELETE_PLAN.failure,
+                payload: { error },
+            });
+        }
+    };
+};
 export const createPlan = (
     plan,
     specialityId

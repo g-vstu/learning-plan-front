@@ -1,6 +1,6 @@
 import { Reducer } from 'redux';
 import { PlanState } from 'types';
-import { CREATE_PLAN, GET_PLANS, SET_CURRENT_PLAN } from './types';
+import { CREATE_PLAN, DELETE_PLAN, GET_PLANS, SET_CURRENT_PLAN } from './types';
 
 const initialState: PlanState = {
     plans: [],
@@ -20,6 +20,9 @@ const planReducer: Reducer<PlanState> = (state: PlanState = initialState, action
 
         case CREATE_PLAN.success:
             return onCreatePlanSuccess(state, action.payload);
+
+        case DELETE_PLAN.success:
+            return onDeletePlanSuccess(state, action.payload);
 
         case SET_CURRENT_PLAN.success:
             return onSetCurrentPlanSuccess(state, action.payload);
@@ -60,4 +63,8 @@ const onSetCurrentPlanSuccess = (state: PlanState, payload): PlanState => {
     };
 };
 
+const onDeletePlanSuccess = (state: PlanState, payload): PlanState => ({
+    ...state,
+    plans: state.plans.filter((plan) => plan.id !== payload.id),
+});
 export default planReducer;

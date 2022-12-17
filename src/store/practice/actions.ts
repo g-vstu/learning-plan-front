@@ -1,8 +1,13 @@
 import { ThunkAction } from 'redux-thunk';
 import { Action, Dispatch } from 'redux';
 import { RootState } from 'store';
-import { GET_PRACTICES, DELETE_PRACTICE, CREATE_PRACTICE } from './types';
-import { addPracticeRequest, deletePracticeRequest, fetchPractices } from './services';
+import { GET_PRACTICES, DELETE_PRACTICE, CREATE_PRACTICE, UPDATE_PRACTICE } from './types';
+import {
+    addPracticeRequest,
+    deletePracticeRequest,
+    fetchPractices,
+    updatePracticeRequest,
+} from './services';
 import { Practice } from 'types';
 
 export const getPractices = (): ThunkAction<Promise<void>, RootState, null, Action> => {
@@ -55,6 +60,24 @@ export const addPractice = (
         } catch (error) {
             dispatch({
                 type: CREATE_PRACTICE.failure,
+                payload: { error },
+            });
+        }
+    };
+};
+
+export const updatePractice = (practice): ThunkAction<Promise<void>, RootState, null, Action> => {
+    return async (dispatch: Dispatch) => {
+        dispatch({ type: UPDATE_PRACTICE.start });
+        try {
+            const updatedPractice: Practice = await updatePracticeRequest(practice);
+            dispatch({
+                type: UPDATE_PRACTICE.success,
+                payload: { updatedPractice },
+            });
+        } catch (error) {
+            dispatch({
+                type: UPDATE_PRACTICE.failure,
                 payload: { error },
             });
         }

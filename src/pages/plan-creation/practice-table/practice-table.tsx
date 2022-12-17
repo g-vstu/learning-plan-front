@@ -7,8 +7,9 @@ import { Button, TextField } from '@mui/material';
 import { OverviewHeader } from 'components/overview-header';
 import { OverviewTitle } from 'components/overview-title';
 import { DeleteCell } from 'components/delete-cell';
-import { deletePractice } from 'store/practice/actions';
+import { deletePractice, updatePractice } from 'store/practice/actions';
 import { AddPracticeDialog } from './add-practice-dialog';
+import { useDispatch } from 'react-redux';
 
 interface PropTypes {
     practices: Practice[];
@@ -28,27 +29,31 @@ export const PracticeTable: React.FC<PropTypes> = ({ practices, currentPlan }) =
         setGridApi(params.api);
         setGridColumnApi(params.columnApi);
     };
-
+    const dispatch = useDispatch();
     const practiceColumns = [
         {
             field: 'idSemestr',
             width: 140,
             headerName: 'Семестр',
+            editable: true,
         },
         {
             field: 'name',
             width: 140,
             headerName: 'Название',
+            editable: true,
         },
         {
             field: 'countWeek',
             width: 140,
             headerName: 'Количество недель',
+            editable: true,
         },
         {
             field: 'ze',
             width: 140,
             headerName: 'З.е.',
+            editable: true,
         },
 
         {
@@ -61,7 +66,9 @@ export const PracticeTable: React.FC<PropTypes> = ({ practices, currentPlan }) =
             }),
         },
     ];
-
+    const onCellValueChanged = (event) => {
+        dispatch(updatePractice(event.data));
+    };
     return (
         <>
             <AddPracticeDialog open={open} setOpen={setOpen} planId={currentPlan.id} />
@@ -79,15 +86,14 @@ export const PracticeTable: React.FC<PropTypes> = ({ practices, currentPlan }) =
                     ref={gridRef}
                     modules={modules}
                     rowData={practices}
-                    enableRangeSelection={true}
                     columnDefs={practiceColumns}
                     defaultColDef={defaultColDef}
                     onGridReady={onGridReady}
-                    cacheQuickFilter={true}
                     isFullWidthCell={(rowNode) => rowNode.data.fullWidth}
                     headerHeight={40}
                     groupHeaderHeight={10}
                     suppressDragLeaveHidesColumns
+                    onCellValueChanged={onCellValueChanged}
                 />
             </div>
         </>

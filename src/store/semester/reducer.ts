@@ -34,7 +34,7 @@ const semesterReducer: Reducer<SemesterState> = (state: SemesterState = initialS
             return onUpdateSemesterSuccess(state, action.payload);
         case DELETE_SEMESTER.success:
             return onDeleteSemester(state, action.payload);
-            
+
         case GET_WEEKS_SEMESTERS.start:
             return onGetWeeksSemestersStart(state);
         case GET_WEEKS_SEMESTERS.success:

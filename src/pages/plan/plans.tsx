@@ -9,6 +9,9 @@ import { OverviewHeader } from 'components/overview-header';
 import { OverviewTitle } from 'components/overview-title';
 import { AddPlanDialog } from './add-plan-dialog';
 import { Search as SearchIcon } from '@mui/icons-material';
+import { DeleteCell } from 'components/delete-cell';
+import { deleteSubject } from 'store/subject/actions';
+import { delPlan } from 'store/plan/actions';
 
 interface PropTypes {
     plans: Plan[];
@@ -24,12 +27,12 @@ export const Plans: React.FC<PropTypes> = ({ plans }) => {
     const [gridApi, setGridApi] = useState(null);
     const [gridColumnApi, setGridColumnApi] = useState(null);
 
-    const onGridReady = (params) => {
-        setGridApi(params.api);
-        setGridColumnApi(params.columnApi);
-    };
-
     const plansColumns = [
+        {
+            field: 'idSpeciality.name',
+            width: 140,
+            headerName: 'Специальность',
+        },
         {
             field: 'learnYear',
             width: 140,
@@ -41,11 +44,40 @@ export const Plans: React.FC<PropTypes> = ({ plans }) => {
             headerName: 'Форма обучения',
         },
         {
-            field: 'idSpeciality.name',
-            width: 140,
-            headerName: 'Специальность',
+            width: 10,
+            headerName: 'Удалить',
+            cellRenderer: DeleteCell,
+            cellRendererParams: ({ data }) => ({
+                id: data.id,
+                method: onDeletePlan,
+            }),
+        },
+        {
+            width: 10,
+            headerName: 'Удалить',
+            cellRenderer: DeleteCell,
+            cellRendererParams: ({ data }) => ({
+                id: data.id,
+                method: delPlan,
+            }),
         },
     ];
+
+    const onGridReady = (params) => {
+        setGridApi(params.api);
+        setGridColumnApi(params.columnApi);
+    };
+
+    const onDeletePlan = ({ data }) => {
+        const selectedRows = gridApi.api.getSelectedNodes();
+        console.log('WWWWWWWWWW');
+        console.log(selectedRows);
+        delPlan(data);
+    };
+    
+    const onOpenPlan = (id) => {
+        //                  onCellClicked={(e) => history.push(`/${PREFIX}/plan-creation/${e.data?.id}`)}
+    };
 
     const onFilterTextBoxChanged = useCallback(() => {
         (gridRef.current as any).api.setQuickFilter(
@@ -79,7 +111,6 @@ export const Plans: React.FC<PropTypes> = ({ plans }) => {
                 <AgGridReact
                     ref={gridRef}
                     modules={modules}
-                    onCellClicked={(e) => history.push(`/${PREFIX}/plan-creation/${e.data?.id}`)}
                     rowData={plans}
                     enableRangeSelection={true}
                     columnDefs={plansColumns}
