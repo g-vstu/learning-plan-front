@@ -7,7 +7,6 @@ export const updateWeeksSemesterRequest = async (weeksSemester: WeeksSemester) =
         `${DEVELOPMENT}/weeks_semestr?planId=${weeksSemester?.idPlan?.id}`,
         weeksSemester
     );
-    console.log(updatedWeeksSemester);
     return updatedWeeksSemester;
 };
 

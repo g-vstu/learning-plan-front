@@ -6,6 +6,8 @@ import {
     DialogContent,
     Grid,
     IconButton,
+    MenuItem,
+    Select,
     TextField,
     Typography,
 } from '@mui/material';
@@ -14,11 +16,13 @@ import { useDispatch } from 'react-redux';
 import { addSubject } from 'store/subject/actions';
 import { FieldContainer } from 'components/field-container';
 import { addPractice } from 'store/practice/actions';
+import { PRACTICE_TYPES } from 'config/domain-consts';
 
 export const AddPracticeDialog: React.FC<any> = ({ open, setOpen, planId }) => {
     const dispatch = useDispatch();
     const [newPractice, setNewPractice] = useState({
         idSemestr: 4,
+        type: PRACTICE_TYPES[0],
         name: '',
         countWeek: 4,
         ze: 6,
@@ -80,6 +84,22 @@ export const AddPracticeDialog: React.FC<any> = ({ open, setOpen, planId }) => {
                                         fullWidth
                                         size="small"
                                     />
+                                </FieldContainer>
+                                <FieldContainer>
+                                    <Typography>Тип практики</Typography>
+                                    <Select
+                                        name="type"
+                                        value={newPractice.type}
+                                        onChange={handleChange}
+                                        fullWidth
+                                        size="small"
+                                    >
+                                        {PRACTICE_TYPES.map((type, i) => (
+                                            <MenuItem key={i} value={type}>
+                                                {type}
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
                                 </FieldContainer>
                                 <FieldContainer>
                                     <Typography>Название</Typography>

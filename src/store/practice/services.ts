@@ -17,8 +17,6 @@ export const deletePracticeRequest = async (id) => {
     await instance.delete(`${DEVELOPMENT}/practice/${id}`);
 };
 export const updatePracticeRequest = async (practice) => {
-    console.log('event.data');
-    console.log(practice);
     const { data: updatedPractice } = await instance.post(
         `${DEVELOPMENT}/practice?planId=${practice.idPlan.id}`,
         practice

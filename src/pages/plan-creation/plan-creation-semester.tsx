@@ -53,8 +53,6 @@ export const PlanCreationSemester: React.FC<PropTypes> = ({ semester }) => {
     }, [semesterData]);
 
     const handleSaveSemester = () => {
-        console.log('EDDDI');
-        console.log(semesterData);
         dispatch(updateSemester(semesterData));
         setEditMode(false);
     };

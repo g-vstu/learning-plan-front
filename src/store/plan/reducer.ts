@@ -65,6 +65,7 @@ const onSetCurrentPlanSuccess = (state: PlanState, payload): PlanState => {
 
 const onDeletePlanSuccess = (state: PlanState, payload): PlanState => ({
     ...state,
+    loading: false,
     plans: state.plans.filter((plan) => plan.id !== payload.id),
 });
 export default planReducer;

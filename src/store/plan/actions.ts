@@ -29,16 +29,14 @@ export const getPlans = (): ThunkAction<Promise<void>, RootState, null, Action> 
     };
 };
 
-export const delPlan = (id): ThunkAction<Promise<void>, RootState, null, Action> => {
+export const delPlan = (id: number): ThunkAction<Promise<void>, RootState, null, Action> => {
     return async (dispatch: Dispatch) => {
         dispatch({ type: DELETE_PLAN.start });
         try {
-            console.log('d!!!!!!!!!gaegregrt');
-            console.log(id);
             const delPlanId = await delPlanRequest(id);
             dispatch({
                 type: DELETE_PLAN.success,
-                id,
+                payload: { id },
             });
         } catch (error) {
             dispatch({

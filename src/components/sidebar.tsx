@@ -20,19 +20,21 @@ export const SideBar = (props) => {
                 <FolderSpecialIcon />
                 <Typography style={{ marginLeft: 5 }}>Специальности</Typography>
             </ListItemButton>
-            <ListItemButton component={Link} to={`/${PREFIX}/subjects`} style={{ display: 'flex' }}>
+            {/*} <ListItemButton component={Link} to={`/${PREFIX}/subjects`} style={{ display: 'flex' }}>
                 <SubjectIcon />
                 <Typography style={{ marginLeft: 5 }}>Предметы</Typography>
             </ListItemButton>
+            */}
             {/*<ListItemButton component={Link} to={`/${PREFIX}/units`} style={{ display: 'flex' }}>
                 <PictureInPictureIcon />
                 <Typography style={{ marginLeft: 5 }}>Модули</Typography>
-    </ListItemButton>*/}
+             </ListItemButton>
+             */}
             <ListItemButton component={Link} to={`/${PREFIX}/plans`} style={{ display: 'flex' }}>
                 <SourceIcon />
                 <Typography style={{ marginLeft: 5 }}>Планы</Typography>
             </ListItemButton>
-            <ListItemButton
+            {/* <ListItemButton
                 component={Link}
                 to={`/${PREFIX}/competencies`}
                 style={{ display: 'flex' }}
@@ -40,6 +42,7 @@ export const SideBar = (props) => {
                 <ChatBubbleIcon />
                 <Typography style={{ marginLeft: 5 }}>Компетенции</Typography>
             </ListItemButton>
+            */}
         </Menu>
     );
 };

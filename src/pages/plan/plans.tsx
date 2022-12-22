@@ -12,6 +12,7 @@ import { Search as SearchIcon } from '@mui/icons-material';
 import { DeleteCell } from 'components/delete-cell';
 import { deleteSubject } from 'store/subject/actions';
 import { delPlan } from 'store/plan/actions';
+import FileOpenOutlinedIcon from '@mui/icons-material/FileOpenOutlined';
 
 interface PropTypes {
     plans: Plan[];
@@ -28,6 +29,19 @@ export const Plans: React.FC<PropTypes> = ({ plans }) => {
     const [gridColumnApi, setGridColumnApi] = useState(null);
 
     const plansColumns = [
+        {
+            width: 10,
+            headerName: 'Открыть',
+            cellRenderer: ({ id }) => {
+                const handleOpen = () => {
+                    history.push(`/${PREFIX}/plan-creation/${id}`);
+                };
+                return <FileOpenOutlinedIcon onClick={handleOpen} />;
+            },
+            cellRendererParams: ({ data }) => ({
+                id: data.id,
+            }),
+        },
         {
             field: 'idSpeciality.name',
             width: 140,
@@ -49,15 +63,6 @@ export const Plans: React.FC<PropTypes> = ({ plans }) => {
             cellRenderer: DeleteCell,
             cellRendererParams: ({ data }) => ({
                 id: data.id,
-                method: onDeletePlan,
-            }),
-        },
-        {
-            width: 10,
-            headerName: 'Удалить',
-            cellRenderer: DeleteCell,
-            cellRendererParams: ({ data }) => ({
-                id: data.id,
                 method: delPlan,
             }),
         },
@@ -68,13 +73,6 @@ export const Plans: React.FC<PropTypes> = ({ plans }) => {
         setGridColumnApi(params.columnApi);
     };
 
-    const onDeletePlan = ({ data }) => {
-        const selectedRows = gridApi.api.getSelectedNodes();
-        console.log('WWWWWWWWWW');
-        console.log(selectedRows);
-        delPlan(data);
-    };
-    
     const onOpenPlan = (id) => {
         //                  onCellClicked={(e) => history.push(`/${PREFIX}/plan-creation/${e.data?.id}`)}
     };

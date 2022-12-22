@@ -10,6 +10,7 @@ import { DeleteCell } from 'components/delete-cell';
 import { deletePractice, updatePractice } from 'store/practice/actions';
 import { AddPracticeDialog } from './add-practice-dialog';
 import { useDispatch } from 'react-redux';
+import { PRACTICE_TYPES } from 'config/domain-consts';
 
 interface PropTypes {
     practices: Practice[];
@@ -36,6 +37,15 @@ export const PracticeTable: React.FC<PropTypes> = ({ practices, currentPlan }) =
             width: 140,
             headerName: 'Семестр',
             editable: true,
+        },
+        {
+            field: 'type',
+            cellEditor: 'agSelectCellEditor',
+            headerName: 'Тип практики',
+            editable: true,
+            cellEditorParams: {
+                values: PRACTICE_TYPES,
+            },
         },
         {
             field: 'name',
