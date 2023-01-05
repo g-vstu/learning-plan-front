@@ -7,7 +7,7 @@ export const PREFIX = process.env.REACT_APP_PREFIX;
 export const defaultTheme = 'ag-theme-material';
 
 export const defaultSize = {
-    height: 780,
+    height: 700,
     width: '100%',
 };
 

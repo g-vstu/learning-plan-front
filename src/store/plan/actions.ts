@@ -1,7 +1,7 @@
 import { ThunkAction } from 'redux-thunk';
 import { Action, Dispatch } from 'redux';
 import { RootState } from 'store';
-import { CREATE_PLAN, DELETE_PLAN, GET_PLANS, SET_CURRENT_PLAN } from './types';
+import { CREATE_PLAN, DELETE_PLAN, GET_PLANS, SET_CURRENT_PLAN, UPDATE_PLAN } from './types';
 import { createPlanRequest, delPlanRequest, fetchPlan, fetchPlans } from './services';
 import { Node, Plan, Semester, Speciality, WeeksSemester } from 'types';
 import { fetchNodes } from 'store/node/services';
@@ -71,6 +71,31 @@ export const createPlan = (
             dispatch({
                 type: CREATE_PLAN.success,
                 payload: { newPlan },
+            });
+        } catch (error) {
+            dispatch({
+                type: CREATE_PLAN.failure,
+                payload: { error },
+            });
+        }
+    };
+};
+
+export const updatePlan = (
+    plan,
+    specialityId
+): ThunkAction<Promise<void>, RootState, null, Action> => {
+    return async (dispatch: Dispatch) => {
+        dispatch({ type: UPDATE_PLAN.start });
+        try {
+            console.log('!!!!!plan');
+            console.log(plan);
+            console.log('!!!!!specialityId');
+            console.log(specialityId);
+            const updatedPlan: Plan = await createPlanRequest(plan, specialityId);
+            dispatch({
+                type: CREATE_PLAN.success,
+                payload: { updatedPlan },
             });
         } catch (error) {
             dispatch({

@@ -10,9 +10,11 @@ import { OverviewTitle } from 'components/overview-title';
 import { AddPlanDialog } from './add-plan-dialog';
 import { Search as SearchIcon } from '@mui/icons-material';
 import { DeleteCell } from 'components/delete-cell';
-import { deleteSubject } from 'store/subject/actions';
-import { delPlan } from 'store/plan/actions';
+import { delPlan, updatePlan } from 'store/plan/actions';
 import FileOpenOutlinedIcon from '@mui/icons-material/FileOpenOutlined';
+import { useDispatch } from 'react-redux';
+import { DIPLOM_TYPES } from 'config/domain-consts';
+import 'config/styles/styles.css';
 
 interface PropTypes {
     plans: Plan[];
@@ -27,10 +29,12 @@ export const Plans: React.FC<PropTypes> = ({ plans }) => {
 
     const [gridApi, setGridApi] = useState(null);
     const [gridColumnApi, setGridColumnApi] = useState(null);
+    const dispatch = useDispatch();
 
     const plansColumns = [
         {
             width: 10,
+            filter: false,
             headerName: 'Открыть',
             cellRenderer: ({ id }) => {
                 const handleOpen = () => {
@@ -48,17 +52,72 @@ export const Plans: React.FC<PropTypes> = ({ plans }) => {
             headerName: 'Специальность',
         },
         {
+            field: 'diplomCountWeek',
+            width: 140,
+            headerName: 'Недели диплома',
+            editable: true,
+        },
+        {
+            field: 'diplomIdSemestr',
+            width: 140,
+            headerName: 'Семестр диплома',
+            editable: true,
+        },
+        {
+            field: 'diplomName',
+            width: 140,
+            cellEditor: 'agSelectCellEditor',
+            headerName: 'Тип диплома',
+            editable: true,
+            cellEditorParams: {
+                values: DIPLOM_TYPES,
+            },
+        },
+        {
+            field: 'diplomZe',
+            width: 140,
+            headerName: 'Диплом зе',
+            editable: true,
+        },
+        {
+            field: 'enrollmentYear',
+            width: 140,
+            headerName: 'Год принятия',
+            editable: true,
+        },
+        {
+            field: 'govExam',
+            width: 140,
+            headerName: 'ГЭК',
+            editable: true,
+        },
+        {
+            field: 'utvDate',
+            width: 140,
+            headerName: 'Дата утверждения',
+            editable: true,
+        },
+        {
+            field: 'regNumber',
+            width: 140,
+            headerName: 'Рег. №',
+            editable: true,
+        },
+        {
             field: 'learnYear',
             width: 140,
             headerName: 'Года обучения',
+            editable: true,
         },
         {
             field: 'educationForm',
             width: 140,
             headerName: 'Форма обучения',
+            editable: true,
         },
         {
             width: 10,
+            filter: false,
             headerName: 'Удалить',
             cellRenderer: DeleteCell,
             cellRendererParams: ({ data }) => ({
@@ -68,13 +127,13 @@ export const Plans: React.FC<PropTypes> = ({ plans }) => {
         },
     ];
 
+    const onCellValueChanged = (event) => {
+        dispatch(updatePlan(event.data, event.data.idSpeciality.id));
+    };
+
     const onGridReady = (params) => {
         setGridApi(params.api);
         setGridColumnApi(params.columnApi);
-    };
-
-    const onOpenPlan = (id) => {
-        //                  onCellClicked={(e) => history.push(`/${PREFIX}/plan-creation/${e.data?.id}`)}
     };
 
     const onFilterTextBoxChanged = useCallback(() => {
@@ -116,9 +175,9 @@ export const Plans: React.FC<PropTypes> = ({ plans }) => {
                     onGridReady={onGridReady}
                     cacheQuickFilter={true}
                     isFullWidthCell={(rowNode) => rowNode.data.fullWidth}
-                    headerHeight={40}
-                    groupHeaderHeight={10}
                     suppressDragLeaveHidesColumns
+                    onCellValueChanged={onCellValueChanged}
+                    headerHeight={140}
                 />
             </div>
         </>

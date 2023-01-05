@@ -27,7 +27,7 @@ export const AddPlanDialog: React.FC<any> = ({ open, setOpen }) => {
     const [selectedSpeciality, setSelectedSpeciality] = useState(null);
 
     const [newPlan, setNewPlan] = useState({
-        diplomC2ountWeek: 0,
+        diplomCountWeek: 0,
         diplomIdSemestr: 0,
         diplomName: '',
         diplomZe: 0,
@@ -110,17 +110,17 @@ export const AddPlanDialog: React.FC<any> = ({ open, setOpen }) => {
                                 <FieldContainer>
                                     <Typography>Недели диплома</Typography>
                                     <TextField
-                                        name="diplomC2ountWeek"
+                                        name="diplomCountWeek"
                                         type="number"
                                         required
-                                        value={newPlan.diplomC2ountWeek}
+                                        value={newPlan.diplomCountWeek}
                                         onChange={handlePlanChange}
                                         fullWidth
                                         size="small"
                                     />
                                 </FieldContainer>
                                 <FieldContainer>
-                                    <Typography>Семестр</Typography>
+                                    <Typography>Семестр диплома</Typography>
                                     <TextField
                                         name="diplomIdSemestr"
                                         required
@@ -175,7 +175,7 @@ export const AddPlanDialog: React.FC<any> = ({ open, setOpen }) => {
                                     />
                                 </FieldContainer>
                                 <FieldContainer>
-                                    <Typography>Экзамены</Typography>
+                                    <Typography>ГЭК</Typography>
                                     <TextField
                                         name="govExam"
                                         required
@@ -197,7 +197,7 @@ export const AddPlanDialog: React.FC<any> = ({ open, setOpen }) => {
                                     />
                                 </FieldContainer>
                                 <FieldContainer>
-                                    <Typography>Регестрационный номер</Typography>
+                                    <Typography>Рег. №</Typography>
                                     <TextField
                                         name="regNumber"
                                         required

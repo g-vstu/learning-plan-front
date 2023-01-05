@@ -11,6 +11,7 @@ import { deletePractice, updatePractice } from 'store/practice/actions';
 import { AddPracticeDialog } from './add-practice-dialog';
 import { useDispatch } from 'react-redux';
 import { PRACTICE_TYPES } from 'config/domain-consts';
+import 'config/styles/styles.css';
 
 interface PropTypes {
     practices: Practice[];
@@ -68,6 +69,7 @@ export const PracticeTable: React.FC<PropTypes> = ({ practices, currentPlan }) =
 
         {
             width: 140,
+            filter: false,
             headerName: 'Удалить',
             cellRenderer: DeleteCell,
             cellRendererParams: ({ data }) => ({
@@ -100,8 +102,7 @@ export const PracticeTable: React.FC<PropTypes> = ({ practices, currentPlan }) =
                     defaultColDef={defaultColDef}
                     onGridReady={onGridReady}
                     isFullWidthCell={(rowNode) => rowNode.data.fullWidth}
-                    headerHeight={40}
-                    groupHeaderHeight={10}
+                    headerHeight={120}
                     suppressDragLeaveHidesColumns
                     onCellValueChanged={onCellValueChanged}
                 />

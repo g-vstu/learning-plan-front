@@ -23,3 +23,11 @@ export const createPlanRequest = async (plan, specialityId) => {
     );
     return newPlan;
 };
+
+export const updatePlanRequest = async (plan, specialityId) => {
+    const { data: newPlan } = await instance.post(
+        `${DEVELOPMENT}/plan?specialityId=${specialityId}`,
+        plan
+    );
+    return newPlan;
+};
