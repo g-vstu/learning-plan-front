@@ -19,6 +19,7 @@ import { createSpeciality } from 'store/speciality/actions';
 import { selectSubjects } from 'store/subject/selectors';
 import { createPlan } from 'store/plan/actions';
 import { selectSpecialities } from 'store/speciality/selectors';
+import { DIPLOM_TYPES, EDUCATION_FORMS } from 'config/domain-consts';
 
 export const AddPlanDialog: React.FC<any> = ({ open, setOpen }) => {
     const dispatch = useDispatch();
@@ -132,14 +133,20 @@ export const AddPlanDialog: React.FC<any> = ({ open, setOpen }) => {
                                 </FieldContainer>
                                 <FieldContainer>
                                     <Typography>Тип диплома</Typography>
-                                    <TextField
+                                    <Select
                                         name="diplomName"
                                         required
                                         value={newPlan.diplomName}
                                         onChange={handlePlanChange}
                                         fullWidth
                                         size="small"
-                                    />
+                                    >
+                                        {DIPLOM_TYPES?.map((form, i) => (
+                                            <MenuItem key={i} value={form}>
+                                                {form}
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
                                 </FieldContainer>
                                 <FieldContainer>
                                     <Typography>Диплом зе</Typography>
@@ -154,14 +161,20 @@ export const AddPlanDialog: React.FC<any> = ({ open, setOpen }) => {
                                 </FieldContainer>
                                 <FieldContainer>
                                     <Typography>форма обучения</Typography>
-                                    <TextField
+                                    <Select
                                         name="educationForm"
                                         required
                                         value={newPlan.educationForm}
                                         onChange={handlePlanChange}
                                         fullWidth
                                         size="small"
-                                    />
+                                    >
+                                        {EDUCATION_FORMS?.map((form, i) => (
+                                            <MenuItem key={i} value={form}>
+                                                {form}
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
                                 </FieldContainer>
                                 <FieldContainer>
                                     <Typography>Год принятия</Typography>

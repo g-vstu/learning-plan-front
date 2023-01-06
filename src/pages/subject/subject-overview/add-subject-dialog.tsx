@@ -86,16 +86,6 @@ export const AddSubjectDialog: React.FC<any> = ({ open, setOpen, groupUnits }) =
                                     />
                                 </FieldContainer>
                                 <FieldContainer>
-                                    <Typography>Шифр</Typography>
-                                    <TextField
-                                        name="shifr"
-                                        value={newSubject.shifr}
-                                        onChange={handleChange}
-                                        fullWidth
-                                        size="small"
-                                    />
-                                </FieldContainer>
-                                <FieldContainer>
                                     <Typography>Выберете модуль</Typography>
                                     <Select
                                         fullWidth

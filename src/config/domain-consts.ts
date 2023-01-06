@@ -1,5 +1,6 @@
 export const PRACTICE_TYPES = ['учебная', 'производственная'];
 export const DIPLOM_TYPES = ['проект', 'работа'];
+export const EDUCATION_FORMS = ['очная', 'заочная'];
 
 export const createdPlan = {
     diplomCountWeek: 0,

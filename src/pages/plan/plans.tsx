@@ -13,7 +13,7 @@ import { DeleteCell } from 'components/delete-cell';
 import { delPlan, updatePlan } from 'store/plan/actions';
 import FileOpenOutlinedIcon from '@mui/icons-material/FileOpenOutlined';
 import { useDispatch } from 'react-redux';
-import { DIPLOM_TYPES } from 'config/domain-consts';
+import { DIPLOM_TYPES, EDUCATION_FORMS } from 'config/domain-consts';
 import 'config/styles/styles.css';
 
 interface PropTypes {
@@ -82,7 +82,7 @@ export const Plans: React.FC<PropTypes> = ({ plans }) => {
         {
             field: 'enrollmentYear',
             width: 140,
-            headerName: 'Год принятия',
+            headerName: 'Год поступления',
             editable: true,
         },
         {
@@ -112,6 +112,10 @@ export const Plans: React.FC<PropTypes> = ({ plans }) => {
         {
             field: 'educationForm',
             width: 140,
+            cellEditor: 'agSelectCellEditor',
+            cellEditorParams: {
+                values: EDUCATION_FORMS,
+            },
             headerName: 'Форма обучения',
             editable: true,
         },

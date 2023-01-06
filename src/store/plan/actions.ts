@@ -53,6 +53,10 @@ export const createPlan = (
     return async (dispatch: Dispatch) => {
         dispatch({ type: CREATE_PLAN.start });
         try {
+            console.log('!!!!!plan');
+            console.log(plan);
+            console.log('!!!!!specialityId');
+            console.log(specialityId);
             const newPlan: Plan = await createPlanRequest(plan, specialityId);
             for (let i = 0; i < plan.semesterCount; i++) {
                 let weeksSemester: WeeksSemester = {
@@ -88,9 +92,9 @@ export const updatePlan = (
     return async (dispatch: Dispatch) => {
         dispatch({ type: UPDATE_PLAN.start });
         try {
-            console.log('!!!!!plan');
+            console.log('FFFFFFFFFFFplan');
             console.log(plan);
-            console.log('!!!!!specialityId');
+            console.log('FFFFFFFFspecialityId');
             console.log(specialityId);
             const updatedPlan: Plan = await createPlanRequest(plan, specialityId);
             dispatch({

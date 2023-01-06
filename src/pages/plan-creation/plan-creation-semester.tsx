@@ -144,7 +144,7 @@ export const PlanCreationSemester: React.FC<PropTypes> = ({ semester }) => {
                         editMode={editMode}
                         name="type"
                         value={semesterData?.type}
-                        selItems={[SemesterType.Test, SemesterType.Exam]}
+                        selItems={Object.values(SemesterType)}
                         handleUpdateSemester={handleUpdateSemester}
                     />
                     <TableEditCell

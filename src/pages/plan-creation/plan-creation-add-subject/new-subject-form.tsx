@@ -29,16 +29,6 @@ export const NewSubjectForm: React.FC<any> = ({
                 />
             </FieldContainer>
             <FieldContainer>
-                <Typography>Шифр</Typography>
-                <TextField
-                    name="shifr"
-                    value={newSubject.shifr}
-                    onChange={handleChange}
-                    fullWidth
-                    size="small"
-                />
-            </FieldContainer>
-            <FieldContainer>
                 <Typography>Выберете модуль</Typography>
                 <Select fullWidth size="small" value={unit?.id} onChange={handleChangeTypeUnit}>
                     {groupUnits

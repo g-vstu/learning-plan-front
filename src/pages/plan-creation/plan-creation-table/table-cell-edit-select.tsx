@@ -2,7 +2,6 @@ import React from 'react';
 import { Select, TableCell, TextField, Typography } from '@mui/material';
 import { indigo } from '@mui/material/colors';
 import MenuItem from '@mui/material/MenuItem';
-import { SemesterType } from 'types';
 
 export const TableEditSelectCell: React.FC<any> = ({
     editMode,
@@ -25,8 +24,11 @@ export const TableEditSelectCell: React.FC<any> = ({
                     variant="standard"
                     style={{ width: 70, textAlign: 'center' }}
                 >
-                    <MenuItem value={SemesterType.Test}>{SemesterType.Test}</MenuItem>;
-                    <MenuItem value={SemesterType.Exam}>{SemesterType.Exam}</MenuItem>;
+                    {selItems.map((itm, i) => (
+                        <MenuItem key={i} value={itm}>
+                            {itm}
+                        </MenuItem>
+                    ))}
                 </Select>
             ) : (
                 <Typography variant="subtitle2">{value}</Typography>

@@ -98,7 +98,7 @@ export const AddGroupUnitDialog: React.FC<any> = ({ open, setOpen }) => {
                                 />
                             </FieldContainer>
                             <FieldContainer>
-                                <Typography>Шифр</Typography>
+                                <Typography>Номер в плане</Typography>
                                 <TextField
                                     name="unitNumber"
                                     value={newGroupUnit.unitNumber}

@@ -9,7 +9,9 @@ export enum CourseWorkType {
 
 export enum SemesterType {
     Exam = 'экзамен',
-    Test = 'зачет',
+    Test = 'зачёт',
+    Prosm = 'просмотр',
+    DifTest = 'дифзачёт',
 }
 
 export interface Semester {
