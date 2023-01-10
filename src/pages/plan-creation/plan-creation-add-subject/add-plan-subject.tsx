@@ -19,6 +19,7 @@ import { createNode, createNodeWithNewSubject } from 'store/node/actions';
 import { ExistSubjectForm } from './exist-subject-form';
 import { NewSubjectForm } from './new-subject-form';
 import { FieldContainer } from 'components/field-container';
+import toast, { Toaster } from 'react-hot-toast';
 
 interface PropTypes {
     open: boolean;
@@ -87,7 +88,8 @@ export const AddPlanDialog: React.FC<PropTypes> = ({ open, setOpen, nodes }) => 
                         nodeNumber: newNodeNumber,
                     };
                     dispatch(createNode(node, selectedSubject, currentPlan));
-                    setOpen(false);
+                    toast.success('Предмет добавлен!');
+                   // setOpen(false);
                 }
             }
             if (isNewSubject) {
@@ -96,7 +98,8 @@ export const AddPlanDialog: React.FC<PropTypes> = ({ open, setOpen, nodes }) => 
                     nodeNumber: newNodeNumber,
                 };
                 dispatch(createNodeWithNewSubject(node, currentPlan, newSubject, unit));
-                setOpen(false);
+                toast.success('Предмет добавлен!');
+                //setOpen(false);
             }
         }
     };
@@ -109,6 +112,7 @@ export const AddPlanDialog: React.FC<PropTypes> = ({ open, setOpen, nodes }) => 
 
     return (
         <>
+           <Toaster />
             <Dialog open={open} onClose={() => setOpen(false)} maxWidth="xs" fullWidth>
                 <Tabs value={tabValue} onChange={onTabChange} style={{ width: '100%' }}>
                     {Object.values(TABS).map((tab) => (

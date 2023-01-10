@@ -17,6 +17,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { selectGroupComponents } from 'store/group-component/selectors';
 import { createGroupUnit } from 'store/group-unit/actions';
 import { selectCurrentPlan } from 'store/plan/selectors';
+import toast, { Toaster } from 'react-hot-toast';
 
 export const AddGroupUnitDialog: React.FC<any> = ({ open, setOpen }) => {
     const dispatch = useDispatch();
@@ -51,10 +52,13 @@ export const AddGroupUnitDialog: React.FC<any> = ({ open, setOpen }) => {
                 component
             )
         );
+        console.log('GGGGGGGGGGGGGG');
+        toast.success('Модуль добавлен!');
     };
 
     return (
         <Dialog open={open} onClose={() => setOpen(false)} maxWidth="xs" fullWidth>
+            <Toaster />
             <DialogContent>
                 <Container style={{ marginTop: 0, paddingTop: 20, paddingBottom: 30 }}>
                     <div

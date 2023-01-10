@@ -12,9 +12,10 @@ export const defaultSize = {
 };
 
 export const defaultColDef: ColDef = {
-    enableRowGroup: true,
-    enablePivot: true,
-    enableValue: true,
+    // Enterprise version only
+    // enableRowGroup: true,
+    // enablePivot: true,
+    // enableValue: true,
     width: 100,
     sortable: true,
     resizable: true,

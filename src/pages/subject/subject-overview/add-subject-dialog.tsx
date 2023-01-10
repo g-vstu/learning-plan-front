@@ -15,6 +15,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { useDispatch } from 'react-redux';
 import { addSubject } from 'store/subject/actions';
 import { FieldContainer } from 'components/field-container';
+import toast, { Toaster } from 'react-hot-toast';
 
 export const AddSubjectDialog: React.FC<any> = ({ open, setOpen, groupUnits }) => {
     const dispatch = useDispatch();
@@ -37,12 +38,14 @@ export const AddSubjectDialog: React.FC<any> = ({ open, setOpen, groupUnits }) =
 
     const handleAddSubject = () => {
         dispatch(addSubject(newSubject, unit));
-        setOpen(false);
+        toast.success('Предмет добавлен!');
+        //setOpen(false);
     };
 
     return (
         <>
             <Dialog open={open} onClose={() => setOpen(false)} maxWidth="xs" fullWidth>
+                <Toaster />
                 <DialogContent>
                     <Container style={{ marginTop: 0, paddingTop: 20, paddingBottom: 30 }}>
                         <div
