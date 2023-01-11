@@ -25,8 +25,8 @@ import ConfirmDialog from '../../components/confirm-dialog';
 
 interface SemesterWeek {
     id: number;
-    semsteerNumber: number;
-    semesterWeeks: number;
+    numberSemestr: number;
+    countWeeks: number;
 }
 
 interface PlanCreationNodeProps {
@@ -74,15 +74,16 @@ export const PlanCreationNode: React.FC<PlanCreationNodeProps> = ({
     const associatedSemestersNumber = associatedSemesters.map((semester) => semester?.number);
 
     const showSemesters = semestersWeeks.map((week) => {
-        if (associatedSemestersNumber?.includes(week?.semsteerNumber)) {
+        if (associatedSemestersNumber?.includes(week?.numberSemestr)) {
             return associatedSemesters.find(
-                (associatedSemester) => associatedSemester?.number === week?.semsteerNumber
+                (associatedSemester) => associatedSemester?.number === week?.numberSemestr
             );
         } else {
-            return { semesterNumber: week?.semsteerNumber };
+            return { semesterNumber: week?.numberSemestr };
         }
     });
-
+    console.log('_______showSemesters');
+    console.log(showSemesters);
     const associatedPlan = plans?.find((plan) => plan?.id === node?.idPlan?.id);
 
     const { totalExams, totalTests, totalRgrs, totalZe } =

@@ -55,16 +55,6 @@ const useStyles = makeStyles({
     },
 });
 
-const semestersWeeks = [
-    { id: 1, semsteerNumber: 1, semesterWeeks: 17 },
-    { id: 2, semsteerNumber: 2, semesterWeeks: 17 },
-    { id: 3, semsteerNumber: 3, semesterWeeks: 17 },
-    { id: 4, semsteerNumber: 4, semesterWeeks: 17 },
-    { id: 5, semsteerNumber: 5, semesterWeeks: 17 },
-    { id: 6, semsteerNumber: 6, semesterWeeks: 17 },
-    { id: 7, semsteerNumber: 7, semesterWeeks: 17 },
-    { id: 8, semsteerNumber: 8, semesterWeeks: 17 },
-];
 
 export const PlanCreation: React.FC<PropTypes> = ({
     plans,
@@ -157,7 +147,7 @@ export const PlanCreation: React.FC<PropTypes> = ({
                                 associatedSemesters={govSemesters}
                                 semesters={semesters}
                                 plans={plans}
-                                semestersWeeks={semestersWeeks}
+                                semestersWeeks={associateWeeks}
                                 groupComponent={GroupComponentName.GovComponent}
                             />
                             <PlanCreationMain
@@ -165,7 +155,7 @@ export const PlanCreation: React.FC<PropTypes> = ({
                                 associatedSemesters={highEduSemesters}
                                 semesters={semesters}
                                 plans={plans}
-                                semestersWeeks={semestersWeeks}
+                                semestersWeeks={associateWeeks}
                                 groupComponent={GroupComponentName.HighEduComponent}
                             />
                             <PlanCreationMain
@@ -173,7 +163,7 @@ export const PlanCreation: React.FC<PropTypes> = ({
                                 associatedSemesters={optionalEduSemesters}
                                 semesters={semesters}
                                 plans={plans}
-                                semestersWeeks={semestersWeeks}
+                                semestersWeeks={associateWeeks}
                                 groupComponent={GroupComponentName.OptionalComponent}
                             />
                             <PlanCreationMain
@@ -181,7 +171,7 @@ export const PlanCreation: React.FC<PropTypes> = ({
                                 associatedSemesters={additionalSemesters}
                                 semesters={semesters}
                                 plans={plans}
-                                semestersWeeks={semestersWeeks}
+                                semestersWeeks={associateWeeks}
                                 groupComponent={GroupComponentName.AdditionalComponent}
                             />
                         </TableBody>
