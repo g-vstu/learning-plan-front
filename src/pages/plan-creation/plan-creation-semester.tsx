@@ -39,7 +39,10 @@ export const PlanCreationSemester: React.FC<PropTypes> = ({ semester }) => {
     } = useEditMode(semester);
 
     const [subTotal, setSubTotal] = useState(
-        semesterData?.lecture + semesterData?.practice + semesterData?.laboratory
+        semesterData?.lecture +
+            semesterData?.practice +
+            semesterData?.laboratory +
+            semesterData?.seminar
     );
     const [totalHours, setTotalHours] = useState(semesterData?.selfeducation + subTotal);
 
@@ -48,7 +51,11 @@ export const PlanCreationSemester: React.FC<PropTypes> = ({ semester }) => {
     }, [subTotal, semesterData?.selfeducation]);
 
     useEffect(() => {
-        const result = semesterData?.lecture + semesterData?.practice + semesterData?.laboratory;
+        const result =
+            semesterData?.lecture +
+            semesterData?.practice +
+            semesterData?.laboratory +
+            semesterData?.seminar;
         setSubTotal(result);
     }, [semesterData]);
 
@@ -56,7 +63,6 @@ export const PlanCreationSemester: React.FC<PropTypes> = ({ semester }) => {
         dispatch(updateSemester(semesterData));
         setEditMode(false);
     };
-    //               delete                  window.location.reload();
     return (
         <TableCell>
             <TableCell style={{ border: 'none' }}>
@@ -102,7 +108,6 @@ export const PlanCreationSemester: React.FC<PropTypes> = ({ semester }) => {
                         {subTotal}
                     </TableCell>
                     <TableEditCell
-                        colSpan={2}
                         editMode={editMode}
                         name="rgr"
                         value={semesterData?.rgr}

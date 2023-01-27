@@ -52,7 +52,7 @@ export const AddSemesterDialog: React.FC<PropTypes> = ({
             rgr: 0,
             selfeducation: 0,
             seminar: 0,
-            type: SemesterType.Test,
+            type: null,
             ze: 0,
         };
         dispatch(createSemester(newSemester, node));

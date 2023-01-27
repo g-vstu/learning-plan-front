@@ -19,7 +19,7 @@ import { createSpeciality } from 'store/speciality/actions';
 import { selectSubjects } from 'store/subject/selectors';
 import { createPlan } from 'store/plan/actions';
 import { selectSpecialities } from 'store/speciality/selectors';
-import { DIPLOM_TYPES, EDUCATION_FORMS } from 'config/domain-consts';
+import { DIPLOM_TYPES, EDUCATION_FORMS, EDUCATION_LEVELS } from 'config/domain-consts';
 
 export const AddPlanDialog: React.FC<any> = ({ open, setOpen }) => {
     const dispatch = useDispatch();
@@ -32,7 +32,7 @@ export const AddPlanDialog: React.FC<any> = ({ open, setOpen }) => {
         diplomIdSemestr: 0,
         diplomName: '',
         diplomZe: 0,
-        educationForm: 'очная',
+        educationForm: EDUCATION_FORMS[0],
         enrollmentYear: '2022-05-22',
         govExam: 0,
         learnYear: '',
@@ -40,6 +40,7 @@ export const AddPlanDialog: React.FC<any> = ({ open, setOpen }) => {
         regNumber: '',
         utvDate: '2022-05-22',
         semesterCount: 8,
+        educationLevel: EDUCATION_LEVELS[0],
     });
 
     const handlePlanChange = (e) => {
@@ -170,6 +171,23 @@ export const AddPlanDialog: React.FC<any> = ({ open, setOpen }) => {
                                         size="small"
                                     >
                                         {EDUCATION_FORMS?.map((form, i) => (
+                                            <MenuItem key={i} value={form}>
+                                                {form}
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
+                                </FieldContainer>
+                                <FieldContainer>
+                                    <Typography>Уровень образования</Typography>
+                                    <Select
+                                        name="educationLevel"
+                                        required
+                                        value={newPlan.educationLevel}
+                                        onChange={handlePlanChange}
+                                        fullWidth
+                                        size="small"
+                                    >
+                                        {EDUCATION_LEVELS?.map((form, i) => (
                                             <MenuItem key={i} value={form}>
                                                 {form}
                                             </MenuItem>

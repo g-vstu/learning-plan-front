@@ -13,7 +13,7 @@ import { DeleteCell } from 'components/delete-cell';
 import { delPlan, updatePlan } from 'store/plan/actions';
 import FileOpenOutlinedIcon from '@mui/icons-material/FileOpenOutlined';
 import { useDispatch } from 'react-redux';
-import { DIPLOM_TYPES, EDUCATION_FORMS } from 'config/domain-consts';
+import { DIPLOM_TYPES, EDUCATION_FORMS, EDUCATION_LEVELS } from 'config/domain-consts';
 import 'config/styles/styles.css';
 
 interface PropTypes {
@@ -33,7 +33,7 @@ export const Plans: React.FC<PropTypes> = ({ plans }) => {
 
     const plansColumns = [
         {
-            width: 10,
+            width: 60,
             filter: false,
             headerName: 'Открыть',
             cellRenderer: ({ id }) => {
@@ -48,70 +48,84 @@ export const Plans: React.FC<PropTypes> = ({ plans }) => {
         },
         {
             field: 'idSpeciality.name',
-            width: 140,
+            width: 200,
             headerName: 'Специальность',
         },
         {
             field: 'diplomCountWeek',
-            width: 140,
+            width: 60,
             headerName: 'Недели диплома',
             editable: true,
+            filter: false,
         },
         {
             field: 'diplomIdSemestr',
-            width: 140,
+            width: 60,
             headerName: 'Семестр диплома',
             editable: true,
+            filter: false,
         },
         {
             field: 'diplomName',
-            width: 140,
+            width: 80,
             cellEditor: 'agSelectCellEditor',
             headerName: 'Тип диплома',
             editable: true,
             cellEditorParams: {
                 values: DIPLOM_TYPES,
             },
+            filter: false,
         },
         {
             field: 'diplomZe',
-            width: 140,
+            width: 40,
             headerName: 'Диплом зе',
             editable: true,
+            filter: false,
         },
         {
             field: 'enrollmentYear',
-            width: 140,
+            width: 100,
             headerName: 'Год поступления',
             editable: true,
         },
         {
             field: 'govExam',
-            width: 140,
+            width: 80,
             headerName: 'ГЭК',
             editable: true,
         },
         {
             field: 'utvDate',
-            width: 140,
+            width: 100,
             headerName: 'Дата утверждения',
             editable: true,
         },
         {
             field: 'regNumber',
-            width: 140,
+            width: 100,
             headerName: 'Рег. №',
             editable: true,
         },
         {
             field: 'learnYear',
-            width: 140,
+            width: 100,
             headerName: 'Года обучения',
             editable: true,
         },
         {
+            field: 'educationLevel',
+            width: 180,
+            cellEditor: 'agSelectCellEditor',
+            cellEditorParams: {
+                values: EDUCATION_LEVELS,
+            },
+            headerName: 'Уровень образования',
+            editable: true,
+        },
+        {
             field: 'educationForm',
-            width: 140,
+            width: 100,
             cellEditor: 'agSelectCellEditor',
             cellEditorParams: {
                 values: EDUCATION_FORMS,
@@ -120,7 +134,7 @@ export const Plans: React.FC<PropTypes> = ({ plans }) => {
             editable: true,
         },
         {
-            width: 10,
+            width: 20,
             filter: false,
             headerName: 'Удалить',
             cellRenderer: DeleteCell,

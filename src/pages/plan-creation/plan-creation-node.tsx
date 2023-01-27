@@ -82,8 +82,7 @@ export const PlanCreationNode: React.FC<PlanCreationNodeProps> = ({
             return { semesterNumber: week?.numberSemestr };
         }
     });
-    console.log('_______showSemesters');
-    console.log(showSemesters);
+
     const associatedPlan = plans?.find((plan) => plan?.id === node?.idPlan?.id);
 
     const { totalExams, totalTests, totalRgrs, totalZe } =
@@ -208,7 +207,7 @@ export const PlanCreationNode: React.FC<PlanCreationNodeProps> = ({
 
                 {showSemesters?.map((semester: Semester, i: number) => {
                     return semester?.id ? (
-                        semester?.courseWorkType === CourseWorkType.Project ? (
+                        semester?.courseWorkType !== null ? (
                             <PlanCreationSemesterWork
                                 key={`${i}_${new Date().getTime()}`}
                                 semester={semester}

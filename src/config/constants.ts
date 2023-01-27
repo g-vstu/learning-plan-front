@@ -16,10 +16,9 @@ export const defaultColDef: ColDef = {
     // enableRowGroup: true,
     // enablePivot: true,
     // enableValue: true,
-    width: 100,
+    // width: 100,
     sortable: true,
     resizable: true,
     filter: true,
-    flex: 1,
-    minWidth: 80,
+    //flex: 1,
 };

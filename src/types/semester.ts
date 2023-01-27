@@ -3,8 +3,8 @@ import { Node } from './node';
 import { Plan } from './plan';
 
 export enum CourseWorkType {
-    Work = 'work',
-    Project = 'project',
+    Work = 'работа',
+    Project = 'проект',
 }
 
 export enum SemesterType {
@@ -36,6 +36,12 @@ export interface Semester {
 
     idFaculty?: number;
     idTeacher?: number;
+}
+
+export interface SemesterWeek {
+    id: number;
+    numberSemestr: number;
+    countWeeks: number;
 }
 
 export interface WeeksSemester {

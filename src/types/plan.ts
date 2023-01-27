@@ -11,8 +11,8 @@ export interface Plan {
     diplomCountWeek: number;
     diplomIdSemestr: number;
     diplomName: string;
-    diplomZe: string;
     educationForm: EducationForm;
+    diplomZe: string;
     enrollmentYear: string;
     govExam: number;
     idSpeciality: Speciality;
@@ -21,6 +21,7 @@ export interface Plan {
     utvDate: string;
     //NEW
     idSubject: Subject;
+    educationLevel: string;
 }
 
 export interface PlanState {

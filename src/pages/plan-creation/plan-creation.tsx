@@ -28,6 +28,7 @@ import { PracticeTable } from './practice-table/practice-table';
 import { OverviewHeader } from 'components/overview-header';
 import { OverviewTitle } from 'components/overview-title';
 import { CurrencyBitcoin } from '@mui/icons-material';
+import { PlanSummary } from './plan-summary';
 
 interface PropTypes {
     plans: Plan[];
@@ -54,7 +55,6 @@ const useStyles = makeStyles({
         padding: 8,
     },
 });
-
 
 export const PlanCreation: React.FC<PropTypes> = ({
     plans,
@@ -124,7 +124,7 @@ export const PlanCreation: React.FC<PropTypes> = ({
                                     работы)
                                 </TableCell>
                                 <VerticalTableCell>Экзамены</VerticalTableCell>
-                                <VerticalTableCell>Зачеты</VerticalTableCell>
+                                <VerticalTableCell>Зачёты</VerticalTableCell>
                                 <VerticalTableCell>Расчетно графические работы</VerticalTableCell>
                                 <VerticalTableCell>Итого</VerticalTableCell>
                                 <VerticalTableCell>Аудиторные</VerticalTableCell>
@@ -137,7 +137,7 @@ export const PlanCreation: React.FC<PropTypes> = ({
                                     <TableSemesterCell key={week?.id} semesterWeek={week} />
                                 ))}
 
-                                <VerticalTableCell>Всего зачетных единиц</VerticalTableCell>
+                                <VerticalTableCell>Всего зачётных единиц</VerticalTableCell>
                                 <VerticalTableCell>Код компетенции</VerticalTableCell>
                             </TableRow>
                         </TableHead>
@@ -174,6 +174,7 @@ export const PlanCreation: React.FC<PropTypes> = ({
                                 semestersWeeks={associateWeeks}
                                 groupComponent={GroupComponentName.AdditionalComponent}
                             />
+                            <PlanSummary semestersWeeks={associateWeeks} semesters={semesters} />
                         </TableBody>
                     </Table>
                 </TableContainer>

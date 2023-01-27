@@ -16,6 +16,7 @@ export const TableSemesterCell: React.FC<any> = ({ semesterWeek }) => {
         handleChangeEntityData: handleChangeSemesterWeeksData,
         handleCancelClick,
     } = useEditMode(semesterWeek);
+
     const dispatch = useDispatch();
 
     const handleSaveСountWeeks = () => {

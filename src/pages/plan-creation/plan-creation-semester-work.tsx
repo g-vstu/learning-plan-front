@@ -6,10 +6,11 @@ import EditIcon from '@mui/icons-material/Edit';
 import DoDisturbIcon from '@mui/icons-material/DoDisturb';
 import { useDispatch } from 'react-redux';
 import { deleteSemester, updateSemester } from 'store/semester/actions';
-import { Semester } from 'types';
+import { CourseWorkType, Semester } from 'types';
 import { useEditMode } from 'hooks/useEditMode';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { red } from '@mui/material/colors';
+import { TableEditSelectCell } from './plan-creation-table/table-cell-edit-select';
 
 interface PropTypes {
     semester: Semester;
@@ -77,15 +78,21 @@ export const PlanCreationSemesterWork: React.FC<PropTypes> = ({ semester }) => {
                     <TableCell align="center" size="small">
                         Часы
                     </TableCell>
-                    <TableCell align="center" colSpan={4}>
-                        Зачетные единицы
-                    </TableCell>
+                    <TableCell align="center">Тип</TableCell>
+                    <TableCell align="center">зе</TableCell>
                 </TableRow>
                 <TableRow>
                     <TableEditCell
                         editMode={editMode}
                         name="courceWorkHours"
                         value={semesterData?.courceWorkHours}
+                        handleUpdateSemester={handleUpdateSemester}
+                    />
+                    <TableEditSelectCell
+                        editMode={editMode}
+                        name="courseWorkType"
+                        value={semesterData?.courseWorkType}
+                        selItems={Object.values(CourseWorkType)}
                         handleUpdateSemester={handleUpdateSemester}
                     />
                     <TableEditCell

@@ -52,8 +52,6 @@ export const AddGroupUnitDialog: React.FC<any> = ({ open, setOpen }) => {
                 component
             )
         );
-        console.log('GGGGGGGGGGGGGG');
-        toast.success('Модуль добавлен!');
     };
 
     return (
