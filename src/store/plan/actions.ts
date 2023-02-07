@@ -4,7 +4,7 @@ import { RootState } from 'store';
 import { CREATE_PLAN, DELETE_PLAN, GET_PLANS, SET_CURRENT_PLAN, UPDATE_PLAN } from './types';
 import { createPlanRequest, delPlanRequest, fetchPlan, fetchPlans } from './services';
 import { Node, Plan, Semester, Speciality, WeeksSemester } from 'types';
-import { fetchNodes } from 'store/node/services';
+import { fetchNodes, fetchPlanNodes } from 'store/node/services';
 import { createWeeksSemesterRequest, fetchSemesters } from 'store/semester/services';
 import { GET_NODES } from 'store/node/types';
 import { CREATE_WEEKS_SEMESTERS, GET_SEMESTERS } from 'store/semester/types';
@@ -92,10 +92,6 @@ export const updatePlan = (
     return async (dispatch: Dispatch) => {
         dispatch({ type: UPDATE_PLAN.start });
         try {
-            console.log('FFFFFFFFFFFplan');
-            console.log(plan);
-            console.log('FFFFFFFFspecialityId');
-            console.log(specialityId);
             const updatedPlan: Plan = await createPlanRequest(plan, specialityId);
             dispatch({
                 type: CREATE_PLAN.success,
@@ -125,8 +121,8 @@ export const getGlobalPlan = (
             const plansWithAssociatedSpeciality = plans.filter(
                 (plan) => plan?.idSpeciality?.id === speciality?.id
             );
-            const nodes: Node[] = await fetchNodes();
-            const associatedNodes = nodes.filter((node) => node?.idPlan?.id === necessaryPlan.id);
+            const associatedNodes: Node[] = await fetchPlanNodes(planId);
+            //const associatedNodes = nodes.filter((node) => node?.idPlan?.id === necessaryPlan.id);
 
             const semesters: Semester[] = await fetchSemesters();
             const associatedSemesters = semesters?.filter((semester) => {

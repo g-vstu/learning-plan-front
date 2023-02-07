@@ -47,7 +47,6 @@ export const AddPlanDialog: React.FC<PropTypes> = ({ open, setOpen, nodes }) => 
 
     const plans = useSelector(selectPlans);
     const currentPlan = useSelector(selectCurrentPlan);
-    //const associatedPlan = plans?.find((plan) => plan?.idSpeciality?.id === speciality?.id);
 
     const subjects = useSelector(selectSubjects);
 
@@ -89,7 +88,7 @@ export const AddPlanDialog: React.FC<PropTypes> = ({ open, setOpen, nodes }) => 
                     };
                     dispatch(createNode(node, selectedSubject, currentPlan));
                     toast.success('Предмет добавлен!');
-                   // setOpen(false);
+                    // setOpen(false);
                 }
             }
             if (isNewSubject) {
@@ -112,7 +111,7 @@ export const AddPlanDialog: React.FC<PropTypes> = ({ open, setOpen, nodes }) => 
 
     return (
         <>
-           <Toaster />
+            <Toaster />
             <Dialog open={open} onClose={() => setOpen(false)} maxWidth="xs" fullWidth>
                 <Tabs value={tabValue} onChange={onTabChange} style={{ width: '100%' }}>
                     {Object.values(TABS).map((tab) => (

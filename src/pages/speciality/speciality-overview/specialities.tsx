@@ -37,7 +37,7 @@ export const Specialities: React.FC<PropTypes> = ({ specialities }) => {
         },
         {
             field: 'name',
-            width: 140,
+            width: 350,
             headerName: 'Название',
         },
     ];

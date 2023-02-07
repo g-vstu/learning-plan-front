@@ -113,6 +113,8 @@ export const PlanCreation: React.FC<PropTypes> = ({
                 <TableContainer
                     style={{
                         boxShadow: '0px 35px 50px rgba( 0, 0, 0, 0.2 )',
+                        overflow: 'scroll',
+                        height: '80vh',
                     }}
                 >
                     <Table className={classes.table}>

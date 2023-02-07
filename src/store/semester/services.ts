@@ -24,6 +24,13 @@ export const fetchWeeksSemesters = async () => {
     return weeksSemesters;
 };
 
+export const fetchPlanWeeksSemesters = async (idPlan: number) => {
+    const { data: weeksSemesters } = await instance.get(
+        `${DEVELOPMENT}/weeks_semestr/planId/${idPlan}`
+    );
+    return weeksSemesters;
+};
+
 export const createWeeksSemesters = async (week: WeeksSemester, currentPlan) => {
     const { data: newSemester } = await instance.post(
         `${DEVELOPMENT}/weeks_semestr?planId=${currentPlan?.id}`,

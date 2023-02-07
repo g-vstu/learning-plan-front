@@ -53,7 +53,7 @@ export const Plans: React.FC<PropTypes> = ({ plans }) => {
         },
         {
             field: 'diplomCountWeek',
-            width: 60,
+            width: 70,
             headerName: 'Недели диплома',
             editable: true,
             filter: false,
@@ -67,7 +67,7 @@ export const Plans: React.FC<PropTypes> = ({ plans }) => {
         },
         {
             field: 'diplomName',
-            width: 80,
+            width: 140,
             cellEditor: 'agSelectCellEditor',
             headerName: 'Тип диплома',
             editable: true,
@@ -78,7 +78,7 @@ export const Plans: React.FC<PropTypes> = ({ plans }) => {
         },
         {
             field: 'diplomZe',
-            width: 40,
+            width: 70,
             headerName: 'Диплом зе',
             editable: true,
             filter: false,
@@ -97,19 +97,19 @@ export const Plans: React.FC<PropTypes> = ({ plans }) => {
         },
         {
             field: 'utvDate',
-            width: 100,
+            width: 160,
             headerName: 'Дата утверждения',
             editable: true,
         },
         {
             field: 'regNumber',
-            width: 100,
+            width: 150,
             headerName: 'Рег. №',
             editable: true,
         },
         {
             field: 'learnYear',
-            width: 100,
+            width: 150,
             headerName: 'Года обучения',
             editable: true,
         },
