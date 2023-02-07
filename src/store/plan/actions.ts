@@ -3,13 +3,15 @@ import { Action, Dispatch } from 'redux';
 import { RootState } from 'store';
 import { CREATE_PLAN, DELETE_PLAN, GET_PLANS, SET_CURRENT_PLAN, UPDATE_PLAN } from './types';
 import { createPlanRequest, delPlanRequest, fetchPlan, fetchPlans } from './services';
-import { Node, Plan, Semester, Speciality, WeeksSemester } from 'types';
+import { Node, Plan, Practice, Semester, Speciality, WeeksSemester } from 'types';
 import { fetchNodes, fetchPlanNodes } from 'store/node/services';
-import { createWeeksSemesterRequest, fetchSemesters } from 'store/semester/services';
+import { createWeeksSemesterRequest, fetchPlanSemesters, fetchSemesters } from 'store/semester/services';
 import { GET_NODES } from 'store/node/types';
 import { CREATE_WEEKS_SEMESTERS, GET_SEMESTERS } from 'store/semester/types';
 import { fetchSpeciality } from 'store/speciality/services';
 import { SET_CURRENT_SPECIALITY } from 'store/speciality/types';
+import { fetchPlanPractices } from 'store/practice/services';
+import { GET_PRACTICES } from 'store/practice/types';
 
 export const getPlans = (): ThunkAction<Promise<void>, RootState, null, Action> => {
     return async (dispatch: Dispatch) => {
@@ -124,18 +126,20 @@ export const getGlobalPlan = (
             const associatedNodes: Node[] = await fetchPlanNodes(planId);
             //const associatedNodes = nodes.filter((node) => node?.idPlan?.id === necessaryPlan.id);
 
-            const semesters: Semester[] = await fetchSemesters();
-            const associatedSemesters = semesters?.filter((semester) => {
+            const associatedSemesters: Semester[] = await fetchPlanSemesters(planId);
+            /*const associatedSemesters = semesters?.filter((semester) => {
                 return (
                     associatedNodes.filter((node) => {
                         return node?.id === semester?.idNode?.id;
                     }).length !== 0
                 );
             });
-
-            /*           const цуулы: Week[] = await fetchNodes();
-            const associatedNodes = nodes.filter((node) => node?.idPlan?.id === necessaryPlan.id);
-*/
+            */
+            const associatedPractice: Practice[] = await fetchPlanPractices(planId);
+            dispatch({
+                type: GET_PRACTICES.success,
+                payload: { practices: associatedPractice },
+            });
 
             dispatch({
                 type: GET_PLANS.success,

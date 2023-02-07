@@ -44,6 +44,11 @@ export const fetchSemesters = async () => {
     return semesters;
 };
 
+export const fetchPlanSemesters = async (idPlan: number) => {
+    const { data: semesters } = await instance.get(`${DEVELOPMENT}/semestr/plan/${idPlan}`);
+    return semesters;
+};
+
 export const updateSemesterRequest = async (semester: Semester) => {
     const { data: updatedSemester } = await instance.post(
         `${DEVELOPMENT}/semestr?nodeId=${semester?.idNode?.id}`,

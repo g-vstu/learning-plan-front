@@ -1,8 +1,8 @@
 import { DEVELOPMENT } from 'config/constants';
 import instance from 'store/auth/instance';
 
-export const fetchPractices = async () => {
-    const { data: practices } = await instance.get(`${DEVELOPMENT}/practice`);
+export const fetchPlanPractices = async (idPlan) => {
+    const { data: practices } = await instance.get(`${DEVELOPMENT}/practice/planId/${idPlan}`);
     return practices;
 };
 export const addPracticeRequest = async (practice, planId) => {

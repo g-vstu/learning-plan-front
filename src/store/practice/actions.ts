@@ -5,16 +5,18 @@ import { GET_PRACTICES, DELETE_PRACTICE, CREATE_PRACTICE, UPDATE_PRACTICE } from
 import {
     addPracticeRequest,
     deletePracticeRequest,
-    fetchPractices,
+    fetchPlanPractices,
     updatePracticeRequest,
 } from './services';
 import { Practice } from 'types';
 
-export const getPractices = (): ThunkAction<Promise<void>, RootState, null, Action> => {
+export const getPlanPractices = (
+    idPlan: number
+): ThunkAction<Promise<void>, RootState, null, Action> => {
     return async (dispatch: Dispatch) => {
         dispatch({ type: GET_PRACTICES.start });
         try {
-            const practices: Practice[] = await fetchPractices();
+            const practices: Practice[] = await fetchPlanPractices(idPlan);
             dispatch({
                 type: GET_PRACTICES.success,
                 payload: { practices },

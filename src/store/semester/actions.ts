@@ -14,6 +14,7 @@ import {
     createSemesterRequest,
     createWeeksSemesterRequest,
     deleteSemesterRequest,
+    fetchPlanSemesters,
     fetchSemesters,
     fetchWeeksSemesters,
     updateSemesterRequest,
@@ -39,7 +40,25 @@ export const getSemesters = (): ThunkAction<Promise<void>, RootState, null, Acti
         }
     };
 };
-
+export const getPlanSemesters = (
+    idPlan: number
+): ThunkAction<Promise<void>, RootState, null, Action> => {
+    return async (dispatch: Dispatch) => {
+        dispatch({ type: GET_SEMESTERS.start });
+        try {
+            const semesters: Semester[] = await fetchPlanSemesters(idPlan);
+            dispatch({
+                type: GET_SEMESTERS.success,
+                payload: { semesters },
+            });
+        } catch (error) {
+            dispatch({
+                type: GET_SEMESTERS.failure,
+                payload: { error },
+            });
+        }
+    };
+};
 export const getWeeksSemesters = (): ThunkAction<Promise<void>, RootState, null, Action> => {
     return async (dispatch: Dispatch) => {
         dispatch({ type: GET_WEEKS_SEMESTERS.start });

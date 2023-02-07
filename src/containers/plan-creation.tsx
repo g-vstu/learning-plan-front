@@ -21,7 +21,6 @@ import { selectGroupComponentsLoading } from 'store/group-component/selectors';
 import { selectGroupUnitsLoading } from 'store/group-unit/selectors';
 import { getSubCompetencies } from 'store/sub-competence/actions';
 import { selectSubCompetenciesLoading } from 'store/sub-competence/selectors';
-import { getPractices } from 'store/practice/actions';
 import { getWeeksSemesters } from 'store/semester/actions';
 
 export const PlanCreationContanier: React.FC<{ match: match<any> }> = ({ match }) => {
@@ -69,7 +68,6 @@ export const PlanCreationContanier: React.FC<{ match: match<any> }> = ({ match }
         dispatch(getGroupComponents());
         dispatch(getSubjects());
         dispatch(getSubCompetencies());
-        dispatch(getPractices());
         dispatch(getWeeksSemesters());
     }, [dispatch, match?.params?.id]);
 
