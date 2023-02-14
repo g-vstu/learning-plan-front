@@ -21,7 +21,7 @@ import { selectGroupComponentsLoading } from 'store/group-component/selectors';
 import { selectGroupUnitsLoading } from 'store/group-unit/selectors';
 import { getSubCompetencies } from 'store/sub-competence/actions';
 import { selectSubCompetenciesLoading } from 'store/sub-competence/selectors';
-import { getWeeksSemesters } from 'store/semester/actions';
+import { getPlanWeeksSemesters, getWeeksSemesters } from 'store/semester/actions';
 
 export const PlanCreationContanier: React.FC<{ match: match<any> }> = ({ match }) => {
     const dispatch = useDispatch();
@@ -64,11 +64,11 @@ export const PlanCreationContanier: React.FC<{ match: match<any> }> = ({ match }
 
     useEffect(() => {
         dispatch(getGlobalPlan(+match?.params?.id));
-        dispatch(getGroupUnits());
+        dispatch(getGroupUnits(+match?.params?.id));
         dispatch(getGroupComponents());
         dispatch(getSubjects());
         dispatch(getSubCompetencies());
-        dispatch(getWeeksSemesters());
+        dispatch(getPlanWeeksSemesters(+match?.params?.id));
     }, [dispatch, match?.params?.id]);
 
     const nodes = useSelector(selectNodes);

@@ -15,6 +15,7 @@ import {
     createWeeksSemesterRequest,
     deleteSemesterRequest,
     fetchPlanSemesters,
+    fetchPlanWeeksSemesters,
     fetchSemesters,
     fetchWeeksSemesters,
     updateSemesterRequest,
@@ -77,6 +78,25 @@ export const getWeeksSemesters = (): ThunkAction<Promise<void>, RootState, null,
     };
 };
 
+export const getPlanWeeksSemesters = (
+    idPlan: number
+): ThunkAction<Promise<void>, RootState, null, Action> => {
+    return async (dispatch: Dispatch) => {
+        dispatch({ type: GET_WEEKS_SEMESTERS.start });
+        try {
+            const weeks: WeeksSemester[] = await fetchPlanWeeksSemesters(idPlan);
+            dispatch({
+                type: GET_WEEKS_SEMESTERS.success,
+                payload: { weeks },
+            });
+        } catch (error) {
+            dispatch({
+                type: GET_WEEKS_SEMESTERS.failure,
+                payload: { error },
+            });
+        }
+    };
+};
 export const updateWeeksSemesters = (
     weeksSemester: WeeksSemester
 ): ThunkAction<Promise<void>, RootState, null, Action> => {

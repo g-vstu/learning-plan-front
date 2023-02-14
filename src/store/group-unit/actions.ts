@@ -6,15 +6,16 @@ import {
     createGroupUnitRequest,
     deleteGroupUnitRequest,
     fetchGroupUnits,
+    fetchPlanGroupUnits,
     updateGroupUnitsRequest,
 } from './services';
 import { GroupUnit } from 'types';
 
-export const getGroupUnits = (): ThunkAction<Promise<void>, RootState, null, Action> => {
+export const getGroupUnits = (planId): ThunkAction<Promise<void>, RootState, null, Action> => {
     return async (dispatch: Dispatch) => {
         dispatch({ type: GET_GROUP_UNITS.start });
         try {
-            const groupUnits: GroupUnit[] = await fetchGroupUnits();
+            const groupUnits: GroupUnit[] = await fetchPlanGroupUnits(planId);
             dispatch({
                 type: GET_GROUP_UNITS.success,
                 payload: { groupUnits },

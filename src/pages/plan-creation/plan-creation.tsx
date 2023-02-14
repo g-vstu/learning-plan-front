@@ -47,8 +47,9 @@ const useStyles = makeStyles({
         borderCollapse: 'collapse',
         width: '100%',
         maxWidth: '100%',
-        whiteSpace: 'nowrap',
+        whiteSpace: 'normal',
         backgroundColor: 'white',
+        textAlign: 'right',
     },
     header: {
         textAlign: 'center',

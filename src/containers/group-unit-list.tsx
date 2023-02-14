@@ -15,7 +15,7 @@ export const GroupUnitsList: React.FC = () => {
     const isComponentsLoading = useSelector(selectGroupComponentsLoading);
 
     useEffect(() => {
-        dispatch(getGroupUnits());
+        // dispatch(getGroupUnits());
         dispatch(getGroupComponents());
     }, [dispatch]);
 

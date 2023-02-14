@@ -12,7 +12,7 @@ export const theme = createTheme({
             styleOverrides: {
                 root: {
                     border: '1px solid black',
-                    padding: 8,
+                    padding: 5,
                     fontSize: 12,
                     '&:hover': {
                         //backgroundColor: '#80deea',

@@ -83,7 +83,7 @@ export const PlanCreationNode: React.FC<PlanCreationNodeProps> = ({
         }
     });
 
-    const associatedPlan = plans?.find((plan) => plan?.id === node?.idPlan?.id);
+    // const associatedPlan = plans?.find((plan) => plan?.id === node?.idPlan?.id);
 
     const { totalExams, totalTests, totalRgrs, totalZe } =
         useCalculateTotalTests(associatedSemesters);

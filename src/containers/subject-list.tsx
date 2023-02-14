@@ -22,7 +22,7 @@ export const SubjectList: React.FC = () => {
 
     useEffect(() => {
         dispatch(getSubjects());
-        dispatch(getGroupUnits());
+        //dispatch(getGroupUnits());
     }, [dispatch]);
 
     return (
