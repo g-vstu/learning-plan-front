@@ -5,7 +5,11 @@ import { CREATE_PLAN, DELETE_PLAN, GET_PLANS, SET_CURRENT_PLAN, UPDATE_PLAN } fr
 import { createPlanRequest, delPlanRequest, fetchPlan, fetchPlans } from './services';
 import { Node, Plan, Practice, Semester, Speciality, WeeksSemester } from 'types';
 import { fetchNodes, fetchPlanNodes } from 'store/node/services';
-import { createWeeksSemesterRequest, fetchPlanSemesters, fetchSemesters } from 'store/semester/services';
+import {
+    createWeeksSemesterRequest,
+    fetchPlanSemesters,
+    fetchSemesters,
+} from 'store/semester/services';
 import { GET_NODES } from 'store/node/types';
 import { CREATE_WEEKS_SEMESTERS, GET_SEMESTERS } from 'store/semester/types';
 import { fetchSpeciality } from 'store/speciality/services';
@@ -55,10 +59,6 @@ export const createPlan = (
     return async (dispatch: Dispatch) => {
         dispatch({ type: CREATE_PLAN.start });
         try {
-            console.log('!!!!!plan');
-            console.log(plan);
-            console.log('!!!!!specialityId');
-            console.log(specialityId);
             const newPlan: Plan = await createPlanRequest(plan, specialityId);
             for (let i = 0; i < plan.semesterCount; i++) {
                 let weeksSemester: WeeksSemester = {

@@ -5,13 +5,14 @@ import { TableEditSelectCell } from './plan-creation-table/table-cell-edit-selec
 import DoneIcon from '@mui/icons-material/Done';
 import EditIcon from '@mui/icons-material/Edit';
 import DoDisturbIcon from '@mui/icons-material/DoDisturb';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { deleteSemester, updateSemester } from 'store/semester/actions';
 import { makeStyles } from '@mui/styles';
 import { indigo, lightGreen, red } from '@mui/material/colors';
 import { useEditMode } from 'hooks/useEditMode';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Semester, SemesterType } from 'types';
+import { selectWeeksSemesters } from 'store/semester/selectors';
 
 interface PropTypes {
     semester: Semester;
@@ -29,6 +30,7 @@ const useStyles = makeStyles({
 export const PlanCreationSemester: React.FC<PropTypes> = ({ semester }) => {
     const classes = useStyles();
     const dispatch = useDispatch();
+    const semestersWeeks = useSelector(selectWeeksSemesters);
 
     const {
         editMode,
@@ -38,6 +40,15 @@ export const PlanCreationSemester: React.FC<PropTypes> = ({ semester }) => {
         handleCancelClick,
     } = useEditMode(semester);
 
+    const weeks = semestersWeeks.find(
+        (week) => week.numberSemestr == semesterData.number
+    ).countWeeks;
+    const hoursPerWeek = {
+        lk: Math.ceil(semesterData?.lecture / weeks),
+        lb: Math.ceil(semesterData?.laboratory / weeks),
+        sem: Math.ceil(semesterData?.seminar / weeks),
+        pr: Math.ceil(semesterData.practice / weeks),
+    };
     const [subTotal, setSubTotal] = useState(
         semesterData?.lecture +
             semesterData?.practice +
@@ -96,15 +107,28 @@ export const PlanCreationSemester: React.FC<PropTypes> = ({ semester }) => {
                         Итог
                     </TableCell>
                     <TableCell align="center" colSpan={4}>
-                        Итог звонки
+                        Часы в нед.
                     </TableCell>
+                    <TableCell align="center">Итог зв.</TableCell>
                     <TableCell align="center">Кол-во РГР</TableCell>
                 </TableRow>
                 <TableRow>
                     <TableCell align="center" className={classes.cell}>
                         {totalHours}
                     </TableCell>
-                    <TableCell align="center" colSpan={4} className={classes.cell}>
+                    <TableCell align="center" className={classes.cell}>
+                        {hoursPerWeek.lk}
+                    </TableCell>
+                    <TableCell align="center" className={classes.cell}>
+                        {hoursPerWeek.pr}
+                    </TableCell>
+                    <TableCell align="center" className={classes.cell}>
+                        {hoursPerWeek.sem}
+                    </TableCell>
+                    <TableCell align="center" className={classes.cell}>
+                        {hoursPerWeek.lb}
+                    </TableCell>
+                    <TableCell align="center" className={classes.cell}>
                         {subTotal}
                     </TableCell>
                     <TableEditCell

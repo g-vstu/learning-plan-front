@@ -26,8 +26,14 @@ export interface Semester {
     laboratory?: number;
     lecture?: number;
     practice?: number;
-    ze?: number;
     seminar?: number;
+
+    ze?: number;
+
+    perWeekLab?: number;
+    perWeekLec?: number;
+    perWeekPrac?: number;
+    perWeekSem?: number;
 
     //another Node
     courceWorkHours: number;
