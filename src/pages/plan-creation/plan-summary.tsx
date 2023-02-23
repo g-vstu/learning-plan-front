@@ -111,6 +111,17 @@ export const PlanSummary: React.FC<PalanSummaryProps> = ({ semestersWeeks, semes
                     return sum + 1;
                 else return sum;
             }, 0),
+            audHours: semesters.reduce((sum, semesterData) => {
+                if (semesterWeek.numberSemestr == semesterData.number)
+                    return (
+                        sum +
+                        Math.ceil(semesterData?.lecture / semesterWeek.countWeeks) +
+                        Math.ceil(semesterData?.practice / semesterWeek.countWeeks) +
+                        Math.ceil(semesterData?.seminar / semesterWeek.countWeeks) +
+                        Math.ceil(semesterData?.laboratory / semesterWeek.countWeeks)
+                    );
+                else return sum;
+            }, 0),
         };
     });
 
@@ -122,9 +133,6 @@ export const PlanSummary: React.FC<PalanSummaryProps> = ({ semestersWeeks, semes
         (sum, semester) => sum + semester.CourseWorks,
         0
     );
-
-    console.log('semestersTota');
-    console.log(newSemestersTotal);
 
     return (
         <>
@@ -180,6 +188,19 @@ export const PlanSummary: React.FC<PalanSummaryProps> = ({ semestersWeeks, semes
                 </TableCell>
             </TableRow>
 
+            <TableRow>
+                <TableCell colSpan={2} align="center" className={classes.mainCell}>
+                    <Typography>Количество часов в неделю</Typography>
+                </TableCell>
+                <TableCell colSpan={9} align="center" className={classes.cell}></TableCell>
+                {newSemestersTotal?.map((semesterTotal, i) => {
+                    return (
+                        <TableCell key={i} align="center">
+                            {semesterTotal.audHours}
+                        </TableCell>
+                    );
+                })}
+            </TableRow>
             <TableRow>
                 <TableCell colSpan={2} align="center" className={classes.mainCell}>
                     <Typography>Количество курсовых проектов</Typography>

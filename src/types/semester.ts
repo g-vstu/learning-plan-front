@@ -54,6 +54,12 @@ export interface WeeksSemester {
     id: number;
     countWeeks: number;
     numberSemestr: number;
+    audHours: {
+        lk: number;
+        pr: number;
+        sm: number;
+        lb: number;
+    };
     idPlan: Plan;
 }
 

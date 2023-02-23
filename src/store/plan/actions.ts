@@ -66,6 +66,12 @@ export const createPlan = (
                     idPlan: newPlan,
                     countWeeks: 17,
                     numberSemestr: i + 1,
+                    audHours: {
+                        lk: 0,
+                        pr: 0,
+                        sm: 0,
+                        lb: 0,
+                    },
                 };
                 weeksSemester = await createWeeksSemesterRequest(weeksSemester);
                 dispatch({
