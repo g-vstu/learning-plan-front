@@ -16,6 +16,7 @@ export const useCalculateTotalParams = (semesters: Semester[]) => {
     const selfeducations = semesters.reduce((sum, semester) => sum + semester.selfeducation, 0);
     const laboratories = semesters.reduce((sum, semester) => sum + semester.laboratory, 0);
     const practices = semesters.reduce((sum, semester) => sum + semester.practice, 0);
+    const course = semesters.reduce((sum, semester) => sum + semester.courceWorkHours, 0);
 
     useEffect(() => {
         setTotalCourseHours({
@@ -25,7 +26,7 @@ export const useCalculateTotalParams = (semesters: Semester[]) => {
             totalPractice: practices,
             totalLab: laboratories,
             totalAuditore: lectures + laboratories + seminars + practices,
-            totalClass: lectures + laboratories + seminars + practices + selfeducations,
+            totalClass: lectures + laboratories + seminars + practices + selfeducations + course,
         });
     }, [seminars, lectures, selfeducations, practices, laboratories]);
 

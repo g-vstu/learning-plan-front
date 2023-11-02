@@ -13,6 +13,7 @@ import { useEditMode } from 'hooks/useEditMode';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Semester, SemesterType } from 'types';
 import { selectWeeksSemesters } from 'store/semester/selectors';
+import { perWeek } from 'helpers/calc-formulas';
 
 interface PropTypes {
     semester: Semester;
@@ -44,10 +45,10 @@ export const PlanCreationSemester: React.FC<PropTypes> = ({ semester }) => {
         (week) => week.numberSemestr == semesterData.number
     ).countWeeks;
     const hoursPerWeek = {
-        lk: Math.ceil(semesterData?.lecture / weeks),
-        lb: Math.ceil(semesterData?.laboratory / weeks),
-        sem: Math.ceil(semesterData?.seminar / weeks),
-        pr: Math.ceil(semesterData.practice / weeks),
+        lk: perWeek(semesterData?.lecture, weeks),
+        lb: perWeek(semesterData?.laboratory, weeks),
+        sem: perWeek(semesterData?.seminar, weeks),
+        pr: perWeek(semesterData.practice, weeks),
     };
     const [subTotal, setSubTotal] = useState(
         semesterData?.lecture +

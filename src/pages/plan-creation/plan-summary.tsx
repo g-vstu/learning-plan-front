@@ -22,6 +22,7 @@ import { selectCurrentPlan } from 'store/plan/selectors';
 import WarnDialog from '../../components/warn-dialog';
 import ConfirmDialog from '../../components/confirm-dialog';
 import { useSemestersTotalCalculate } from 'hooks/useSemestersTotalCalculate';
+import { perWeek } from 'helpers/calc-formulas';
 
 interface PalanSummaryProps {
     semestersWeeks: SemesterWeek[];
@@ -115,10 +116,10 @@ export const PlanSummary: React.FC<PalanSummaryProps> = ({ semestersWeeks, semes
                 if (semesterWeek.numberSemestr == semesterData.number)
                     return (
                         sum +
-                        Math.ceil(semesterData?.lecture / semesterWeek.countWeeks) +
-                        Math.ceil(semesterData?.practice / semesterWeek.countWeeks) +
-                        Math.ceil(semesterData?.seminar / semesterWeek.countWeeks) +
-                        Math.ceil(semesterData?.laboratory / semesterWeek.countWeeks)
+                        perWeek(semesterData?.lecture, semesterWeek.countWeeks) +
+                        perWeek(semesterData?.practice, semesterWeek.countWeeks) +
+                        perWeek(semesterData?.seminar, semesterWeek.countWeeks) +
+                        perWeek(semesterData?.laboratory, semesterWeek.countWeeks)
                     );
                 else return sum;
             }, 0),
@@ -182,6 +183,7 @@ export const PlanSummary: React.FC<PalanSummaryProps> = ({ semestersWeeks, semes
                             </Table>
                         </TableCell>
                     );
+                     
                 })}
                 <TableCell align="center" className={classes.cell}>
                     {totalZe}
