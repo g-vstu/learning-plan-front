@@ -12,9 +12,11 @@ import { Search as SearchIcon } from '@mui/icons-material';
 import { DeleteCell } from 'components/delete-cell';
 import { delPlan, updatePlan } from 'store/plan/actions';
 import FileOpenOutlinedIcon from '@mui/icons-material/FileOpenOutlined';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import { useDispatch } from 'react-redux';
 import { DIPLOM_TYPES, EDUCATION_FORMS, EDUCATION_LEVELS } from 'config/domain-consts';
 import 'config/styles/styles.css';
+import { duplicatePlan } from 'store/plan/services';
 
 interface PropTypes {
     plans: Plan[];
@@ -141,6 +143,28 @@ export const Plans: React.FC<PropTypes> = ({ plans }) => {
             cellRendererParams: ({ data }) => ({
                 id: data.id,
                 method: delPlan,
+            }),
+        },
+        {
+            width: 60,
+            filter: false,
+            headerName: 'Дублировать',
+            cellRenderer: ({ id }) => {
+                const handleOpen = () => {
+                    duplicatePlan(id)
+                        .then((duplicatedPlan) => {
+                            duplicatedPlan.regNumber += '_копия'; // надо отправить на бэк изменение
+                            history.push(`/${PREFIX}/plan-creation/${duplicatedPlan.id}`);
+                            console.log(duplicatedPlan);
+                        })
+                        .catch(() => {
+                            console.log('not duplicated');
+                        });
+                };
+                return <ContentCopyIcon onClick={handleOpen} />;
+            },
+            cellRendererParams: ({ data }) => ({
+                id: data.id,
             }),
         },
     ];

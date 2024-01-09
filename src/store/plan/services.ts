@@ -1,6 +1,13 @@
 import { DEVELOPMENT } from 'config/constants';
 import instance from 'store/auth/instance';
 
+export const duplicatePlan = async (id) => {
+    const { data: duplicatedPlan } = await instance.post(`${DEVELOPMENT}/duplicate/plan`, {
+        planIDs: [id],
+    });
+    return duplicatedPlan;
+};
+
 export const fetchPlans = async () => {
     const { data: plans } = await instance.get(`${DEVELOPMENT}/plan`);
     return plans;
