@@ -91,7 +91,7 @@ export const PlanCreation: React.FC<PropTypes> = ({
             <OverviewHeader>
                 <div style={{ display: 'flex' }}>
                     <OverviewTitle>
-                        {currentPlan.idSpeciality.name} <br /> {currentPlan.learnYear}
+                        {currentPlan.idSpeciality.name} <br /> {currentPlan.regNumber}
                     </OverviewTitle>
                 </div>
             </OverviewHeader>
