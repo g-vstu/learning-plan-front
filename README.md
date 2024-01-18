@@ -1,3 +1,8 @@
+Deploy on production server
+###     "deploy-on-26": "react-scripts build"
+\\ABIT\webapps\ROOT\umo
+
+
 VSTU project of front-end application 
 # Getting Started with Create React App
 

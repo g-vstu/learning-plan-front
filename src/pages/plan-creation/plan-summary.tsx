@@ -183,7 +183,6 @@ export const PlanSummary: React.FC<PalanSummaryProps> = ({ semestersWeeks, semes
                             </Table>
                         </TableCell>
                     );
-                     
                 })}
                 <TableCell align="center" className={classes.cell}>
                     {totalZe}
