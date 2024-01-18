@@ -59,6 +59,11 @@ export const Plans: React.FC<PropTypes> = ({ plans }) => {
             headerName: 'Недели диплома',
             editable: true,
             filter: false,
+            cellEditor: 'agNumberCellEditor',
+            cellEditorParams: {
+                min: 0,
+                max: 20,
+            },
         },
         {
             field: 'diplomIdSemestr',

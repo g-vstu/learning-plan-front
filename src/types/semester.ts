@@ -12,6 +12,7 @@ export enum SemesterType {
     Test = 'зачёт',
     Prosm = 'просмотр',
     DifTest = 'дифзачёт',
+    No = 'нет',
 }
 
 export interface Semester {
