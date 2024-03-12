@@ -12,7 +12,6 @@ export const useEditMode = <T>(data: T) => {
     useEffect(() => {
         setEntityData(data);
     }, [isCanceledState]);
-
     const handleChangeEntityData = (e, isNumber?) => {
         if (isNumber) {
             setEntityData({

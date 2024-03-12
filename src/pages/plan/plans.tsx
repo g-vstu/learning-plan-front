@@ -8,6 +8,7 @@ import { useAgGridModules } from 'hooks/useAgGridModules';
 import { OverviewHeader } from 'components/overview-header';
 import { OverviewTitle } from 'components/overview-title';
 import { AddPlanDialog } from './add-plan-dialog';
+import { EditPlanDialog } from './edit-plan-dialog';
 import { Search as SearchIcon } from '@mui/icons-material';
 import { DeleteCell } from 'components/delete-cell';
 import { ExcelCell } from 'components/excel-cell';
@@ -20,6 +21,7 @@ import 'config/styles/styles.css';
 import { duplicatePlan } from 'store/plan/services';
 import axios from 'axios';
 import { CustomSelect } from '../../components/CustomSelect';
+import Autocomplete from '@mui/material/Autocomplete';
 
 interface PropTypes {
     plans: Plan[];
@@ -30,13 +32,15 @@ export const Plans: React.FC<PropTypes> = ({ plans }) => {
     const { modules } = useAgGridModules();
     const gridRef = useRef();
 
-    const [open, setOpen] = useState(false);
+    const [openAdd, setOpenAdd] = useState(false);
+    const [openEdit, setOpenEdit] = useState(false);
 
     const [gridApi, setGridApi] = useState(null);
     const [gridColumnApi, setGridColumnApi] = useState(null);
     const [groups, setGroups] = useState([]);
     const [directions, setDirections] = useState([]);
     const [specializations, setSpecializations] = useState([]);
+    const [rowData, setRowData] = useState([]);
 
     const getDataGroups = async () => {
         try {
@@ -78,9 +82,12 @@ export const Plans: React.FC<PropTypes> = ({ plans }) => {
     const dispatch = useDispatch();
 
     const specializationsCellRenderer = (params: { value: { name: string }[] }) => {
+        console.log(params);
         return params.value.map(({ name }) => name).join(', ');
     };
-
+    const handleRowClicked = (event) => {
+        setRowData(event.data);
+    };
     const plansColumns = [
         {
             width: 60,
@@ -110,7 +117,29 @@ export const Plans: React.FC<PropTypes> = ({ plans }) => {
             field: 'specializations',
             width: 150,
             headerName: 'Специализация',
+            // editable: true,
             cellRenderer: specializationsCellRenderer,
+            // cellEditor: (params) => {
+            //     return (
+            //         <Autocomplete
+            //             multiple={true}
+            //             limitTags={2}
+            //             id="multiple-limit-tags"
+            //             options={specializations
+            //                 .map((item) => ({
+            //                     value: item.id,
+            //                     label: item.name,
+            //                 }))
+            //                 .sort((a, b) => a.label.localeCompare(b.label))}
+            //             // onChange={(e, value) => handleSpecializationsChange(e, value)}
+            //             disableCloseOnSelect
+            //             // defaultValue={params.value}
+            //             renderInput={(params) => (
+            //                 <TextField {...params} InputLabelProps={{ shrink: false }} />
+            //             )}
+            //         />
+            //     );
+            // },
         },
         {
             headerName: 'Группа',
@@ -270,7 +299,6 @@ export const Plans: React.FC<PropTypes> = ({ plans }) => {
             },
         },
     ];
-
     const onCellValueChanged = (event) => {
         console.log(event.data, 'event data');
         dispatch(updatePlan(event.data, event.data.idSpeciality.id));
@@ -296,8 +324,17 @@ export const Plans: React.FC<PropTypes> = ({ plans }) => {
                 specializations={specializations}
                 directions={directions}
                 groups={groups}
-                open={open}
-                setOpen={setOpen}
+                openAdd={openAdd}
+                setOpenAdd={setOpenAdd}
+            />
+            <EditPlanDialog
+                specializations={specializations}
+                directions={directions}
+                groups={groups}
+                openEdit={openEdit}
+                setOpenEdit={setOpenEdit}
+                rowData={rowData}
+                setRowData={setRowData}
             />
             <OverviewHeader>
                 <div style={{ display: 'flex' }}>
@@ -314,9 +351,14 @@ export const Plans: React.FC<PropTypes> = ({ plans }) => {
                     />
                     <OverviewTitle>Планы</OverviewTitle>
                 </div>
-                <Button variant="contained" onClick={() => setOpen(true)}>
-                    Добавить план
-                </Button>
+                <div style={{ display: 'flex', gap: '20px' }}>
+                    <Button variant="contained" onClick={() => setOpenEdit(true)}>
+                        Редактировать план
+                    </Button>
+                    <Button variant="contained" onClick={() => setOpenAdd(true)}>
+                        Добавить план
+                    </Button>
+                </div>
             </OverviewHeader>
 
             <div style={defaultSize} className={defaultTheme}>
@@ -327,6 +369,7 @@ export const Plans: React.FC<PropTypes> = ({ plans }) => {
                     enableRangeSelection={true}
                     columnDefs={plansColumns}
                     defaultColDef={defaultColDef}
+                    rowSelection={'single'}
                     onGridReady={onGridReady}
                     cacheQuickFilter={true}
                     isFullWidthCell={(rowNode) => rowNode.data.fullWidth}
@@ -334,6 +377,7 @@ export const Plans: React.FC<PropTypes> = ({ plans }) => {
                     onCellValueChanged={onCellValueChanged}
                     onCellEditingStopped={onCellEditingStopped}
                     headerHeight={140}
+                    onRowClicked={handleRowClicked}
                 />
             </div>
         </>

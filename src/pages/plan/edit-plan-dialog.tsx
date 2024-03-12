@@ -22,6 +22,7 @@ import { selectSpecialities } from 'store/speciality/selectors';
 import { DIPLOM_TYPES, EDUCATION_FORMS, EDUCATION_LEVELS } from 'config/domain-consts';
 import Autocomplete from '@mui/material/Autocomplete';
 import { makeStyles } from '@mui/styles';
+import { updatePlan } from 'store/plan/actions';
 
 const useStyles = makeStyles({
     option: {
@@ -31,82 +32,82 @@ const useStyles = makeStyles({
         },
     },
 });
-export const AddPlanDialog: React.FC<any> = ({
+export const EditPlanDialog: React.FC<any> = ({
     specializations,
     directions,
     groups,
-    openAdd,
-    setOpenAdd,
+    openEdit,
+    setOpenEdit,
+    rowData,
+    setRowData,
 }) => {
     const dispatch = useDispatch();
     const specialities = useSelector(selectSpecialities);
 
     const [selectedSpeciality, setSelectedSpeciality] = useState(null);
     const [selectedSpecializations, setSelectedSpecializations] = useState([]);
-
-    const [newPlan, setNewPlan] = useState({
-        diplomCountWeek: 0,
-        diplomIdSemestr: 0,
-        diplomName: '',
-        diplomZe: 0,
-        educationForm: EDUCATION_FORMS[0],
-        govExam: 0,
-        learnYear: '',
-        name: '',
-        regNumber: '',
-        utvDate: '2022-05-22',
-        semesterCount: 8,
-        educationLevel: EDUCATION_LEVELS[0],
-        group: null,
-        idSpeciality: null,
-        directions: [],
-        specializations: [],
-    });
-    console.log(newPlan.specializations[0]);
+    // const [newPlan, setNewPlan] = useState({
+    //     diplomCountWeek: 0,
+    //     diplomIdSemestr: 0,
+    //     diplomName: '',
+    //     diplomZe: 0,
+    //     educationForm: EDUCATION_FORMS[0],
+    //     govExam: 0,
+    //     learnYear: '',
+    //     name: '',
+    //     regNumber: '',
+    //     utvDate: '2022-05-22',
+    //     semesterCount: 8,
+    //     educationLevel: EDUCATION_LEVELS[0],
+    //     group: null,
+    //     idSpeciality: null,
+    //     directions: [],
+    //     specializations: [],
+    // });
     const handleGroupChange = (e, value) => {
-        setNewPlan({
-            ...newPlan,
+        setRowData({
+            ...rowData,
             ['group']: { id: value.value, name: value.label },
         });
     };
     const handleDirectionChange = (e, value) => {
-        setNewPlan({
-            ...newPlan,
+        setRowData({
+            ...rowData,
             ['directions']: [{ id: value.value, name: value.label }],
         });
     };
     const handleSpecializationsChange = (e, value) => {
         setSelectedSpecializations(value);
-        setNewPlan({
-            ...newPlan,
+        setRowData({
+            ...rowData,
             ['specializations']: value.map((item) => ({ id: item.value, name: item.label })),
         });
     };
 
     const handlePlanChange = (e) => {
         console.log(e);
-        setNewPlan({
-            ...newPlan,
+        setRowData({
+            ...rowData,
             [e.target.name]: e.target.value,
         });
     };
 
     const handleChangeType = (e) => {
         setSelectedSpeciality(e.target.value as any);
-        setNewPlan({
-            ...newPlan,
+        setRowData({
+            ...rowData,
             [e.target.name]: { id: e.target.value },
         });
     };
 
-    const handleCreatePlan = () => {
-        dispatch(createPlan(newPlan, selectedSpeciality));
-        setOpenAdd(false);
+    const handleEditPlan = () => {
+        dispatch(updatePlan(rowData, rowData.idSpeciality.id));
+        setOpenEdit(false);
     };
 
     return (
         <>
-            <Dialog open={openAdd} onClose={() => setOpenAdd(false)} maxWidth="md" fullWidth>
+            <Dialog open={openEdit} onClose={() => setOpenEdit(false)} maxWidth="md" fullWidth>
                 <DialogContent>
                     <Container style={{ marginTop: 0, paddingTop: 20, paddingBottom: 30 }}>
                         <div
@@ -122,7 +123,7 @@ export const AddPlanDialog: React.FC<any> = ({
                                     <Grid container>
                                         <Grid item xs={9}>
                                             <Typography fontWeight={700} variant="h5">
-                                                Добавить план
+                                                Редактировать план
                                             </Typography>
                                         </Grid>
                                         <Grid item xs={3}>
@@ -132,7 +133,7 @@ export const AddPlanDialog: React.FC<any> = ({
                                                     justifyContent: 'flex-end',
                                                 }}
                                             >
-                                                <IconButton onClick={() => setOpenAdd(false)}>
+                                                <IconButton onClick={() => setOpenEdit(false)}>
                                                     <CloseIcon />
                                                 </IconButton>
                                             </div>
@@ -224,7 +225,7 @@ export const AddPlanDialog: React.FC<any> = ({
                                         name="diplomCountWeek"
                                         type="number"
                                         required
-                                        value={newPlan.diplomCountWeek}
+                                        value={rowData.diplomCountWeek}
                                         onChange={handlePlanChange}
                                         fullWidth
                                         size="small"
@@ -235,7 +236,7 @@ export const AddPlanDialog: React.FC<any> = ({
                                     <TextField
                                         name="diplomIdSemestr"
                                         required
-                                        value={newPlan.diplomIdSemestr}
+                                        value={rowData.diplomIdSemestr}
                                         onChange={handlePlanChange}
                                         fullWidth
                                         size="small"
@@ -246,7 +247,7 @@ export const AddPlanDialog: React.FC<any> = ({
                                     <Select
                                         name="diplomName"
                                         required
-                                        value={newPlan.diplomName}
+                                        value={rowData.diplomName}
                                         onChange={handlePlanChange}
                                         fullWidth
                                         size="small"
@@ -263,7 +264,7 @@ export const AddPlanDialog: React.FC<any> = ({
                                     <TextField
                                         name="diplomZe"
                                         required
-                                        value={newPlan.diplomZe}
+                                        value={rowData.diplomZe}
                                         onChange={handlePlanChange}
                                         fullWidth
                                         size="small"
@@ -274,7 +275,7 @@ export const AddPlanDialog: React.FC<any> = ({
                                     <Select
                                         name="educationForm"
                                         required
-                                        value={newPlan.educationForm}
+                                        value={rowData.educationForm}
                                         onChange={handlePlanChange}
                                         fullWidth
                                         size="small"
@@ -291,7 +292,7 @@ export const AddPlanDialog: React.FC<any> = ({
                                     <Select
                                         name="educationLevel"
                                         required
-                                        value={newPlan.educationLevel}
+                                        value={rowData.educationLevel}
                                         onChange={handlePlanChange}
                                         fullWidth
                                         size="small"
@@ -319,7 +320,7 @@ export const AddPlanDialog: React.FC<any> = ({
                                     <TextField
                                         name="govExam"
                                         required
-                                        value={newPlan.govExam}
+                                        value={rowData.govExam}
                                         onChange={handlePlanChange}
                                         fullWidth
                                         size="small"
@@ -330,7 +331,7 @@ export const AddPlanDialog: React.FC<any> = ({
                                     <TextField
                                         name="learnYear"
                                         required
-                                        value={newPlan.learnYear}
+                                        value={rowData.learnYear}
                                         onChange={handlePlanChange}
                                         fullWidth
                                         size="small"
@@ -341,7 +342,7 @@ export const AddPlanDialog: React.FC<any> = ({
                                     <TextField
                                         name="regNumber"
                                         required
-                                        value={newPlan.regNumber}
+                                        value={rowData.regNumber}
                                         onChange={handlePlanChange}
                                         fullWidth
                                         size="small"
@@ -352,7 +353,7 @@ export const AddPlanDialog: React.FC<any> = ({
                                     <TextField
                                         name="utvDate"
                                         required
-                                        value={newPlan.utvDate}
+                                        value={rowData.utvDate}
                                         onChange={handlePlanChange}
                                         fullWidth
                                         size="small"
@@ -364,7 +365,7 @@ export const AddPlanDialog: React.FC<any> = ({
                                         name="semesterCount"
                                         required
                                         type="number"
-                                        value={newPlan.semesterCount}
+                                        value={rowData.semesterCount}
                                         onChange={handlePlanChange}
                                         fullWidth
                                         size="small"
@@ -372,8 +373,8 @@ export const AddPlanDialog: React.FC<any> = ({
                                 </FieldContainer>
                             </div>
                             <div style={{ marginTop: 30 }}>
-                                <Button fullWidth onClick={handleCreatePlan} variant="contained">
-                                    Добавить план
+                                <Button fullWidth onClick={handleEditPlan} variant="contained">
+                                    Редактировать план
                                 </Button>
                             </div>
                         </div>
