@@ -19,7 +19,6 @@ interface CustomSelectProps {
 
 export const CustomSelect: React.FC<CustomSelectProps> = ({ value, onChange, groups, params }) => {
     const handleChange = (e, value) => {
-        console.log(value.value);
         const selectedGroup = groups.find((group) => group.id === parseInt(value.value));
         onChange(selectedGroup);
         params.api.stopEditing();

@@ -81,9 +81,11 @@ export const Plans: React.FC<PropTypes> = ({ plans }) => {
 
     const dispatch = useDispatch();
 
-    const specializationsCellRenderer = (params: { value: { name: string }[] }) => {
+    const specializationsCellRenderer = (params: {
+        value: { specialization: { name: string } }[];
+    }) => {
         console.log(params);
-        return params.value.map(({ name }) => name).join(', ');
+        return params.value.map((value) => value.specialization.name).join(', ');
     };
     const handleRowClicked = (event) => {
         setRowData(event.data);
@@ -270,7 +272,6 @@ export const Plans: React.FC<PropTypes> = ({ plans }) => {
                         .then((duplicatedPlan) => {
                             duplicatedPlan.regNumber += '_копия'; // надо отправить на бэк изменение
                             history.push(`/${PREFIX}/plan-creation/${duplicatedPlan.id}`);
-                            console.log(duplicatedPlan);
                         })
                         .catch(() => {
                             console.log('not duplicated');
@@ -300,11 +301,9 @@ export const Plans: React.FC<PropTypes> = ({ plans }) => {
         },
     ];
     const onCellValueChanged = (event) => {
-        console.log(event.data, 'event data');
         dispatch(updatePlan(event.data, event.data.idSpeciality.id));
     };
     const onCellEditingStopped = (event) => {
-        console.log('Изменено:', event.data);
         dispatch(updatePlan(event.data, event.data.idSpeciality.id));
     };
     const onGridReady = (params) => {

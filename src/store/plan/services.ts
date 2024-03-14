@@ -23,11 +23,8 @@ export const delPlanRequest = async (id) => {
     return delId;
 };
 
-export const createPlanRequest = async (plan, specialityId) => {
-    const { data: newPlan } = await instance.post(
-        `${DEVELOPMENT}/plan?specialityId=${specialityId}`,
-        plan
-    );
+export const createPlanRequest = async (plan) => {
+    const { data: newPlan } = await instance.post(`${DEVELOPMENT}/plan`, plan);
     return newPlan;
 };
 

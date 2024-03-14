@@ -22,7 +22,7 @@ import { selectSpecialities } from 'store/speciality/selectors';
 import { DIPLOM_TYPES, EDUCATION_FORMS, EDUCATION_LEVELS } from 'config/domain-consts';
 import Autocomplete from '@mui/material/Autocomplete';
 import { makeStyles } from '@mui/styles';
-import { updatePlan } from 'store/plan/actions';
+import { updatePlan, getPlans } from 'store/plan/actions';
 
 const useStyles = makeStyles({
     option: {
@@ -73,19 +73,20 @@ export const EditPlanDialog: React.FC<any> = ({
     const handleDirectionChange = (e, value) => {
         setRowData({
             ...rowData,
-            ['directions']: [{ id: value.value, name: value.label }],
+            ['directions']: [{ direction: { id: value.value, name: value.label } }],
         });
     };
     const handleSpecializationsChange = (e, value) => {
         setSelectedSpecializations(value);
         setRowData({
             ...rowData,
-            ['specializations']: value.map((item) => ({ id: item.value, name: item.label })),
+            ['specializations']: value.map((item) => ({
+                specialization: { id: item.value, name: item.label },
+            })),
         });
     };
 
     const handlePlanChange = (e) => {
-        console.log(e);
         setRowData({
             ...rowData,
             [e.target.name]: e.target.value,
@@ -102,6 +103,7 @@ export const EditPlanDialog: React.FC<any> = ({
 
     const handleEditPlan = () => {
         dispatch(updatePlan(rowData, rowData.idSpeciality.id));
+        dispatch(getPlans());
         setOpenEdit(false);
     };
 
