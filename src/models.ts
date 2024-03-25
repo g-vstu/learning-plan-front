@@ -5,6 +5,7 @@ import { PlanCreationContanier } from 'containers/plan-creation';
 import { PlansList } from 'containers/plan-list';
 import { SpecialitiesListContainer } from 'containers/speaciality-list';
 import { SubjectList } from 'containers/subject-list';
+import Login from 'pages/login/Login';
 
 export const getRoutes = (PREFIX: string) => [
     {
@@ -36,5 +37,10 @@ export const getRoutes = (PREFIX: string) => [
         path: `/${PREFIX}/competencies`,
         exact: true,
         component: CompetenciesList,
+    },
+    {
+        path: `/${PREFIX}/`,
+        exact: true,
+        component: Login,
     },
 ];

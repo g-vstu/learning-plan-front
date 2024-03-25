@@ -11,6 +11,7 @@ import { getSpecialities } from 'store/speciality/actions';
 import { selectSpecialities, selectSpecialitiesLoading } from 'store/speciality/selectors';
 import { getSubjects } from 'store/subject/actions';
 import { selectSubjects, selectSubjectsLoading } from 'store/subject/selectors';
+import RequireAuth from '../hoc/RequireAuth';
 
 export const SubjectList: React.FC = () => {
     const dispatch = useDispatch();
@@ -30,7 +31,9 @@ export const SubjectList: React.FC = () => {
             {isSubjectsLoading || isGroupUnitsLoading ? (
                 <Loader />
             ) : (
-                <Subjects subjects={subjects} groupUnits={groupUnits} />
+                <RequireAuth role={['DEAN']}>
+                    <Subjects subjects={subjects} groupUnits={groupUnits} />
+                </RequireAuth>
             )}
         </>
     );

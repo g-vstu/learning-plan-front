@@ -119,35 +119,14 @@ export const Plans: React.FC<PropTypes> = ({ plans }) => {
             field: 'specializations',
             width: 150,
             headerName: 'Специализация',
-            // editable: true,
             cellRenderer: specializationsCellRenderer,
-            // cellEditor: (params) => {
-            //     return (
-            //         <Autocomplete
-            //             multiple={true}
-            //             limitTags={2}
-            //             id="multiple-limit-tags"
-            //             options={specializations
-            //                 .map((item) => ({
-            //                     value: item.id,
-            //                     label: item.name,
-            //                 }))
-            //                 .sort((a, b) => a.label.localeCompare(b.label))}
-            //             // onChange={(e, value) => handleSpecializationsChange(e, value)}
-            //             disableCloseOnSelect
-            //             // defaultValue={params.value}
-            //             renderInput={(params) => (
-            //                 <TextField {...params} InputLabelProps={{ shrink: false }} />
-            //             )}
-            //         />
-            //     );
-            // },
         },
         {
             headerName: 'Группа',
             field: 'group.name',
             width: 150,
             editable: true,
+            filter: true,
             cellEditor: (params) => {
                 const { value, data } = params;
                 return (
@@ -161,7 +140,6 @@ export const Plans: React.FC<PropTypes> = ({ plans }) => {
                     />
                 );
             },
-            filter: false,
         },
         {
             field: 'diplomCountWeek',
@@ -226,7 +204,7 @@ export const Plans: React.FC<PropTypes> = ({ plans }) => {
         {
             field: 'learnYear',
             width: 150,
-            headerName: 'Год обучения',
+            headerName: 'Учебный год',
             editable: true,
         },
         {

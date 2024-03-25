@@ -6,6 +6,7 @@ import { getGroupUnits } from 'store/group-unit/actions';
 import { selectGroupUnits, selectGroupUnitsLoading } from 'store/group-unit/selectors';
 import { getGroupComponents } from 'store/group-component/actions';
 import { selectGroupComponentsLoading } from 'store/group-component/selectors';
+import RequireAuth from '../hoc/RequireAuth';
 
 export const GroupUnitsList: React.FC = () => {
     const dispatch = useDispatch();
@@ -21,7 +22,13 @@ export const GroupUnitsList: React.FC = () => {
 
     return (
         <>
-            {isLoading || isComponentsLoading ? <Loader /> : <GroupUnits groupUnits={groupUnits} />}
+            {isLoading || isComponentsLoading ? (
+                <Loader />
+            ) : (
+                <RequireAuth role={['DEAN']}>
+                    <GroupUnits groupUnits={groupUnits} />
+                </RequireAuth>
+            )}
         </>
     );
 };

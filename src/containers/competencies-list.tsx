@@ -13,6 +13,7 @@ import { getSpecialities } from 'store/speciality/actions';
 import { selectSpecialitiesLoading } from 'store/speciality/selectors';
 import { getSubjects } from 'store/subject/actions';
 import { selectSubjectsLoading } from 'store/subject/selectors';
+import RequireAuth from '../hoc/RequireAuth';
 
 export const CompetenciesList: React.FC = () => {
     const dispatch = useDispatch();
@@ -33,7 +34,9 @@ export const CompetenciesList: React.FC = () => {
             {isLoading || isCompetenciesLoading || selectedSpeciality ? (
                 <Loader />
             ) : (
-                <Competencies subCompetencies={subCompetencies} />
+                <RequireAuth role={['DEAN']}>
+                    <Competencies subCompetencies={subCompetencies} />
+                </RequireAuth>
             )}
         </>
     );
