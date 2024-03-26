@@ -42,9 +42,19 @@ export const Plans: React.FC<PropTypes> = ({ plans }) => {
     const [specializations, setSpecializations] = useState([]);
     const [rowData, setRowData] = useState([]);
 
+    const token = JSON.parse(localStorage.getItem('user')).access_token;
+    const fetchConfig = {
+        headers: {
+            Authorization: `Bearer ${token ? token : ''}`,
+        },
+    };
+
     const getDataGroups = async () => {
         try {
-            const response = await axios.get(`${process.env.REACT_APP_STUDENT_PLAN_API}/groups`);
+            const response = await axios.get(
+                `${process.env.REACT_APP_STUDENT_PLAN_API}/groups`,
+                fetchConfig
+            );
             setGroups(response.data);
         } catch (error) {
             console.error(error);
@@ -54,7 +64,8 @@ export const Plans: React.FC<PropTypes> = ({ plans }) => {
     const getDataDirections = async () => {
         try {
             const response = await axios.get(
-                `${process.env.REACT_APP_STUDENT_PLAN_API}/directions`
+                `${process.env.REACT_APP_STUDENT_PLAN_API}/directions`,
+                fetchConfig
             );
             setDirections(response.data);
         } catch (error) {
@@ -65,7 +76,8 @@ export const Plans: React.FC<PropTypes> = ({ plans }) => {
     const getDataSpecializations = async () => {
         try {
             const response = await axios.get(
-                `${process.env.REACT_APP_STUDENT_PLAN_API}/specializations`
+                `${process.env.REACT_APP_STUDENT_PLAN_API}/specializations`,
+                fetchConfig
             );
             setSpecializations(response.data);
         } catch (error) {

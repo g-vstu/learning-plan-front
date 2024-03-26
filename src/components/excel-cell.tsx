@@ -5,7 +5,12 @@ import loaderIcon from '../img/loader.svg';
 
 export const ExcelCell: React.FC<{ id: number; shifr: string }> = ({ id, shifr }) => {
     const [loading, setLoading] = useState(false);
-
+    const token = JSON.parse(localStorage.getItem('user')).access_token;
+    const fetchConfig = {
+        headers: {
+            Authorization: `Bearer ${token ? token : ''}`,
+        },
+    };
     const handleExcel = async () => {
         try {
             setLoading(true);
@@ -14,6 +19,7 @@ export const ExcelCell: React.FC<{ id: number; shifr: string }> = ({ id, shifr }
                 `${process.env.REACT_APP_STUDENT_PLAN_API}/utils/myExcel?planId=${id}`,
                 {
                     responseType: 'blob',
+                    headers: fetchConfig.headers,
                 }
             );
             const url = window.URL.createObjectURL(new Blob([response.data]));
