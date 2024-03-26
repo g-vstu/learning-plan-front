@@ -2,13 +2,6 @@ import { DEVELOPMENT, fetchConfig } from 'config/constants';
 import instance from 'store/auth/instance';
 import { Plan } from 'types';
 
-const token = JSON.parse(localStorage.getItem('user')).access_token;
-const fetchConfig = {
-    headers: {
-        Authorization: `Bearer ${token ? token : ''}`,
-    },
-};
-
 export const fetchNodes = async () => {
     const { data: nodes } = await instance.get(`${DEVELOPMENT}/node`, fetchConfig);
     return nodes;
