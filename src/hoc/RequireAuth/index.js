@@ -8,7 +8,7 @@ export default withRouter(function RequireAuth({ children, role, history }) {
 
     useEffect(() => {
         if (!user) {
-            history.push('/vstu', { state: { from: location }, replace: true });
+            history.push('/umo', { state: { from: location }, replace: true });
         }
     }, [user, history, location]);
 

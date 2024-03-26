@@ -28,7 +28,7 @@ function Login(props) {
                 stateRole = stateRole + role.includes(el);
             });
             signIn(JSON.parse(localStorage.getItem('user')), () =>
-                history.replace(location.state ? location.state?.from : '/vstu/plans')
+                history.replace(location.state ? location.state?.from : '/umo/plans')
             );
         }
     }, [location, history, signIn]);
@@ -48,7 +48,7 @@ function Login(props) {
                 localStorage.setItem('user', JSON.stringify(data));
                 reset();
                 signIn(data, () =>
-                    history.replace('/vstu', {
+                    history.replace('/umo', {
                         replace: true,
                     })
                 );

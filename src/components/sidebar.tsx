@@ -16,8 +16,8 @@ export const SideBar = (props) => {
     const handleExit = () => {
         signOut(() => {
             localStorage.removeItem('user');
-            window.history.replaceState({}, '', '/vstu');
-            window.location.href = '/vstu';
+            window.history.replaceState({}, '', '/umo');
+            window.location.href = '/umo';
         });
     };
     return (
