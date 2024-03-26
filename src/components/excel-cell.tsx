@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import excelIcon from '../img/excel.svg';
 import loaderIcon from '../img/loader.svg';
+import { fetchConfig } from 'config/constants';
 
 export const ExcelCell: React.FC<{ id: number; shifr: string }> = ({ id, shifr }) => {
     const [loading, setLoading] = useState(false);
@@ -13,6 +14,7 @@ export const ExcelCell: React.FC<{ id: number; shifr: string }> = ({ id, shifr }
                 `${process.env.REACT_APP_STUDENT_PLAN_API}/utils/myExcel?planId=${id}`,
                 {
                     responseType: 'blob',
+                    headers: fetchConfig.headers,
                 }
             );
             const url = window.URL.createObjectURL(new Blob([response.data]));

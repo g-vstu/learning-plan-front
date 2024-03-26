@@ -2,6 +2,13 @@ import { DEVELOPMENT, fetchConfig } from 'config/constants';
 import instance from 'store/auth/instance';
 import { Semester, WeeksSemester } from 'types';
 
+const token = JSON.parse(localStorage.getItem('user')).access_token;
+const fetchConfig = {
+    headers: {
+        Authorization: `Bearer ${token ? token : ''}`,
+    },
+};
+
 export const updateWeeksSemesterRequest = async (weeksSemester: WeeksSemester) => {
     const { data: updatedWeeksSemester } = await instance.post(
         `${DEVELOPMENT}/weeks_semestr?planId=${weeksSemester?.idPlan?.id}`,

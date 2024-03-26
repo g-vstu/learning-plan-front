@@ -1,6 +1,13 @@
 import { DEVELOPMENT, fetchConfig } from 'config/constants';
 import instance from 'store/auth/instance';
 
+const token = JSON.parse(localStorage.getItem('user')).access_token;
+const fetchConfig = {
+    headers: {
+        Authorization: `Bearer ${token ? token : ''}`,
+    },
+};
+
 export const fetchSubCompetencies = async () => {
     const { data: subCompetencies } = await instance.get(
         `${DEVELOPMENT}/sub_competence`,
