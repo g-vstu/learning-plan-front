@@ -48,7 +48,7 @@ function Login(props) {
                 localStorage.setItem('user', JSON.stringify(data));
                 reset();
                 signIn(data, () =>
-                    history.replace('/vstu', {
+                    history.replace('/', {
                         replace: true,
                     })
                 );
