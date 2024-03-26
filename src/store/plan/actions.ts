@@ -59,7 +59,7 @@ export const createPlan = (
     return async (dispatch: Dispatch) => {
         dispatch({ type: CREATE_PLAN.start });
         try {
-            const newPlan: Plan = await createPlanRequest(plan, specialityId);
+            const newPlan: Plan = await createPlanRequest(plan);
             for (let i = 0; i < plan.semesterCount; i++) {
                 let weeksSemester: WeeksSemester = {
                     id: 0,
@@ -100,7 +100,7 @@ export const updatePlan = (
     return async (dispatch: Dispatch) => {
         dispatch({ type: UPDATE_PLAN.start });
         try {
-            const updatedPlan: Plan = await createPlanRequest(plan, specialityId);
+            const updatedPlan: Plan = await createPlanRequest(plan);
             dispatch({
                 type: CREATE_PLAN.success,
                 payload: { updatedPlan },

@@ -22,6 +22,7 @@ import { selectGroupUnitsLoading } from 'store/group-unit/selectors';
 import { getSubCompetencies } from 'store/sub-competence/actions';
 import { selectSubCompetenciesLoading } from 'store/sub-competence/selectors';
 import { getPlanWeeksSemesters, getWeeksSemesters } from 'store/semester/actions';
+import RequireAuth from '../hoc/RequireAuth';
 
 export const PlanCreationContanier: React.FC<{ match: match<any> }> = ({ match }) => {
     const dispatch = useDispatch();
@@ -82,13 +83,15 @@ export const PlanCreationContanier: React.FC<{ match: match<any> }> = ({ match }
             {isLoading ? (
                 <Loader />
             ) : (
-                <PlanCreation
-                    plans={plans}
-                    nodes={nodes}
-                    semesters={semesters}
-                    practices={practices}
-                    weeks={weeks}
-                />
+                <RequireAuth role={['DEAN']}>
+                    <PlanCreation
+                        plans={plans}
+                        nodes={nodes}
+                        semesters={semesters}
+                        practices={practices}
+                        weeks={weeks}
+                    />
+                </RequireAuth>
             )}
         </>
     );

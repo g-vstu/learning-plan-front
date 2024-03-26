@@ -80,7 +80,6 @@ export const PlanCreationSemester: React.FC<PropTypes> = ({ semester }) => {
             <TableCell style={{ border: 'none', display: 'flex', justifyContent: 'center' }}>
                 {editMode ? (
                     <div>
-                        {console.log(semesterData, 'sem')}
                         <IconButton onClick={() => handleSaveSemester()}>
                             <DoneIcon />
                         </IconButton>

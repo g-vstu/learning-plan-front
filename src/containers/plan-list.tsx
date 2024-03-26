@@ -6,6 +6,7 @@ import { getPlans } from 'store/plan/actions';
 import { selectPlans, selectPlansLoading } from 'store/plan/selectors';
 import { getSpecialities } from 'store/speciality/actions';
 import { selectSpecialitiesLoading } from 'store/speciality/selectors';
+import RequireAuth from '../hoc/RequireAuth';
 
 export const PlansList: React.FC = () => {
     const dispatch = useDispatch();
@@ -18,5 +19,15 @@ export const PlansList: React.FC = () => {
         dispatch(getSpecialities());
     }, [dispatch]);
 
-    return <>{isLoading || isSpecialities ? <Loader /> : <Plans plans={plans} />}</>;
+    return (
+        <>
+            {isLoading || isSpecialities ? (
+                <Loader />
+            ) : (
+                <RequireAuth role={['DEAN']}>
+                    <Plans plans={plans} />
+                </RequireAuth>
+            )}
+        </>
+    );
 };

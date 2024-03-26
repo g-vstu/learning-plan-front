@@ -10,7 +10,13 @@ export const DeleteCell: React.FC<{ id: number; method: (id: number) => void }> 
     const dispatch = useDispatch();
 
     const handleDelete = () => {
-        dispatch(method(id));
+        const result = confirm('Вы действительно хотите удалить?');
+        if (result) {
+            const resultConfirm = confirm('Вы точно уверены?');
+            if (resultConfirm) {
+                dispatch(method(id));
+            }
+        }
     };
     return (
         <>

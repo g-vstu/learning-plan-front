@@ -22,3 +22,11 @@ export const defaultColDef: ColDef = {
     filter: true,
     //flex: 1,
 };
+const user = localStorage.getItem('user');
+const token = user ? JSON.parse(user).access_token : undefined;
+
+export const fetchConfig = {
+    headers: {
+        Authorization: `Bearer ${token}`,
+    },
+};

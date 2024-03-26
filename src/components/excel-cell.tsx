@@ -5,7 +5,6 @@ import loaderIcon from '../img/loader.svg';
 
 export const ExcelCell: React.FC<{ id: number; shifr: string }> = ({ id, shifr }) => {
     const [loading, setLoading] = useState(false);
-
     const handleExcel = async () => {
         try {
             setLoading(true);
@@ -16,7 +15,6 @@ export const ExcelCell: React.FC<{ id: number; shifr: string }> = ({ id, shifr }
                     responseType: 'blob',
                 }
             );
-
             const url = window.URL.createObjectURL(new Blob([response.data]));
             const link = document.createElement('a');
             link.href = url;
@@ -25,7 +23,9 @@ export const ExcelCell: React.FC<{ id: number; shifr: string }> = ({ id, shifr }
             link.click();
             link.remove();
 
-            setLoading(false);
+            if (response) {
+                setLoading(false);
+            }
         } catch (error) {
             console.error('Error downloading excel file:', error);
             setLoading(false);
@@ -44,7 +44,7 @@ export const ExcelCell: React.FC<{ id: number; shifr: string }> = ({ id, shifr }
             }}
             onClick={handleExcel}
         >
-            {loading && (
+            {loading ? (
                 <img
                     style={{
                         position: 'absolute',
@@ -54,13 +54,14 @@ export const ExcelCell: React.FC<{ id: number; shifr: string }> = ({ id, shifr }
                     src={loaderIcon}
                     alt="Loader icon"
                 />
+            ) : (
+                <img
+                    style={{ width: '30px', height: '30px' }}
+                    hidden={loading}
+                    src={excelIcon}
+                    alt="Excel icon"
+                />
             )}
-            <img
-                style={{ width: '30px', height: '30px' }}
-                hidden={loading}
-                src={excelIcon}
-                alt="Excel icon"
-            />
         </div>
     );
 };

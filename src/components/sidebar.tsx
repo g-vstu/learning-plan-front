@@ -8,14 +8,29 @@ import { Typography } from '@mui/material';
 import SubjectIcon from '@mui/icons-material/Subject';
 import SourceIcon from '@mui/icons-material/Source';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
+import { useAuth } from '../hooks/useAuth';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 export const SideBar = (props) => {
+    const { user, signOut } = useAuth();
+    const handleExit = () => {
+        signOut(() => {
+            localStorage.removeItem('user');
+            window.history.replaceState({}, '', '/vstu');
+            window.location.href = '/vstu';
+        });
+    };
     return (
         <Menu {...props}>
+            {user ? (
+                <Typography>{user.fio.split(' ').reverse().join(' ')}</Typography>
+            ) : (
+                <Typography>Авторизуйтесь</Typography>
+            )}
             <ListItemButton
                 component={Link}
                 to={`/${PREFIX}/specialities`}
-                style={{ display: 'flex' }}
+                style={{ display: 'flex', marginTop: 20 }}
             >
                 <FolderSpecialIcon />
                 <Typography style={{ marginLeft: 5 }}>Специальности</Typography>
@@ -43,6 +58,15 @@ export const SideBar = (props) => {
                 <Typography style={{ marginLeft: 5 }}>Компетенции</Typography>
             </ListItemButton>
             */}
+            {user && (
+                <ListItemButton
+                    style={{ display: 'flex', marginTop: 20 }}
+                    onClick={() => handleExit()}
+                >
+                    <LogoutIcon />
+                    <Typography style={{ marginLeft: 5 }}>Выйти</Typography>
+                </ListItemButton>
+            )}
         </Menu>
     );
 };

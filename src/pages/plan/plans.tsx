@@ -81,9 +81,11 @@ export const Plans: React.FC<PropTypes> = ({ plans }) => {
 
     const dispatch = useDispatch();
 
-    const specializationsCellRenderer = (params: { value: { name: string }[] }) => {
+    const specializationsCellRenderer = (params: {
+        value: { specialization: { name: string } }[];
+    }) => {
         console.log(params);
-        return params.value.map(({ name }) => name).join(', ');
+        return params.value.map((value) => value.specialization.name).join(', ');
     };
     const handleRowClicked = (event) => {
         setRowData(event.data);
@@ -117,35 +119,14 @@ export const Plans: React.FC<PropTypes> = ({ plans }) => {
             field: 'specializations',
             width: 150,
             headerName: 'Специализация',
-            // editable: true,
             cellRenderer: specializationsCellRenderer,
-            // cellEditor: (params) => {
-            //     return (
-            //         <Autocomplete
-            //             multiple={true}
-            //             limitTags={2}
-            //             id="multiple-limit-tags"
-            //             options={specializations
-            //                 .map((item) => ({
-            //                     value: item.id,
-            //                     label: item.name,
-            //                 }))
-            //                 .sort((a, b) => a.label.localeCompare(b.label))}
-            //             // onChange={(e, value) => handleSpecializationsChange(e, value)}
-            //             disableCloseOnSelect
-            //             // defaultValue={params.value}
-            //             renderInput={(params) => (
-            //                 <TextField {...params} InputLabelProps={{ shrink: false }} />
-            //             )}
-            //         />
-            //     );
-            // },
         },
         {
             headerName: 'Группа',
             field: 'group.name',
             width: 150,
             editable: true,
+            filter: true,
             cellEditor: (params) => {
                 const { value, data } = params;
                 return (
@@ -159,7 +140,6 @@ export const Plans: React.FC<PropTypes> = ({ plans }) => {
                     />
                 );
             },
-            filter: false,
         },
         {
             field: 'diplomCountWeek',
@@ -224,7 +204,7 @@ export const Plans: React.FC<PropTypes> = ({ plans }) => {
         {
             field: 'learnYear',
             width: 150,
-            headerName: 'Год обучения',
+            headerName: 'Учебный год',
             editable: true,
         },
         {
@@ -270,7 +250,6 @@ export const Plans: React.FC<PropTypes> = ({ plans }) => {
                         .then((duplicatedPlan) => {
                             duplicatedPlan.regNumber += '_копия'; // надо отправить на бэк изменение
                             history.push(`/${PREFIX}/plan-creation/${duplicatedPlan.id}`);
-                            console.log(duplicatedPlan);
                         })
                         .catch(() => {
                             console.log('not duplicated');
@@ -300,11 +279,9 @@ export const Plans: React.FC<PropTypes> = ({ plans }) => {
         },
     ];
     const onCellValueChanged = (event) => {
-        console.log(event.data, 'event data');
         dispatch(updatePlan(event.data, event.data.idSpeciality.id));
     };
     const onCellEditingStopped = (event) => {
-        console.log('Изменено:', event.data);
         dispatch(updatePlan(event.data, event.data.idSpeciality.id));
     };
     const onGridReady = (params) => {

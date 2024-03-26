@@ -61,8 +61,8 @@ export const AddPlanDialog: React.FC<any> = ({
         idSpeciality: null,
         directions: [],
         specializations: [],
+        qualification: '',
     });
-    console.log(newPlan.specializations[0]);
     const handleGroupChange = (e, value) => {
         setNewPlan({
             ...newPlan,
@@ -72,19 +72,21 @@ export const AddPlanDialog: React.FC<any> = ({
     const handleDirectionChange = (e, value) => {
         setNewPlan({
             ...newPlan,
-            ['directions']: [{ id: value.value, name: value.label }],
+            ['directions']: [{ direction: { id: value.value, name: value.label } }],
         });
     };
+
     const handleSpecializationsChange = (e, value) => {
         setSelectedSpecializations(value);
         setNewPlan({
             ...newPlan,
-            ['specializations']: value.map((item) => ({ id: item.value, name: item.label })),
+            ['specializations']: value.map((item) => ({
+                specialization: { id: item.value, name: item.label },
+            })),
         });
     };
 
     const handlePlanChange = (e) => {
-        console.log(e);
         setNewPlan({
             ...newPlan,
             [e.target.name]: e.target.value,
