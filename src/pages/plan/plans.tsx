@@ -22,6 +22,7 @@ import { duplicatePlan } from 'store/plan/services';
 import axios from 'axios';
 import { CustomSelect } from '../../components/CustomSelect';
 import Autocomplete from '@mui/material/Autocomplete';
+import { fetchConfig } from 'config/constants';
 
 interface PropTypes {
     plans: Plan[];
@@ -41,13 +42,6 @@ export const Plans: React.FC<PropTypes> = ({ plans }) => {
     const [directions, setDirections] = useState([]);
     const [specializations, setSpecializations] = useState([]);
     const [rowData, setRowData] = useState([]);
-
-    const token = JSON.parse(localStorage.getItem('user')).access_token;
-    const fetchConfig = {
-        headers: {
-            Authorization: `Bearer ${token ? token : ''}`,
-        },
-    };
 
     const getDataGroups = async () => {
         try {
