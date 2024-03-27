@@ -22,7 +22,6 @@ export const renderRoutes = (routes) => {
         } else {
             routeProps.component = route.component;
         }
-
         return <Route key={route.key} {...routeProps} />;
     });
 };

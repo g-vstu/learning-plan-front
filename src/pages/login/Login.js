@@ -7,7 +7,7 @@ import { useAuth } from '../../hooks/useAuth';
 import schema from './validation';
 import './Login.css';
 import { getToken } from './axios';
-import { PREFIX } from 'config/constants';
+import { PREFIX, updateUserToken } from 'config/constants';
 
 function Login(props) {
     const location = useLocation();
@@ -15,7 +15,7 @@ function Login(props) {
     const { signIn } = useAuth();
     const [disable, setDisable] = useState(false);
     const [error, setError] = useState(false);
-
+    const [token, setToken] = useState('');
     const { register, handleSubmit, reset } = useForm({
         resolver: yupResolver(schema),
     });
@@ -48,6 +48,7 @@ function Login(props) {
             .then((data) => {
                 localStorage.setItem('user', JSON.stringify(data));
                 reset();
+                updateUserToken();
                 signIn(data, () =>
                     history.replace(`/${PREFIX}`, {
                         replace: true,
