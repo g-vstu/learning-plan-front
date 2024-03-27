@@ -39,7 +39,7 @@ export const getRoutes = (PREFIX: string) => [
         component: CompetenciesList,
     },
     {
-        path: '/umo',
+        path: `/${PREFIX}`,
         exact: true,
         component: Login,
     },

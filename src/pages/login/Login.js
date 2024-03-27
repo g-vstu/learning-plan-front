@@ -7,6 +7,7 @@ import { useAuth } from '../../hooks/useAuth';
 import schema from './validation';
 import './Login.css';
 import { getToken } from './axios';
+import { PREFIX } from 'config/constants';
 
 function Login(props) {
     const location = useLocation();
@@ -28,7 +29,7 @@ function Login(props) {
                 stateRole = stateRole + role.includes(el);
             });
             signIn(JSON.parse(localStorage.getItem('user')), () =>
-                history.replace(location.state ? location.state?.from : '/umo/plans')
+                history.replace(location.state ? location.state?.from : `/${PREFIX}/plans`)
             );
         }
     }, [location, history, signIn]);
@@ -48,7 +49,7 @@ function Login(props) {
                 localStorage.setItem('user', JSON.stringify(data));
                 reset();
                 signIn(data, () =>
-                    history.replace('/umo', {
+                    history.replace(`/${PREFIX}`, {
                         replace: true,
                     })
                 );
