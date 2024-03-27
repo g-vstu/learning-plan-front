@@ -101,14 +101,20 @@ export const Plans: React.FC<PropTypes> = ({ plans }) => {
             width: 60,
             filter: false,
             headerName: 'Открыть',
-            cellRenderer: ({ id }) => {
+            cellRenderer: ({ id, faculty }) => {
                 const handleOpen = () => {
                     history.push(`/${PREFIX}/plan-creation/${id}`);
                 };
+                if (faculty) {
+                    if (faculty.dean !== JSON.parse(localStorage.getItem('user')).fio) {
+                        return null;
+                    }
+                }
                 return <FileOpenOutlinedIcon onClick={handleOpen} />;
             },
             cellRendererParams: ({ data }) => ({
                 id: data.id,
+                faculty: data.group.faculty,
             }),
         },
         {
@@ -238,9 +244,10 @@ export const Plans: React.FC<PropTypes> = ({ plans }) => {
             filter: false,
             headerName: 'Удалить',
             cellRenderer: DeleteCell,
-            cellRendererParams: ({ data }) => ({
+            cellRendererParams: ({ data, faculty }) => ({
                 id: data.id,
                 method: delPlan,
+                faculty: data.group.faculty,
             }),
             cellStyle: () => {
                 return { display: 'flex', alignItems: 'center' };
@@ -250,7 +257,7 @@ export const Plans: React.FC<PropTypes> = ({ plans }) => {
             width: 60,
             filter: false,
             headerName: 'Дублировать',
-            cellRenderer: ({ id }) => {
+            cellRenderer: ({ id, faculty }) => {
                 const handleOpen = () => {
                     duplicatePlan(id)
                         .then((duplicatedPlan) => {
@@ -261,10 +268,16 @@ export const Plans: React.FC<PropTypes> = ({ plans }) => {
                             console.log('not duplicated');
                         });
                 };
+                if (faculty) {
+                    if (faculty.dean !== JSON.parse(localStorage.getItem('user')).fio) {
+                        return null;
+                    }
+                }
                 return <ContentCopyIcon onClick={handleOpen} />;
             },
             cellRendererParams: ({ data }) => ({
                 id: data.id,
+                faculty: data.group.faculty,
             }),
             cellStyle: () => {
                 return { display: 'flex', alignItems: 'center' };
